@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "Nasim Realty",
-  tagline: "Your Oakland Home Story Starts Here",
+  tagline: "Your East Bay Home Story Starts Here",
   description:
-    "Nasim Realty — Oakland's trusted real estate expert. Whether you're buying your first home, selling your property, or exploring Oakland neighborhoods, Nasim brings local expertise and genuine care to every transaction.",
+    "Nasim Realty — the East Bay's trusted real estate expert. Whether you're buying your first home in Berkeley, selling your property in Oakland, or exploring neighborhoods across the East Bay, Nasim brings local expertise and genuine care to every transaction.",
   url: "https://nasimrealty.com",
   agent: {
     name: "Nasim",
-    title: "Licensed Realtor | Oakland Specialist",
+    title: "Licensed Realtor | East Bay Specialist",
     email: "nasim@nasimrealty.com",
     phone: "(510) 555-0123",
     license: "DRE# 0XXXXXXX",

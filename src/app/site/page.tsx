@@ -41,10 +41,10 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 md:py-32 lg:py-40 lg:px-8">
           <div className="max-w-3xl">
             <p className="mb-4 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90 backdrop-blur-sm">
-              Oakland&apos;s Trusted Real Estate Expert
+              East Bay&apos;s Trusted Real Estate Expert
             </p>
             <h1 className="text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
-              Your Oakland Home Story{" "}
+              Your East Bay Home Story{" "}
               <span className="text-accent">Starts Here</span>
             </h1>
             <div className="mt-4 text-lg text-white/80 md:text-xl">
@@ -70,7 +70,7 @@ export default function HomePage() {
           {/* Hero newsletter */}
           <div className="mt-12 max-w-md">
             <p className="mb-2 text-sm font-medium text-white/70">
-              Get weekly Oakland market updates
+              Get weekly East Bay market updates
             </p>
             <NewsletterSignup variant="hero" />
           </div>
@@ -109,7 +109,7 @@ export default function HomePage() {
           <AnimatedSection>
             <SectionHeader
               title="Featured Listings"
-              subtitle="Hand-picked properties in Oakland's most desirable neighborhoods"
+              subtitle="Hand-picked properties in the East Bay's most desirable neighborhoods"
             />
           </AnimatedSection>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -136,7 +136,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
-              title="Explore Oakland Neighborhoods"
+              title="Explore East Bay Neighborhoods"
               subtitle="Every neighborhood has a story. Let me help you find yours."
             />
           </AnimatedSection>
@@ -164,7 +164,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
-              title="Oakland Market Snapshot"
+              title="East Bay Market Snapshot"
               subtitle="Real-time insights to help you make confident decisions"
             />
           </AnimatedSection>
@@ -219,7 +219,7 @@ export default function HomePage() {
           <AnimatedSection>
             <SectionHeader
               title="What Clients Say"
-              subtitle="Real stories from real Oakland homeowners"
+              subtitle="Real stories from real East Bay homeowners"
             />
           </AnimatedSection>
           <AnimatedSection>
@@ -257,7 +257,7 @@ export default function HomePage() {
                 Hi, I&apos;m Nasim
               </h2>
               <p className="mt-4 text-muted-foreground leading-relaxed">
-                I&apos;m not just a realtor — I&apos;m an Oakland neighbor, a
+                I&apos;m not just a realtor — I&apos;m an East Bay local, a
                 market strategist, and your biggest advocate. With{" "}
                 {siteConfig.agent.yearsExperience} years of experience and{" "}
                 {siteConfig.agent.homesSold}+ successful transactions, I bring
@@ -287,10 +287,10 @@ export default function HomePage() {
           <AnimatedSection>
             <BookOpen className="mx-auto h-12 w-12 text-accent mb-4" />
             <h2 className="text-3xl font-bold text-white md:text-4xl">
-              Free Oakland Homebuyer&apos;s Guide
+              Free East Bay Homebuyer&apos;s Guide
             </h2>
             <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto">
-              Everything you need to know about buying a home in Oakland — from
+              Everything you need to know about buying a home in the East Bay — from
               choosing the right neighborhood to navigating multiple offers.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -320,7 +320,7 @@ export default function HomePage() {
               Stay Ahead of the Market
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Get weekly Oakland real estate insights, new listings, and
+              Get weekly East Bay real estate insights, new listings, and
               neighborhood updates delivered to your inbox.
             </p>
             <div className="mt-8">

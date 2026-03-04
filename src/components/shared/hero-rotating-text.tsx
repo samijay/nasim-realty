@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const phrases = [
-  "Helping families find their dream home in Oakland",
+  "Helping families find their dream home in the East Bay",
   "Selling homes above asking with strategic marketing",
   "First-time buyers guided from pre-approval to keys",
-  "Oakland neighborhood expertise you can trust",
+  "East Bay neighborhood expertise you can trust",
   "Data-driven insights for confident decisions",
 ];
 

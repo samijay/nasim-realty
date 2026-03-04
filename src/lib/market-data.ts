@@ -47,9 +47,9 @@ export const neighborhoodMarketData: MarketNeighborhoodData[] = [
 ];
 
 export const marketCommentary = {
-  title: "Oakland Market Update — Q1 2026",
+  title: "East Bay Market Update — Q1 2026",
   summary:
-    "Oakland's housing market continues to show resilience heading into 2026. Demand remains strong, especially in walkable neighborhoods near BART stations. The median home price has climbed 4.2% year-over-year to $1,050,000, driven by limited inventory and sustained buyer interest from tech workers and remote professionals choosing Oakland over San Francisco.",
+    "The East Bay housing market continues to show resilience heading into 2026. Demand remains strong, especially in walkable neighborhoods near BART stations. The median home price has climbed 4.2% year-over-year to $1,050,000, driven by limited inventory and sustained buyer interest from tech workers and remote professionals choosing the East Bay over San Francisco.",
   highlights: [
     "Temescal and Fruitvale saw the strongest price growth, up 6.8% and 8.5% respectively",
     "Jack London Square leads in price appreciation at 9.1%, driven by new waterfront development",
@@ -58,7 +58,7 @@ export const marketCommentary = {
     "First-time buyer activity is up 12%, with condos in Adams Point and Lake Merritt leading demand",
   ],
   outlook:
-    "Looking ahead, I expect Oakland to remain competitive through 2026. With interest rates stabilizing and SF prices pushing more buyers east, Oakland's blend of culture, transit access, and relative affordability will continue to attract diverse homebuyers. My advice: if you're thinking about buying, don't wait for the market to cool — focus on getting pre-approved and being ready to move quickly.",
+    "Looking ahead, I expect the East Bay to remain competitive through 2026. With interest rates stabilizing and SF prices pushing more buyers east, the East Bay's blend of culture, transit access, and relative affordability will continue to attract diverse homebuyers. My advice: if you're thinking about buying, don't wait for the market to cool — focus on getting pre-approved and being ready to move quickly.",
 };
 
 export const getMaxPrice = (): number => {

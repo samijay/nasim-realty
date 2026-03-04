@@ -41,7 +41,7 @@ export default function ListingsPage() {
     <>
       <PageHero
         title="Property Listings"
-        subtitle={`${activeCount} active listings across Oakland's best neighborhoods`}
+        subtitle={`${activeCount} active listings across the East Bay's best neighborhoods`}
         compact
       />
 

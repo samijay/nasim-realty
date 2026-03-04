@@ -32,7 +32,7 @@ export async function generateMetadata({
   const neighborhood = getNeighborhood(slug);
   if (!neighborhood) return { title: "Not Found" };
   return {
-    title: `${neighborhood.name} — Oakland Neighborhood Guide`,
+    title: `${neighborhood.name} — East Bay Neighborhood Guide`,
     description: neighborhood.description,
   };
 }
@@ -67,7 +67,7 @@ export default async function NeighborhoodDetailPage({
         </div>
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <p className="text-sm font-medium text-white/70 uppercase tracking-wider">
-            Oakland Neighborhood Guide
+            East Bay Neighborhood Guide
           </p>
           <h1 className="mt-2 text-4xl font-bold text-white md:text-5xl lg:text-6xl">
             {neighborhood.name}

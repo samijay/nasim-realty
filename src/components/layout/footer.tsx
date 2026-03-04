@@ -1,33 +1,34 @@
+"use client";
+
 import Link from "next/link";
 import { Mail, Phone, MapPin, Instagram, Facebook, Linkedin } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 import { NewsletterSignup } from "@/components/shared/newsletter-signup";
-
-const footerLinks = {
-  explore: [
-    { label: "Listings", href: "/listings" },
-    { label: "Neighborhoods", href: "/neighborhoods" },
-    { label: "Market Insights", href: "/market-insights" },
-    { label: "Testimonials", href: "/testimonials" },
-  ],
-  resources: [
-    { label: "Buyer's Guide", href: "/resources" },
-    { label: "Seller's Playbook", href: "/resources" },
-    { label: "Mortgage Calculator", href: "/resources#calculator" },
-    { label: "Oakland Relocation Guide", href: "/resources" },
-  ],
-  company: [
-    { label: "About Nasim", href: "/about" },
-    { label: "Contact", href: "/contact" },
-  ],
-};
+import { useLocale } from "@/lib/i18n";
 
 export const Footer = () => {
+  const { t } = useLocale();
+
+  const footerLinks = {
+    explore: [
+      { label: t("nav.listings"), href: "/listings" },
+      { label: t("nav.neighborhoods"), href: "/neighborhoods" },
+      { label: t("nav.market_insights"), href: "/market-insights" },
+      { label: t("nav.testimonials"), href: "/testimonials" },
+    ],
+    resources: [
+      { label: t("footer.buyers_guide"), href: "/resources" },
+      { label: t("footer.sellers_playbook"), href: "/resources" },
+      { label: t("footer.mortgage_calculator"), href: "/resources#calculator" },
+      { label: t("footer.relocation_guide"), href: "/resources" },
+    ],
+  };
+
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Brand + Newsletter */}
+          {/* Brand + Contact */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white font-bold text-lg">
@@ -38,8 +39,7 @@ export const Footer = () => {
               </div>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
-              Oakland&apos;s trusted real estate expert. Local knowledge, genuine
-              care, proven results.
+              {t("footer.tagline")}
             </p>
             <div className="space-y-2 text-sm text-muted-foreground">
               <a
@@ -69,11 +69,11 @@ export const Footer = () => {
           {/* Explore */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-              Explore
+              {t("footer.explore")}
             </h3>
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
-                <li key={link.label}>
+                <li key={link.href}>
                   <Link
                     href={link.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -88,11 +88,11 @@ export const Footer = () => {
           {/* Resources */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-              Resources
+              {t("footer.resources")}
             </h3>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
-                <li key={link.label}>
+                <li key={link.href}>
                   <Link
                     href={link.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -107,11 +107,10 @@ export const Footer = () => {
           {/* Newsletter */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
-              Stay in the Loop
+              {t("footer.stay_in_loop")}
             </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Get weekly Oakland market updates, new listings, and neighborhood
-              insights.
+              {t("footer.stay_in_loop_desc")}
             </p>
             <NewsletterSignup variant="compact" />
           </div>
@@ -120,8 +119,8 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights
-            reserved. {siteConfig.agent.license}
+            &copy; {new Date().getFullYear()} {siteConfig.name}. {t("footer.all_rights")}{" "}
+            {siteConfig.agent.license}
           </p>
           <div className="flex items-center gap-4">
             <a

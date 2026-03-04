@@ -17,7 +17,7 @@ import { resources } from "@/lib/resources";
 export const metadata: Metadata = {
   title: "Real Estate Resources",
   description:
-    "Free homebuyer and seller guides, mortgage calculator, and Oakland relocation resources from Nasim Realty.",
+    "Free homebuyer and seller guides, mortgage calculator, and East Bay relocation resources from Nasim Realty.",
 };
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -32,7 +32,7 @@ export default function ResourcesPage() {
     <>
       <PageHero
         title="Free Resources"
-        subtitle="Guides, tools, and insider knowledge to help you navigate Oakland real estate with confidence"
+        subtitle="Guides, tools, and insider knowledge to help you navigate East Bay real estate with confidence"
       />
 
       {/* Mortgage Calculator */}

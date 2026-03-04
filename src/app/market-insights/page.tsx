@@ -13,9 +13,9 @@ import {
 import { formatPrice } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Oakland Market Insights",
+  title: "East Bay Market Insights",
   description:
-    "Oakland real estate market data and trends. Median prices, days on market, and neighborhood comparisons updated quarterly.",
+    "East Bay real estate market data and trends. Median prices, days on market, and neighborhood comparisons updated quarterly.",
 };
 
 export default function MarketInsightsPage() {
@@ -24,7 +24,7 @@ export default function MarketInsightsPage() {
   return (
     <>
       <PageHero
-        title="Oakland Market Insights"
+        title="East Bay Market Insights"
         subtitle="Data-driven analysis to help you make confident real estate decisions"
       />
 
@@ -105,7 +105,7 @@ export default function MarketInsightsPage() {
           <AnimatedSection>
             <SectionHeader
               title="Neighborhood Price Comparison"
-              subtitle="Median home prices and market activity across Oakland"
+              subtitle="Median home prices and market activity across the East Bay"
             />
           </AnimatedSection>
 

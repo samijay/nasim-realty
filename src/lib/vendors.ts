@@ -44,7 +44,7 @@ export const vendors: Vendor[] = [
     category: "inspector",
     specialty: "Residential inspections, foundation, and termite",
     description:
-      "Thorough, detail-oriented inspections with same-day reports. Specializes in older Oakland homes — Craftsmans, Victorians, and mid-century modern.",
+      "Thorough, detail-oriented inspections with same-day reports. Specializes in older East Bay homes — Craftsmans, Victorians, and mid-century modern.",
     phone: "(510) 555-0201",
     rating: 4.9,
     reviewCount: 127,
@@ -58,7 +58,7 @@ export const vendors: Vendor[] = [
     category: "stager",
     specialty: "Luxury and mid-range home staging",
     description:
-      "Full-service staging company that transforms homes for sale. Modern and transitional style furniture that appeals to Oakland buyers.",
+      "Full-service staging company that transforms homes for sale. Modern and transitional style furniture that appeals to East Bay buyers.",
     phone: "(510) 555-0202",
     rating: 4.8,
     reviewCount: 89,
@@ -72,7 +72,7 @@ export const vendors: Vendor[] = [
     category: "lender",
     specialty: "Conventional, FHA, VA, and jumbo loans",
     description:
-      "Local lender who understands Oakland's competitive market. Fast pre-approvals, competitive rates, and responsive communication throughout the process.",
+      "Local lender who understands the East Bay's competitive market. Fast pre-approvals, competitive rates, and responsive communication throughout the process.",
     phone: "(510) 555-0203",
     rating: 4.9,
     reviewCount: 215,
@@ -86,12 +86,12 @@ export const vendors: Vendor[] = [
     category: "contractor",
     specialty: "Kitchen/bath remodels and Craftsman restoration",
     description:
-      "General contractor specializing in Oakland's historic homes. Expert at modernizing kitchens and bathrooms while preserving original character.",
+      "General contractor specializing in the East Bay's historic homes. Expert at modernizing kitchens and bathrooms while preserving original character.",
     phone: "(510) 555-0204",
     rating: 4.7,
     reviewCount: 68,
     nasimNote:
-      "If you need pre-sale renovations that maximize ROI, these are your guys. They understand what Oakland buyers want.",
+      "If you need pre-sale renovations that maximize ROI, these are your guys. They understand what East Bay buyers want.",
     featured: true,
   },
   {
@@ -133,7 +133,7 @@ export const vendors: Vendor[] = [
     rating: 4.8,
     reviewCount: 93,
     nasimNote:
-      "Fresh paint is the highest ROI pre-sale investment. ProCoat knows the exact neutral palettes that Oakland buyers love.",
+      "Fresh paint is the highest ROI pre-sale investment. ProCoat knows the exact neutral palettes that East Bay buyers love.",
     featured: false,
   },
   {
@@ -142,12 +142,12 @@ export const vendors: Vendor[] = [
     category: "electrician",
     specialty: "Panel upgrades, EV charger installation, rewiring",
     description:
-      "Full-service electrical contractor. Specializes in upgrading older Oakland homes with modern electrical panels, EV charging, and smart home wiring.",
+      "Full-service electrical contractor. Specializes in upgrading older East Bay homes with modern electrical panels, EV charging, and smart home wiring.",
     phone: "(510) 555-0208",
     rating: 4.7,
     reviewCount: 51,
     nasimNote:
-      "Older Oakland homes often need panel upgrades. These guys are fast, licensed, and their work passes inspection every time.",
+      "Older East Bay homes often need panel upgrades. These guys are fast, licensed, and their work passes inspection every time.",
     featured: false,
   },
   {
@@ -156,12 +156,12 @@ export const vendors: Vendor[] = [
     category: "plumber",
     specialty: "Sewer lateral, water heater, and fixture installation",
     description:
-      "Licensed plumber specializing in Oakland's older sewer systems. Expert at sewer lateral inspections and replacements — critical for Oakland home sales.",
+      "Licensed plumber specializing in the East Bay's older sewer systems. Expert at sewer lateral inspections and replacements — critical for East Bay home sales.",
     phone: "(510) 555-0209",
     rating: 4.8,
     reviewCount: 72,
     nasimNote:
-      "Sewer laterals are a big deal in Oakland sales. They handle the inspection, repair, and city certification all in one.",
+      "Sewer laterals are a big deal in East Bay sales. They handle the inspection, repair, and city certification all in one.",
     featured: false,
   },
   {
@@ -170,12 +170,12 @@ export const vendors: Vendor[] = [
     category: "mover",
     specialty: "Local and regional residential moving",
     description:
-      "Full-service moving company with packing, loading, and storage options. Specializes in Oakland's tricky hillside homes and narrow Victorian staircases.",
+      "Full-service moving company with packing, loading, and storage options. Specializes in the East Bay's tricky hillside homes and narrow Victorian staircases.",
     phone: "(510) 555-0210",
     rating: 4.6,
     reviewCount: 185,
     nasimNote:
-      "I recommend them to every client. Careful with furniture, on time, and they know how to navigate Oakland's steep driveways.",
+      "I recommend them to every client. Careful with furniture, on time, and they know how to navigate the East Bay's steep driveways.",
     featured: false,
   },
 ];

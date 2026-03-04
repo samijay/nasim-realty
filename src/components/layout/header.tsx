@@ -7,11 +7,29 @@ import { Menu, X, Phone, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { siteConfig, navLinks } from "@/lib/site-config";
+import { useLocale } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/shared/language-switcher";
+
+const navTranslationKeys: Record<string, string> = {
+  Pitch: "nav.pitch",
+  Home: "nav.home",
+  About: "nav.about",
+  Listings: "nav.listings",
+  Neighborhoods: "nav.neighborhoods",
+  "Market Insights": "nav.market_insights",
+  Testimonials: "nav.testimonials",
+  Resources: "nav.resources",
+  Contact: "nav.contact",
+  Partners: "nav.partners",
+  Dashboard: "nav.dashboard",
+  CRM: "nav.crm",
+};
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const { resolvedTheme, setTheme } = useTheme();
+  const { t } = useLocale();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
@@ -26,7 +44,7 @@ export const Header = () => {
               {siteConfig.name}
             </div>
             <div className="text-xs text-muted-foreground leading-tight">
-              Oakland Real Estate
+              {t("nav.oakland_real_estate")}
             </div>
           </div>
         </Link>
@@ -44,17 +62,19 @@ export const Header = () => {
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
             >
-              {link.label}
+              {t(navTranslationKeys[link.label] ?? link.label)}
             </Link>
           ))}
         </nav>
 
         {/* Right side */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          <LanguageSwitcher />
+
           <button
             onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
             className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-            aria-label="Toggle theme"
+            aria-label={t("nav.toggle_theme")}
           >
             <Sun className="h-5 w-5 dark:hidden" />
             <Moon className="hidden h-5 w-5 dark:block" />
@@ -72,7 +92,7 @@ export const Header = () => {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="rounded-lg p-2 text-foreground lg:hidden"
-            aria-label="Toggle menu"
+            aria-label={t("nav.toggle_menu")}
           >
             {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -95,7 +115,7 @@ export const Header = () => {
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
               >
-                {link.label}
+                {t(navTranslationKeys[link.label] ?? link.label)}
               </Link>
             ))}
           </nav>
@@ -104,7 +124,7 @@ export const Header = () => {
             className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-white"
           >
             <Phone className="h-4 w-4" />
-            Call {siteConfig.agent.name}
+            {t("nav.call")} {siteConfig.agent.name}
           </a>
         </div>
       )}

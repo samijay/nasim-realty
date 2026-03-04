@@ -17,7 +17,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "About Nasim",
   description:
-    "Meet Nasim — Oakland's trusted real estate expert with 8+ years of experience and 150+ successful transactions.",
+    "Meet Nasim — the East Bay's trusted real estate expert with 8+ years of experience and 150+ successful transactions.",
 };
 
 const values = [
@@ -37,13 +37,13 @@ const values = [
     icon: MapPin,
     title: "Local Expertise",
     description:
-      "Oakland born and raised. I know every block, every trend, every opportunity.",
+      "East Bay born and raised. I know every block, every trend, every opportunity.",
   },
   {
     icon: Users,
     title: "Community First",
     description:
-      "Actively involved in Oakland community organizations and neighborhood advocacy.",
+      "Actively involved in East Bay community organizations and neighborhood advocacy.",
   },
 ];
 
@@ -53,7 +53,7 @@ const credentials = [
   "Oakland Association of Realtors member",
   "Bay Area Real Estate Top Producer 2023-2025",
   "Specializing in first-time buyers and luxury homes",
-  "Fluent in English and Farsi",
+  "Fluent in English, Farsi, and Spanish",
 ];
 
 export default function AboutPage() {
@@ -61,7 +61,7 @@ export default function AboutPage() {
     <>
       <PageHero
         title="Meet Nasim"
-        subtitle="Oakland neighbor. Market strategist. Your biggest advocate."
+        subtitle="East Bay local. Market strategist. Your biggest advocate."
       />
 
       {/* Stats */}
@@ -198,7 +198,7 @@ export default function AboutPage() {
       <section className="bg-gradient-to-br from-primary-dark via-primary to-primary-light py-20">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
           <h2 className="text-3xl font-bold text-white md:text-4xl">
-            Ready to Start Your Oakland Home Story?
+            Ready to Start Your East Bay Home Story?
           </h2>
           <p className="mt-4 text-lg text-white/80">
             Whether you&apos;re buying, selling, or just exploring — I&apos;d

@@ -220,9 +220,9 @@ const FlywheelDiagram = () => {
 const features = [
   {
     icon: MapPin,
-    title: "12 Oakland Neighborhood Guides",
+    title: "12 East Bay Neighborhood Guides",
     description:
-      "Deep-dive profiles for every major Oakland neighborhood. Walk scores, median prices, vibes, and insider tips.",
+      "Deep-dive profiles for every major East Bay neighborhood. Walk scores, median prices, vibes, and insider tips.",
     color: "from-teal-500/20 to-emerald-500/20",
     link: "/neighborhoods",
   },
@@ -421,7 +421,7 @@ export default function PitchPage() {
 
           <AnimatedSection delay={500}>
             <p className="mt-6 text-xl text-white/70 sm:text-2xl md:text-3xl font-light max-w-3xl mx-auto">
-              Your Oakland real estate empire starts here.
+              Your East Bay real estate empire starts here.
             </p>
           </AnimatedSection>
 
@@ -460,7 +460,7 @@ export default function PitchPage() {
 
           <AnimatedSection delay={200}>
             <h2 className="text-4xl font-bold text-foreground sm:text-5xl md:text-6xl">
-              Every other realtor in Oakland has a{" "}
+              Every other realtor in the East Bay has a{" "}
               <span className="text-muted-foreground/50 line-through decoration-accent/60">
                 generic template
               </span>{" "}
@@ -579,7 +579,7 @@ export default function PitchPage() {
             </AnimatedSection>
             <AnimatedSection delay={300}>
               <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-                Every feature is designed to position Nasim as Oakland&apos;s
+                Every feature is designed to position Nasim as the East Bay&apos;s
                 most trusted, most knowledgeable realtor.
               </p>
             </AnimatedSection>
@@ -870,7 +870,7 @@ export default function PitchPage() {
             <h2 className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl lg:text-7xl leading-tight">
               Ready to dominate
               <br />
-              <span className="text-accent">Oakland real estate?</span>
+              <span className="text-accent">East Bay real estate?</span>
             </h2>
           </AnimatedSection>
 

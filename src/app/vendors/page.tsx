@@ -172,7 +172,7 @@ export default function VendorsPage() {
                 </h3>
                 <p className="mt-2 text-muted-foreground">
                   Join Nasim&apos;s trusted referral network. We send qualified
-                  leads to our partners and only work with the best in Oakland.
+                  leads to our partners and only work with the best in the East Bay.
                 </p>
                 <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">

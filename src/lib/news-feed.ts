@@ -97,15 +97,15 @@ export const newsFeed: NewsItem[] = [
   },
   {
     id: "6",
-    title: "Bay Area Median Home Price Hits $1.2M — Oakland Still Affordable",
+    title: "Bay Area Median Home Price Hits $1.2M — East Bay Still Affordable",
     summary:
-      "The Bay Area median home price reached $1.2M in February, with SF at $1.5M and Oakland at $1.05M. Oakland remains the most affordable major city in the Bay Area, attracting price-conscious buyers from SF and the Peninsula.",
+      "The Bay Area median home price reached $1.2M in February, with SF at $1.5M and the East Bay at $1.05M. The East Bay remains the most affordable major region in the Bay Area, attracting price-conscious buyers from SF and the Peninsula.",
     category: "market",
     impact: "medium",
     date: "2026-02-25",
     source: "California Association of Realtors",
     actionItems: [
-      "Use this data in listing presentations — Oakland is a value play",
+      "Use this data in listing presentations — the East Bay is a value play",
       "Share on social media to attract SF buyers",
       "Update market comparison slides",
     ],
@@ -149,9 +149,9 @@ export const competitiveInsights: CompetitiveInsight[] = [
     metric: "Avg Days on Market",
     value: "18 days",
     trend: "down",
-    context: "Oakland average is 21 days. Top agents average 16 days.",
+    context: "East Bay average is 21 days. Top agents average 16 days.",
     advantage:
-      "Nasim's listings sell 14% faster than the Oakland average, driven by strategic pricing and aggressive marketing.",
+      "Nasim's listings sell 14% faster than the East Bay average, driven by strategic pricing and aggressive marketing.",
   },
   {
     id: "2",
@@ -159,7 +159,7 @@ export const competitiveInsights: CompetitiveInsight[] = [
     metric: "Avg Sale/List",
     value: "106.3%",
     trend: "up",
-    context: "Oakland average is 104.7%. Top agents achieve 105-108%.",
+    context: "East Bay average is 104.7%. Top agents achieve 105-108%.",
     advantage:
       "Nasim's sellers consistently receive 6.3% above asking — that's $66K more on a $1M home compared to list price.",
   },
@@ -171,7 +171,7 @@ export const competitiveInsights: CompetitiveInsight[] = [
     trend: "stable",
     context: "Industry average is 4.2/5.0. Top agents score 4.7+.",
     advantage:
-      "Nasim's 4.9 rating and 72% referral rate place her in the top 2% of Oakland agents for client satisfaction.",
+      "Nasim's 4.9 rating and 72% referral rate place her in the top 2% of East Bay agents for client satisfaction.",
   },
   {
     id: "4",
@@ -181,7 +181,7 @@ export const competitiveInsights: CompetitiveInsight[] = [
     trend: "stable",
     context: "Most agents specialize in 2-3 neighborhoods.",
     advantage:
-      "Full Oakland coverage means Nasim can match clients to their ideal neighborhood rather than just what she knows.",
+      "Full East Bay coverage means Nasim can match clients to their ideal neighborhood rather than just what she knows.",
   },
   {
     id: "5",
@@ -189,7 +189,7 @@ export const competitiveInsights: CompetitiveInsight[] = [
     metric: "Listings w/ Multiple Offers",
     value: "87%",
     trend: "up",
-    context: "Oakland average is 62% of listings receiving multiple offers.",
+    context: "East Bay average is 62% of listings receiving multiple offers.",
     advantage:
       "Nasim's marketing and pricing strategy generates competitive bidding on nearly 9 out of 10 listings.",
   },

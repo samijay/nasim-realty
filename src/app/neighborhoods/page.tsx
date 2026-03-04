@@ -5,16 +5,16 @@ import { NeighborhoodCard } from "@/components/neighborhood/neighborhood-card";
 import { neighborhoods } from "@/lib/neighborhoods";
 
 export const metadata: Metadata = {
-  title: "Oakland Neighborhoods",
+  title: "East Bay Neighborhoods",
   description:
-    "Explore 12 of Oakland's most desirable neighborhoods. Get local insights, median home prices, walkability scores, school ratings, and lifestyle highlights.",
+    "Explore 12 of the East Bay's most desirable neighborhoods. Get local insights, median home prices, walkability scores, school ratings, and lifestyle highlights.",
 };
 
 export default function NeighborhoodsPage() {
   return (
     <>
       <PageHero
-        title="Oakland Neighborhoods"
+        title="East Bay Neighborhoods"
         subtitle="Every neighborhood has its own personality. Find the one that feels like home."
       />
 

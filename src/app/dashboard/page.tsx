@@ -168,7 +168,7 @@ function DashboardContent() {
           Welcome back
         </h1>
         <p className="mt-1 text-muted-foreground">
-          Your personalized Oakland real estate intelligence feed
+          Your personalized East Bay real estate intelligence feed
         </p>
       </div>
 
@@ -290,7 +290,7 @@ function DashboardContent() {
         <div className="mt-8 rounded-xl bg-gradient-to-br from-primary-dark to-primary p-8 text-white">
           <h3 className="text-xl font-bold">Need Personalized Advice?</h3>
           <p className="mt-2 text-white/80">
-            These insights are curated for the Oakland market. For advice tailored
+            These insights are curated for the East Bay market. For advice tailored
             to your specific situation, let&apos;s talk.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">

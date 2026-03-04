@@ -56,7 +56,7 @@ export const testimonials: Testimonial[] = [
     type: "buyer",
     quote: "She found us the view we'd dreamed about for 10 years.",
     story:
-      "Relocating from the East Coast, we fell in love with the Oakland Hills online but had no idea how competitive the market was. Nasim gave us a crash course in Oakland neighborhoods, took us on personalized tours, and when our dream hillside home came up, she moved fast. We were under contract in 48 hours. Best decision we ever made.",
+      "Relocating from the East Coast, we fell in love with the Oakland Hills online but had no idea how competitive the market was. Nasim gave us a crash course in East Bay neighborhoods, took us on personalized tours, and when our dream hillside home came up, she moved fast. We were under contract in 48 hours. Best decision we ever made.",
     rating: 5,
     date: "2025-03",
     initials: "AO",

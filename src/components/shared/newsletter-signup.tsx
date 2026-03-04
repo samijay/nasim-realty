@@ -57,7 +57,7 @@ export const NewsletterSignup = ({
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter your email for Oakland market updates"
+        placeholder="Enter your email for East Bay market updates"
         required
         className={`flex-1 rounded-lg border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary ${
           variant === "hero"
