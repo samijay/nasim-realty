@@ -3,10 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, Sun, Moon } from "lucide-react";
+import { Menu, X, Phone, Sun, Moon, Lock } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-import { siteConfig, navLinks } from "@/lib/site-config";
+import { siteConfig, navLinks, internalNavLinks } from "@/lib/site-config";
 import { useLocale } from "@/lib/i18n";
 import { LanguageSwitcher } from "@/components/shared/language-switcher";
 
@@ -32,11 +32,16 @@ export const Header = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const { t } = useLocale();
 
+  // Show internal links if user is on any internal page
+  const onInternalPage = internalNavLinks.some(
+    (link) => pathname === link.href || pathname.startsWith(link.href + "/")
+  );
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/site" className="flex items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white font-bold text-lg">
             N
           </div>
@@ -66,6 +71,25 @@ export const Header = () => {
               {t(navTranslationKeys[link.label] ?? link.label)}
             </Link>
           ))}
+          {onInternalPage && (
+            <>
+              <div className="mx-1 h-5 w-px bg-border" />
+              {internalNavLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                    pathname === link.href
+                      ? "bg-accent/20 text-accent"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                >
+                  {t(navTranslationKeys[link.label] ?? link.label)}
+                </Link>
+              ))}
+            </>
+          )}
         </nav>
 
         {/* Right side */}
@@ -119,6 +143,32 @@ export const Header = () => {
                 {t(navTranslationKeys[link.label] ?? link.label)}
               </Link>
             ))}
+            {onInternalPage && (
+              <>
+                <div className="my-2 flex items-center gap-2 px-4">
+                  <Lock className="h-3 w-3 text-muted-foreground" />
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Agent Tools
+                  </span>
+                  <div className="flex-1 border-t border-border" />
+                </div>
+                {internalNavLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "rounded-lg px-4 py-3 text-sm font-medium transition-colors",
+                      pathname === link.href
+                        ? "bg-accent/20 text-accent"
+                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    )}
+                  >
+                    {t(navTranslationKeys[link.label] ?? link.label)}
+                  </Link>
+                ))}
+              </>
+            )}
           </nav>
           <a
             href={`tel:${siteConfig.agent.phone}`}

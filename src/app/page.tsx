@@ -1,1 +1,1 @@
-export { default } from "./pitch/page";
+export { default } from "./site/page";

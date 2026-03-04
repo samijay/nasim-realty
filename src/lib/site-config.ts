@@ -29,8 +29,8 @@ export const siteConfig = {
   },
 } as const;
 
+/** Public-facing nav links */
 export const navLinks = [
-  { label: "Pitch", href: "/" },
   { label: "Home", href: "/site" },
   { label: "About", href: "/about" },
   { label: "Listings", href: "/listings" },
@@ -38,8 +38,13 @@ export const navLinks = [
   { label: "Market Insights", href: "/market-insights" },
   { label: "Resources", href: "/resources" },
   { label: "Contact", href: "/contact" },
+] as const;
+
+/** Internal / agent-only nav links */
+export const internalNavLinks = [
   { label: "Intelligence", href: "/intelligence" },
   { label: "Partners", href: "/vendors" },
   { label: "Dashboard", href: "/dashboard" },
   { label: "CRM", href: "/crm" },
+  { label: "Pitch", href: "/pitch" },
 ] as const;
