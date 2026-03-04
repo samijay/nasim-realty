@@ -2,12 +2,14 @@ export interface Property {
   id: string;
   slug: string;
   address: string;
+  city: string;
   neighborhood: string;
   neighborhoodSlug: string;
   price: number;
   beds: number;
   baths: number;
   sqft: number;
+  lotSqft?: number;
   status: "active" | "pending" | "sold";
   propertyType: "house" | "condo" | "townhouse" | "multi-family";
   description: string;
@@ -15,6 +17,13 @@ export interface Property {
   yearBuilt: number;
   soldPrice?: number;
   soldDate?: string;
+  daysOnMarket?: number;
+  pricePerSqft?: number;
+  garage?: number;
+  stories?: number;
+  hoa?: number;
+  mlsNumber?: string;
+  listDate?: string;
   images: string[];
 }
 

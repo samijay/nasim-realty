@@ -38,6 +38,7 @@ export const navLinks = [
   { label: "Market Insights", href: "/market-insights" },
   { label: "Resources", href: "/resources" },
   { label: "Contact", href: "/contact" },
+  { label: "Intelligence", href: "/intelligence" },
   { label: "Partners", href: "/vendors" },
   { label: "Dashboard", href: "/dashboard" },
   { label: "CRM", href: "/crm" },

@@ -9,6 +9,7 @@ export const es: Record<string, string> = {
   "nav.testimonials": "Testimonios",
   "nav.resources": "Recursos",
   "nav.contact": "Contacto",
+  "nav.intelligence": "Inteligencia",
   "nav.partners": "Socios",
   "nav.dashboard": "Panel",
   "nav.crm": "CRM",

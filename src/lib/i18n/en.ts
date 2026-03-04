@@ -9,6 +9,7 @@ export const en: Record<string, string> = {
   "nav.testimonials": "Testimonials",
   "nav.resources": "Resources",
   "nav.contact": "Contact",
+  "nav.intelligence": "Intelligence",
   "nav.partners": "Partners",
   "nav.dashboard": "Dashboard",
   "nav.crm": "CRM",

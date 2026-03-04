@@ -20,6 +20,7 @@ const navTranslationKeys: Record<string, string> = {
   Testimonials: "nav.testimonials",
   Resources: "nav.resources",
   Contact: "nav.contact",
+  Intelligence: "nav.intelligence",
   Partners: "nav.partners",
   Dashboard: "nav.dashboard",
   CRM: "nav.crm",
