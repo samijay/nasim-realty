@@ -28,6 +28,7 @@ import {
   UserPlus,
   ChevronDown,
   Crown,
+  Download,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { StatCounter } from "@/components/shared/stat-counter";
@@ -381,9 +382,23 @@ export default function PitchPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleDownloadPDF = () => {
+    window.print();
+  };
+
   return (
     <div className="-mt-[1px]">
       <SlideNav activeSlide={activeSlide} />
+
+      {/* Floating download button */}
+      <button
+        onClick={handleDownloadPDF}
+        className="no-print fixed left-6 bottom-6 z-50 flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-white shadow-lg shadow-accent/30 hover:bg-accent-dark transition-all hover:shadow-xl hover:-translate-y-0.5"
+        aria-label="Download as PDF"
+      >
+        <Download className="h-4 w-4" />
+        <span className="hidden sm:inline">Download PDF</span>
+      </button>
 
       {/* ══════════════════════════════════════
          SLIDE 1: HERO — "Built for Nasim"
@@ -897,12 +912,13 @@ export default function PitchPage() {
                 Explore the Full Site
                 <ArrowRight className="h-5 w-5" />
               </Link>
-              <Link
-                href="/neighborhoods"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20"
+              <button
+                onClick={handleDownloadPDF}
+                className="no-print inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20"
               >
-                Browse Neighborhoods
-              </Link>
+                <Download className="h-5 w-5" />
+                Download as PDF
+              </button>
             </div>
           </AnimatedSection>
 

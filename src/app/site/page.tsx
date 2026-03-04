@@ -7,6 +7,8 @@ import {
   Users,
   ChevronRight,
   BookOpen,
+  Presentation,
+  Sparkles,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { StatCounter } from "@/components/shared/stat-counter";
@@ -278,6 +280,74 @@ export default function HomePage() {
               </Link>
             </AnimatedSection>
           </div>
+        </div>
+      </section>
+
+      {/* ═══════════ PITCH DECK ═══════════ */}
+      <section className="bg-muted py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
+              <div className="grid md:grid-cols-2">
+                {/* Left — preview mockup */}
+                <div className="relative bg-gradient-to-br from-primary-dark via-primary to-primary-light p-8 sm:p-12 flex flex-col justify-center min-h-[280px]">
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full bg-accent/20 blur-[60px]" />
+                    <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-white/10 blur-[50px]" />
+                  </div>
+                  <div className="relative z-10">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white/90 backdrop-blur-sm mb-6">
+                      <Sparkles className="h-3.5 w-3.5 text-accent" />
+                      Exclusive Presentation
+                    </div>
+                    <h3 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                      Built for{" "}
+                      <span className="text-accent">Nasim</span>
+                    </h3>
+                    <p className="mt-3 text-white/70 text-sm sm:text-base max-w-sm">
+                      The complete strategy, technology, and vision behind Nasim Realty&apos;s digital platform.
+                    </p>
+                    <div className="mt-6 flex items-center gap-4 text-xs text-white/50">
+                      <span>8 Slides</span>
+                      <span className="h-1 w-1 rounded-full bg-white/30" />
+                      <span>Full Strategy</span>
+                      <span className="h-1 w-1 rounded-full bg-white/30" />
+                      <span>Tech Stack</span>
+                      <span className="h-1 w-1 rounded-full bg-white/30" />
+                      <span>Roadmap</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right — CTA */}
+                <div className="p-8 sm:p-12 flex flex-col justify-center">
+                  <Presentation className="h-10 w-10 text-primary mb-4" />
+                  <h3 className="text-2xl font-bold text-foreground">
+                    Nasim&apos;s Pitch Deck
+                  </h3>
+                  <p className="mt-3 text-muted-foreground leading-relaxed">
+                    Explore the pinwheel flywheel strategy, see every feature that&apos;s been built, and discover the roadmap for what&apos;s next. Available to view online or download as a PDF.
+                  </p>
+                  <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                    <Link
+                      href="/pitch"
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-light transition-colors"
+                    >
+                      View Pitch Deck
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                    <Link
+                      href="/pitch"
+                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+                    >
+                      <Presentation className="h-4 w-4" />
+                      Download PDF
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 

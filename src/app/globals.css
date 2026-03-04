@@ -147,3 +147,65 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-light);
 }
+
+/* ═══════════ PRINT STYLES ═══════════ */
+@media print {
+  /* Hide UI chrome */
+  header, footer, nav,
+  .no-print,
+  [aria-label="Toggle menu"],
+  [aria-label="Toggle theme"] {
+    display: none !important;
+  }
+
+  /* Reset backgrounds for print */
+  body, html {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+  }
+
+  /* Make sections flow naturally */
+  section {
+    min-height: auto !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  /* Force visible */
+  .print-visible {
+    display: block !important;
+  }
+
+  /* Cards don't need shadows */
+  [class*="shadow"] {
+    box-shadow: none !important;
+  }
+
+  /* Ensure gradients print as solid */
+  [class*="bg-gradient"] {
+    background: var(--primary) !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Preserve colors on colored sections */
+  * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Remove animations */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Page margins */
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+}
