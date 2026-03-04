@@ -73,7 +73,7 @@ export const Footer = () => {
             </h3>
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -92,7 +92,7 @@ export const Footer = () => {
             </h3>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"

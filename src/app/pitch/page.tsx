@@ -95,30 +95,35 @@ const flywheelSpokes = [
     label: "Neighborhood\nIntelligence",
     detail: "12 detailed guides",
     angle: -90,
+    href: "/neighborhoods",
   },
   {
     icon: BarChart3,
     label: "Market\nInsights",
     detail: "Data visualizations",
     angle: -18,
+    href: "/market-insights",
   },
   {
     icon: Home,
     label: "Property\nShowcase",
     detail: "Filtered listings",
     angle: 54,
+    href: "/listings",
   },
   {
     icon: Users,
     label: "Client\nSuccess",
     detail: "Testimonials",
     angle: 126,
+    href: "/testimonials",
   },
   {
     icon: BookOpen,
     label: "Resource\nHub",
     detail: "Calculator & guides",
     angle: 198,
+    href: "/resources",
   },
 ];
 
@@ -196,15 +201,17 @@ const FlywheelDiagram = () => {
               }}
             >
               <AnimatedSection delay={i * 200 + 400}>
-                <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-card border border-border shadow-lg">
-                  <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
-                </div>
-                <p className="mt-1 text-center text-[10px] sm:text-xs font-bold text-foreground leading-tight whitespace-pre-line">
-                  {spoke.label}
-                </p>
-                <p className="text-[9px] sm:text-[10px] text-muted-foreground text-center">
-                  {spoke.detail}
-                </p>
+                <Link href={spoke.href} className="group/spoke flex flex-col items-center">
+                  <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-card border border-border shadow-lg transition-all duration-300 group-hover/spoke:shadow-xl group-hover/spoke:border-primary group-hover/spoke:scale-110">
+                    <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+                  </div>
+                  <p className="mt-1 text-center text-[10px] sm:text-xs font-bold text-foreground leading-tight whitespace-pre-line group-hover/spoke:text-primary transition-colors">
+                    {spoke.label}
+                  </p>
+                  <p className="text-[9px] sm:text-[10px] text-muted-foreground text-center">
+                    {spoke.detail}
+                  </p>
+                </Link>
               </AnimatedSection>
             </div>
           </div>

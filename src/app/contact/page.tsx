@@ -48,10 +48,12 @@ function ContactFormSection() {
   const searchParams = useSearchParams();
   const preselectedNeighborhood = searchParams.get("neighborhood") || "";
   const [submitted, setSubmitted] = useState(false);
+  const [submittedData, setSubmittedData] = useState<ContactForm | null>(null);
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
@@ -61,9 +63,12 @@ function ContactFormSection() {
     },
   });
 
+  const inquiryType = watch("inquiryType");
+
   const onSubmit = async (data: ContactForm) => {
     console.log("Contact form submitted:", data);
     await new Promise((resolve) => setTimeout(resolve, 1000));
+    setSubmittedData(data);
     setSubmitted(true);
   };
 
@@ -73,16 +78,40 @@ function ContactFormSection() {
           <div className="grid gap-12 lg:grid-cols-3">
             {/* Form */}
             <AnimatedSection className="lg:col-span-2">
-              {submitted ? (
-                <div className="rounded-xl border border-green-200 bg-green-50 p-12 text-center dark:border-green-800 dark:bg-green-900/20">
-                  <CheckCircle className="mx-auto h-16 w-16 text-green-600 mb-4" />
-                  <h2 className="text-2xl font-bold text-foreground">
-                    Message Sent!
-                  </h2>
-                  <p className="mt-2 text-muted-foreground">
-                    Thanks for reaching out. Nasim will get back to you within
-                    24 hours.
-                  </p>
+              {submitted && submittedData ? (
+                <div className="rounded-xl border border-green-200 bg-green-50 p-8 sm:p-12 dark:border-green-800 dark:bg-green-900/20">
+                  <div className="text-center mb-6">
+                    <CheckCircle className="mx-auto h-16 w-16 text-green-600 mb-4" />
+                    <h2 className="text-2xl font-bold text-foreground">
+                      Message Sent!
+                    </h2>
+                    <p className="mt-2 text-muted-foreground">
+                      Thanks, {submittedData.name.split(" ")[0]}! Nasim will get back to you within 24 hours.
+                    </p>
+                  </div>
+                  <div className="rounded-lg bg-white/60 dark:bg-white/5 border border-green-100 dark:border-green-800 p-4 space-y-2 text-sm">
+                    <p className="text-muted-foreground">
+                      <span className="font-medium text-foreground">Reply to:</span>{" "}
+                      {submittedData.email}
+                      {submittedData.phone && ` · ${submittedData.phone}`}
+                    </p>
+                    <p className="text-muted-foreground">
+                      <span className="font-medium text-foreground">Topic:</span>{" "}
+                      {submittedData.inquiryType === "buying" ? "Buying a home" :
+                       submittedData.inquiryType === "selling" ? "Selling my home" :
+                       submittedData.inquiryType === "neighborhood" ? "Neighborhood info" :
+                       "General inquiry"}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setSubmittedData(null);
+                    }}
+                    className="mt-6 mx-auto block text-sm text-primary hover:underline"
+                  >
+                    Send another message
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -124,6 +153,9 @@ function ContactFormSection() {
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-1.5">
                         Phone
+                        {inquiryType === "selling" && (
+                          <span className="text-xs font-normal text-primary ml-1">(recommended for sellers)</span>
+                        )}
                       </label>
                       <input
                         {...register("phone")}
