@@ -17,7 +17,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "About Nasim",
   description:
-    "Meet Nasim — the East Bay's trusted real estate expert with 8+ years of experience and 150+ successful transactions.",
+    "Meet Nasim — an LA native who's called the Bay Area home for over 20 years. With 5 years in real estate, 100+ deals advised, and dozens of closed transactions on both buy and sell sides.",
 };
 
 const values = [
@@ -98,24 +98,26 @@ export default function AboutPage() {
               </h2>
               <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  I grew up in the East Bay and fell in love with Oakland&apos;s
-                  incredible diversity, creativity, and resilience. After a
-                  career in marketing, I found my true calling in real estate —
-                  helping people find not just houses, but homes that transform
-                  their lives.
+                  I&apos;m originally from LA, but the Bay Area has been home
+                  for over 20 years. I fell in love with Oakland&apos;s
+                  incredible diversity, creativity, and resilience — and after
+                  two decades here, I know these neighborhoods inside and out.
                 </p>
                 <p>
-                  What drives me is the moment a buyer walks into a home and
-                  their eyes light up. Or when a seller sees the marketing
-                  campaign I&apos;ve crafted and realizes their home is going to
-                  shine. These moments never get old.
+                  I came to real estate with a keen design eye and a deep
+                  network built over years in the Bay. In 5 years I&apos;ve
+                  advised on over 100 deals and personally closed dozens on
+                  both the buy and sell side. What drives me is the moment a
+                  buyer walks into a home and their eyes light up — or when a
+                  seller sees the strategy I&apos;ve crafted and realizes their
+                  home is going to shine.
                 </p>
                 <p>
-                  I bring a unique blend of marketing savvy, data analysis, and
-                  deep neighborhood knowledge to every transaction. I don&apos;t
-                  just list homes — I tell their stories. I don&apos;t just find
-                  houses — I match people with the neighborhoods and communities
-                  where they&apos;ll thrive.
+                  I bring a unique blend of design sensibility, market
+                  intelligence, and deep neighborhood knowledge to every
+                  transaction. I don&apos;t just list homes — I tell their
+                  stories. I don&apos;t just find houses — I match people with
+                  the neighborhoods and communities where they&apos;ll thrive.
                 </p>
               </div>
             </AnimatedSection>

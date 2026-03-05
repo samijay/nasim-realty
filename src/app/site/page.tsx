@@ -327,17 +327,17 @@ export default function HomePage() {
                 Hi, I&apos;m Nasim
               </h2>
               <p className="mt-4 text-muted-foreground leading-relaxed">
-                I&apos;m not just a realtor — I&apos;m an East Bay local, a
-                market strategist, and your biggest advocate. With{" "}
-                {siteConfig.agent.yearsExperience} years of experience and{" "}
-                {siteConfig.agent.homesSold}+ successful transactions, I bring
-                deep local knowledge, data-driven insights, and genuine care to
-                every client relationship.
+                I&apos;m an LA native who&apos;s called the Bay Area home for
+                over 20 years. With a keen design eye, a deep network, and{" "}
+                {siteConfig.agent.homesSold}+ deals advised across{" "}
+                {siteConfig.agent.yearsExperience} years in the game, I bring a
+                unique blend of market intelligence, design sensibility, and
+                genuine care to every client relationship.
               </p>
               <p className="mt-3 text-muted-foreground leading-relaxed">
                 Whether you&apos;re buying your first condo in Adams Point or
-                selling your family home in Rockridge, I&apos;ll guide you every
-                step of the way.
+                selling your family home in Rockridge, I&apos;ve closed dozens
+                on both sides and I&apos;ll guide you every step of the way.
               </p>
               <Link
                 href="/about"

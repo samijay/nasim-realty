@@ -227,6 +227,22 @@ const FlywheelDiagram = () => {
    ──────────────────────────────────────────── */
 const features = [
   {
+    icon: UserPlus,
+    title: "Custom CRM Portal",
+    description:
+      "Full client pipeline with Kanban board, activity feed, task management, performance metrics, and revenue tracking. Manage your entire business in one place.",
+    color: "from-violet-500/20 to-purple-500/20",
+    link: "/crm",
+  },
+  {
+    icon: Globe,
+    title: "Real Estate Intelligence Hub",
+    description:
+      "Executive dashboard with national & local market data, legislation tracking, interest rates, property taxes, rent control laws, and agent economics — all cited.",
+    color: "from-emerald-500/20 to-teal-500/20",
+    link: "/intelligence",
+  },
+  {
     icon: MapPin,
     title: "12 East Bay Neighborhood Guides",
     description:
@@ -671,7 +687,7 @@ export default function PitchPage() {
 
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
             {[
-              { end: 25, label: "Pages", suffix: "" },
+              { end: 29, label: "Pages", suffix: "" },
               { end: 12, label: "Neighborhoods", suffix: "" },
               { end: 10, label: "Property Listings", suffix: "" },
               { end: 6, label: "Testimonials", suffix: "" },

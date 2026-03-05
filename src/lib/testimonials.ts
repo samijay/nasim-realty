@@ -81,7 +81,7 @@ export const getFeaturedTestimonial = (): Testimonial => {
 
 export const getTestimonialStats = () => {
   return {
-    totalClients: 150,
+    totalClients: 100,
     avgRating: 4.9,
     repeatClients: 34,
     referralRate: 72,

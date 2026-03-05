@@ -9,7 +9,7 @@ import { testimonials, getTestimonialStats } from "@/lib/testimonials";
 export const metadata: Metadata = {
   title: "Client Testimonials",
   description:
-    "Read real stories from East Bay homebuyers and sellers who worked with Nasim. 4.9 average rating from 150+ clients.",
+    "Read real stories from East Bay homebuyers and sellers who worked with Nasim. 4.9 average rating from 100+ clients.",
 };
 
 export default function TestimonialsPage() {
@@ -81,7 +81,7 @@ export default function TestimonialsPage() {
             Ready to Write Your Own Success Story?
           </h2>
           <p className="mt-4 text-white/80">
-            Join 150+ happy East Bay homeowners. Let&apos;s talk about your goals.
+            Join 100+ happy East Bay homeowners. Let&apos;s talk about your goals.
           </p>
           <Link
             href="/contact"

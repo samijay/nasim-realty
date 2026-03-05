@@ -22,24 +22,44 @@ import {
   Landmark,
   FileText,
   ArrowRight,
+  LayoutDashboard,
+  Globe2,
+  MapPin,
+  Receipt,
+  Home,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeader } from "@/components/shared/section-header";
+import { formatPrice } from "@/lib/utils";
+
 import {
-  stateLegislation,
-  localOrdinances,
-  pendingLegislation,
-  keyDates,
-  categoryLabels,
-  impactColors,
-} from "@/lib/intelligence-legislation";
-import type { Legislation, LegislationCategory, ImpactLevel } from "@/lib/intelligence-legislation";
-import {
-  certifications,
-  influencers,
-  industryResources,
-} from "@/lib/intelligence-resources";
+  caseShillerIndices,
+  caseShillerMetroPerformance2025,
+  narExistingHomeSalesHistory,
+  narForecast2026,
+  nationalAffordability,
+  nationalMedianPrice,
+  homeownershipRate,
+  nationalMonthsOfSupply,
+  fomcSchedule2026,
+  fedFundsRateHistory,
+  fedFundsRateSummary,
+  tenYearTreasuryYield,
+  cmeFedWatch,
+  nahbBuilderConfidence,
+  pendingHomeSalesIndex,
+  californiaMarketOverview,
+  californiaAffordabilityByRegion,
+  topCaliforniaMetrosByPrice,
+  millionDollarCounties2026,
+  californiaSalesVolume,
+  californiaHousingLegislation,
+  californiaLegislationSummary,
+  upcomingDataReleases,
+  nationalMarketSummary,
+} from "@/lib/national-market-data";
+
 import {
   cityMarketData,
   currentMortgageRates,
@@ -58,17 +78,62 @@ import {
   tariffImpact,
   caseStudies,
 } from "@/lib/bay-area-market-research";
-import { formatPrice } from "@/lib/utils";
+
+import {
+  prop13Explainer,
+  countyTaxRates,
+  melloRoosInfo,
+  supplementalTaxInfo,
+  prop19Info,
+  taxSavingsPrograms,
+  taxExamples,
+  propertyTaxCalendarDates,
+  saltCapInfo,
+  transferTaxRates,
+} from "@/lib/property-taxes";
+
+import {
+  ab1482Info,
+  localRentControlOrdinances,
+  costaHawkinsInfo,
+  keyTenantRights,
+  recentAndUpcomingChanges,
+  realtorGuidance,
+  rentControlSummaryTable,
+} from "@/lib/rent-control-data";
+
+import {
+  stateLegislation,
+  localOrdinances,
+  pendingLegislation,
+  keyDates,
+  categoryLabels,
+  impactColors,
+} from "@/lib/intelligence-legislation";
+import type {
+  Legislation,
+  LegislationCategory,
+  ImpactLevel,
+} from "@/lib/intelligence-legislation";
+
+import {
+  certifications,
+  influencers,
+  industryResources,
+} from "@/lib/intelligence-resources";
 
 // ─── Tab Navigation ──────────────────────────────────────────────
 const tabs = [
-  { id: "market", label: "Market Data", icon: BarChart3 },
+  { id: "overview", label: "Overview", icon: LayoutDashboard },
+  { id: "national", label: "National", icon: Globe2 },
+  { id: "california", label: "California", icon: MapPin },
+  { id: "bayarea", label: "Bay Area", icon: BarChart3 },
+  { id: "rates", label: "Interest Rates", icon: TrendingUp },
   { id: "legislation", label: "Legislation", icon: Scale },
+  { id: "taxes", label: "Property Taxes", icon: Receipt },
+  { id: "rentcontrol", label: "Rent Control", icon: Home },
   { id: "economics", label: "Agent Economics", icon: DollarSign },
-  { id: "certifications", label: "Certifications", icon: Award },
-  { id: "influencers", label: "Influencers", icon: Users },
   { id: "resources", label: "Resources", icon: BookOpen },
-  { id: "timeline", label: "Timeline", icon: Calendar },
 ] as const;
 
 type TabId = (typeof tabs)[number]["id"];
@@ -104,7 +169,9 @@ const LegislationCard = ({ bill }: { bill: Legislation }) => {
             <span className="text-xs font-bold text-primary bg-primary/10 rounded-full px-2.5 py-0.5">
               {bill.billNumber}
             </span>
-            <span className={`text-xs font-medium rounded-full px-2.5 py-0.5 ${impactColors[bill.impactLevel]}`}>
+            <span
+              className={`text-xs font-medium rounded-full px-2.5 py-0.5 ${impactColors[bill.impactLevel]}`}
+            >
               {bill.impactLevel.toUpperCase()} IMPACT
             </span>
             <span className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -112,21 +179,32 @@ const LegislationCard = ({ bill }: { bill: Legislation }) => {
               {statusLabel[bill.status]}
             </span>
           </div>
-          <h3 className="text-base font-semibold text-foreground">{bill.title}</h3>
+          <h3 className="text-base font-semibold text-foreground">
+            {bill.title}
+          </h3>
           <p className="text-sm text-muted-foreground mt-1">{bill.summary}</p>
         </div>
         <button className="mt-1 shrink-0 text-muted-foreground">
-          {expanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+          {expanded ? (
+            <ChevronUp className="h-5 w-5" />
+          ) : (
+            <ChevronDown className="h-5 w-5" />
+          )}
         </button>
       </div>
 
       {expanded && (
         <div className="mt-4 space-y-3 border-t border-border pt-4">
           <div>
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Key Provisions</h4>
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+              Key Provisions
+            </h4>
             <ul className="space-y-1">
               {bill.keyProvisions.map((p, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-foreground">
+                <li
+                  key={i}
+                  className="flex items-start gap-2 text-sm text-foreground"
+                >
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                   {p}
                 </li>
@@ -134,7 +212,9 @@ const LegislationCard = ({ bill }: { bill: Legislation }) => {
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Realtor Impact</h4>
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+              Realtor Impact
+            </h4>
             <p className="text-sm text-foreground">{bill.realtorImpact}</p>
           </div>
           <div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -154,44 +234,101 @@ const LegislationCard = ({ bill }: { bill: Legislation }) => {
   );
 };
 
+// ─── Collapsible Section Helper ─────────────────────────────────
+const CollapsibleSection = ({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}) => {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="rounded-xl border border-border bg-card">
+      <button
+        className="flex w-full items-center justify-between p-5 text-left"
+        onClick={() => setOpen(!open)}
+      >
+        <h3 className="font-semibold text-foreground">{title}</h3>
+        {open ? (
+          <ChevronUp className="h-5 w-5 text-muted-foreground" />
+        ) : (
+          <ChevronDown className="h-5 w-5 text-muted-foreground" />
+        )}
+      </button>
+      {open && <div className="px-5 pb-5 pt-0">{children}</div>}
+    </div>
+  );
+};
+
 // ─── Main Page ──────────────────────────────────────────────────
 export default function IntelligencePage() {
-  const [activeTab, setActiveTab] = useState<TabId>("market");
-  const [legFilter, setLegFilter] = useState<LegislationCategory | "all">("all");
+  const [activeTab, setActiveTab] = useState<TabId>("overview");
+  const [legFilter, setLegFilter] = useState<LegislationCategory | "all">(
+    "all"
+  );
 
   const filteredLegislation =
     legFilter === "all"
       ? stateLegislation
       : stateLegislation.filter((b) => b.category === legFilter);
 
-  const highImpactCount = stateLegislation.filter((b) => b.impactLevel === "high").length;
+  const highImpactCount = stateLegislation.filter(
+    (b) => b.impactLevel === "high"
+  ).length;
 
   return (
     <>
       <PageHero
         title="Real Estate Intelligence"
-        subtitle="Comprehensive Bay Area market data, legislation tracking, certifications, and industry resources — everything a top-performing agent needs"
+        subtitle="National market data, California trends, Bay Area analysis, legislation tracking, and professional resources — your comprehensive real estate command center"
       />
 
       {/* Quick Stats Bar */}
       <section className="border-b border-border bg-card py-6">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
             <div className="text-center">
-              <p className="text-2xl font-bold text-foreground">{stateLegislation.length}</p>
-              <p className="text-xs text-muted-foreground">Active Laws Tracked</p>
+              <p className="text-2xl font-bold text-foreground">
+                {stateLegislation.length}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Active Laws Tracked
+              </p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-red-600">{highImpactCount}</p>
-              <p className="text-xs text-muted-foreground">High-Impact Bills</p>
+              <p className="text-2xl font-bold text-red-600">
+                {highImpactCount}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                High-Impact Bills
+              </p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-foreground">{certifications.length}</p>
-              <p className="text-xs text-muted-foreground">Certifications Tracked</p>
+              <p className="text-2xl font-bold text-foreground">
+                {certifications.length}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Certifications Tracked
+              </p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-foreground">{cityMarketData.length}</p>
-              <p className="text-xs text-muted-foreground">Cities Monitored</p>
+              <p className="text-2xl font-bold text-foreground">
+                {cityMarketData.length}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Cities Monitored
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-foreground">
+                {countyTaxRates.length}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Counties Tracked
+              </p>
             </div>
           </div>
         </div>
@@ -224,8 +361,498 @@ export default function IntelligencePage() {
 
       {/* Content */}
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        {/* ─── MARKET DATA TAB ───────────────────────────────── */}
-        {activeTab === "market" && (
+        {/* ─── OVERVIEW TAB ────────────────────────────────── */}
+        {activeTab === "overview" && (
+          <div className="space-y-12">
+            <AnimatedSection>
+              <SectionHeader
+                title="Executive Dashboard"
+                subtitle="Key metrics across national, state, and local markets"
+              />
+              <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    National Median Price
+                  </p>
+                  <p className="text-2xl font-bold text-foreground mt-2">
+                    {formatPrice(nationalMedianPrice.medianExistingHomePrice)}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    <span
+                      className={
+                        nationalMedianPrice.yoyChange > 0
+                          ? "text-green-600"
+                          : "text-red-500"
+                      }
+                    >
+                      {nationalMedianPrice.yoyChange > 0 ? "+" : ""}
+                      {nationalMedianPrice.yoyChange}% YoY
+                    </span>{" "}
+                    — {nationalMedianPrice.period}
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    Case-Shiller YoY
+                  </p>
+                  <p className="text-2xl font-bold text-foreground mt-2">
+                    +{nationalMarketSummary.keyMetrics.caseShillerNationalYoY}%
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Weakest since 2011
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    30-Year Mortgage
+                  </p>
+                  <p className="text-2xl font-bold text-foreground mt-2">
+                    {currentMortgageRates.thirtyYearFixed}%
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    As of {currentMortgageRates.date}
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    Fed Funds Rate
+                  </p>
+                  <p className="text-2xl font-bold text-foreground mt-2">
+                    {fedFundsRateSummary.currentRange}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {fedFundsRateSummary.totalCutsFromPeak} cuts from peak
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    Months of Supply
+                  </p>
+                  <p className="text-2xl font-bold text-foreground mt-2">
+                    {nationalMonthsOfSupply.current} mo
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Balanced: {nationalMonthsOfSupply.balancedMarketRange.min}-
+                    {nationalMonthsOfSupply.balancedMarketRange.max} mo
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    Pending Home Sales
+                  </p>
+                  <p className="text-2xl font-bold text-foreground mt-2">
+                    {pendingHomeSalesIndex.indexValue}
+                  </p>
+                  <p className="text-xs text-red-500 mt-1">
+                    Record low — {pendingHomeSalesIndex.period}
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    CA Median Price
+                  </p>
+                  <p className="text-2xl font-bold text-foreground mt-2">
+                    {formatPrice(californiaMarketOverview.medianHomePrice)}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    <span
+                      className={
+                        californiaMarketOverview.medianHomePriceYoY > 0
+                          ? "text-green-600"
+                          : "text-red-500"
+                      }
+                    >
+                      {californiaMarketOverview.medianHomePriceYoY > 0
+                        ? "+"
+                        : ""}
+                      {californiaMarketOverview.medianHomePriceYoY}% YoY
+                    </span>
+                  </p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    CA Affordability
+                  </p>
+                  <p className="text-2xl font-bold text-foreground mt-2">
+                    {californiaMarketOverview.housingAffordabilityIndex}%
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Can afford median home
+                  </p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="rounded-xl border border-border bg-muted/30 p-6">
+                <h3 className="text-lg font-semibold text-foreground mb-3">
+                  Market Outlook
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {nationalMarketSummary.outlook}
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <h3 className="text-lg font-semibold text-foreground mb-4">
+                Top Trends
+              </h3>
+              <ul className="space-y-2">
+                {nationalMarketSummary.topTrends.map((trend, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 text-sm text-foreground"
+                  >
+                    <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
+                    {trend}
+                  </li>
+                ))}
+              </ul>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <h3 className="text-lg font-semibold text-foreground mb-4">
+                Upcoming Data Releases
+              </h3>
+              <div className="space-y-3">
+                {upcomingDataReleases.map((release, i) => (
+                  <div
+                    key={i}
+                    className="flex items-start gap-4 rounded-xl border border-border bg-card p-4"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                      <Calendar className="h-5 w-5 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-sm font-semibold text-foreground">
+                          {release.report}
+                        </h4>
+                        <span className="text-xs font-medium text-primary">
+                          {new Date(release.releaseDate).toLocaleDateString(
+                            "en-US",
+                            { month: "short", day: "numeric" }
+                          )}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {release.notes}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+          </div>
+        )}
+
+        {/* ─── NATIONAL TAB ────────────────────────────────── */}
+        {activeTab === "national" && (
+          <div className="space-y-12">
+            <AnimatedSection>
+              <SectionHeader
+                title="S&P Case-Shiller Home Price Indices"
+                subtitle="National and composite home price index data"
+              />
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Index</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Period</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">Value</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">YoY</th>
+                      <th className="pb-3 font-semibold text-foreground text-right">MoM</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {caseShillerIndices.map((idx) => (
+                      <tr key={idx.indexName} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-3 pr-4 font-medium text-foreground">{idx.indexName}</td>
+                        <td className="py-3 pr-4 text-muted-foreground">{idx.period}</td>
+                        <td className="py-3 pr-4 text-right font-semibold text-foreground">{idx.value.toFixed(2)}</td>
+                        <td className="py-3 pr-4 text-right">
+                          <span className={`inline-flex items-center gap-1 font-medium ${idx.yoyChange > 0 ? "text-green-600" : "text-red-500"}`}>
+                            {idx.yoyChange > 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                            {idx.yoyChange > 0 ? "+" : ""}{idx.yoyChange}%
+                          </span>
+                        </td>
+                        <td className="py-3 text-right text-muted-foreground">{idx.momChange > 0 ? "+" : ""}{idx.momChange}%</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Metro Performance" subtitle="Top vs. bottom metros by YoY price change (Dec 2025)" />
+              <div className="mt-6 grid gap-6 md:grid-cols-2">
+                <div>
+                  <h4 className="text-sm font-semibold text-green-600 mb-3 flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4" /> Leaders
+                  </h4>
+                  <div className="space-y-2">
+                    {caseShillerMetroPerformance2025.filter((m) => m.rank === "top").map((m) => (
+                      <div key={m.metro} className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-2.5">
+                        <span className="text-sm font-medium text-foreground">{m.metro}</span>
+                        <span className="text-sm font-bold text-green-600">+{m.yoyChange}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-red-500 mb-3 flex items-center gap-2">
+                    <TrendingDown className="h-4 w-4" /> Laggards
+                  </h4>
+                  <div className="space-y-2">
+                    {caseShillerMetroPerformance2025.filter((m) => m.rank === "bottom").map((m) => (
+                      <div key={m.metro} className="flex items-center justify-between rounded-lg border border-border bg-card px-4 py-2.5">
+                        <span className="text-sm font-medium text-foreground">{m.metro}</span>
+                        <span className="text-sm font-bold text-red-500">{m.yoyChange}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="NAR Existing Home Sales" subtitle="Historical sales pace and median prices" />
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Period</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">SAAR (M)</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">Median Price</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">Price YoY</th>
+                      <th className="pb-3 font-semibold text-foreground text-right">Supply (mo)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {narExistingHomeSalesHistory.map((row) => (
+                      <tr key={row.period} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-3 pr-4 font-medium text-foreground">{row.period}</td>
+                        <td className="py-3 pr-4 text-right text-foreground">{row.annualizedRate.toFixed(2)}M</td>
+                        <td className="py-3 pr-4 text-right font-semibold text-foreground">{formatPrice(row.medianPrice)}</td>
+                        <td className="py-3 pr-4 text-right">
+                          <span className={`font-medium ${row.medianPriceYoY > 0 ? "text-green-600" : "text-red-500"}`}>
+                            {row.medianPriceYoY > 0 ? "+" : ""}{row.medianPriceYoY}%
+                          </span>
+                        </td>
+                        <td className="py-3 text-right text-muted-foreground">{row.monthsOfSupply}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="rounded-xl border border-border bg-primary/5 p-5">
+                <h3 className="font-semibold text-foreground">NAR 2026 Forecast</h3>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Projected existing home sales: <span className="font-bold text-foreground">{narForecast2026.projectedExistingHomeSales}M SAAR</span> (+{narForecast2026.projectedSalesChangeYoY}% YoY).
+                  Median price change: <span className="font-bold text-green-600">+{narForecast2026.projectedMedianPriceChange}%</span>.
+                </p>
+                <p className="text-xs text-muted-foreground mt-2 italic">{narForecast2026.notes}</p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <h3 className="font-semibold text-foreground text-sm">Housing Affordability</h3>
+                  <p className="text-2xl font-bold text-foreground mt-2">{nationalAffordability.value}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{nationalAffordability.period}</p>
+                  <p className="text-xs text-muted-foreground mt-2">{nationalAffordability.interpretation.slice(0, 120)}...</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <h3 className="font-semibold text-foreground text-sm">Builder Confidence (NAHB)</h3>
+                  <p className="text-2xl font-bold text-foreground mt-2">{nahbBuilderConfidence.overallIndex}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{nahbBuilderConfidence.period} — {nahbBuilderConfidence.consecutiveNegativeMonths} months below breakeven</p>
+                  <div className="mt-2 text-xs text-muted-foreground space-y-0.5">
+                    <p>Current Sales: {nahbBuilderConfidence.currentSalesConditions}</p>
+                    <p>Future Expectations: {nahbBuilderConfidence.futureSalesExpectations}</p>
+                    <p>Buyer Traffic: {nahbBuilderConfidence.prospectiveBuyerTraffic}</p>
+                  </div>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <h3 className="font-semibold text-foreground text-sm">Pending Home Sales</h3>
+                  <p className="text-2xl font-bold text-foreground mt-2">{pendingHomeSalesIndex.indexValue}</p>
+                  <p className="text-xs text-red-500 mt-1">{pendingHomeSalesIndex.momChange}% MoM, {pendingHomeSalesIndex.yoyChange}% YoY</p>
+                  <p className="text-xs text-muted-foreground mt-2">Lowest level in series history.</p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="rounded-xl border border-border bg-card p-5">
+                <h3 className="font-semibold text-foreground">National Inventory</h3>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Active listings: <span className="font-bold text-foreground">{(nationalMonthsOfSupply.totalActiveListings / 1_000_000).toFixed(2)}M</span> — up {nationalMonthsOfSupply.activeListingsYoYChange}% YoY.
+                  Homeownership rate: <span className="font-bold text-foreground">{homeownershipRate.rate}%</span> ({homeownershipRate.period}).
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">{nationalMonthsOfSupply.notes}</p>
+              </div>
+            </AnimatedSection>
+          </div>
+        )}
+
+        {/* ─── CALIFORNIA TAB ──────────────────────────────── */}
+        {activeTab === "california" && (
+          <div className="space-y-12">
+            <AnimatedSection>
+              <SectionHeader
+                title="California Market Overview"
+                subtitle="Statewide housing data and forecasts from C.A.R."
+              />
+              <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Median Price</p>
+                  <p className="text-2xl font-bold text-foreground mt-2">{formatPrice(californiaMarketOverview.medianHomePrice)}</p>
+                  <p className="text-xs mt-1"><span className={californiaMarketOverview.medianHomePriceYoY > 0 ? "text-green-600" : "text-red-500"}>{californiaMarketOverview.medianHomePriceYoY > 0 ? "+" : ""}{californiaMarketOverview.medianHomePriceYoY}%</span> <span className="text-muted-foreground">{californiaMarketOverview.period}</span></p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">2026 Forecast</p>
+                  <p className="text-2xl font-bold text-foreground mt-2">{formatPrice(californiaMarketOverview.forecastMedianPrice2026)}</p>
+                  <p className="text-xs text-green-600 mt-1">+{californiaMarketOverview.forecastPriceChangeYoY}% — Record high</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Affordability</p>
+                  <p className="text-2xl font-bold text-foreground mt-2">{californiaMarketOverview.housingAffordabilityIndex}%</p>
+                  <p className="text-xs text-muted-foreground mt-1">Income needed: {formatPrice(californiaMarketOverview.incomeRequiredForMedian)}</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Locked-In Rate</p>
+                  <p className="text-2xl font-bold text-foreground mt-2">{californiaMarketOverview.pctMortgagesUnder5Pct}%</p>
+                  <p className="text-xs text-muted-foreground mt-1">Of owners below 5% rate</p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Top CA Metros by Price" subtitle="County-level median prices" />
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Metro</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">Median Price</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">YoY</th>
+                      <th className="pb-3 font-semibold text-foreground">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {topCaliforniaMetrosByPrice.map((m) => (
+                      <tr key={m.metro} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-3 pr-4 font-medium text-foreground">{m.metro}</td>
+                        <td className="py-3 pr-4 text-right font-semibold text-foreground">{formatPrice(m.medianPrice)}</td>
+                        <td className="py-3 pr-4 text-right">
+                          <span className={`font-medium ${m.yoyChange > 0 ? "text-green-600" : "text-red-500"}`}>
+                            {m.yoyChange > 0 ? "+" : ""}{m.yoyChange}%
+                          </span>
+                        </td>
+                        <td className="py-3 text-xs text-muted-foreground max-w-xs">{m.notes.slice(0, 80)}...</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="rounded-xl border border-border bg-primary/5 p-5">
+                <h3 className="font-semibold text-foreground">Million Dollar Club — {millionDollarCounties2026.period}</h3>
+                <p className="text-sm text-muted-foreground mt-2">
+                  <span className="font-bold text-foreground">{millionDollarCounties2026.count} counties</span> now have median home prices above $1M (up from {millionDollarCounties2026.priorYearCount} last year).
+                  New additions: <span className="font-bold text-primary">{millionDollarCounties2026.newAdditions.join(", ")}</span>.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {millionDollarCounties2026.counties.map((c) => (
+                    <span key={c} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">{c}</span>
+                  ))}
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="CA Affordability by Region" subtitle="Percent of households able to afford the median home" />
+              <div className="mt-6 grid gap-3 md:grid-cols-2">
+                {californiaAffordabilityByRegion.map((r) => (
+                  <div key={r.region} className="flex items-center justify-between rounded-xl border border-border bg-card px-5 py-3">
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{r.region}</p>
+                      {r.incomeRequired && <p className="text-xs text-muted-foreground">Income needed: {formatPrice(r.incomeRequired)}</p>}
+                    </div>
+                    <p className="text-lg font-bold text-foreground">{r.affordabilityIndex}%</p>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="CA Sales Volume" subtitle="Existing single-family home sales history" />
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Year</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">Sales</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">YoY</th>
+                      <th className="pb-3 font-semibold text-foreground">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {californiaSalesVolume.map((row) => (
+                      <tr key={row.year} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-2.5 pr-4 font-medium text-foreground">{row.year}</td>
+                        <td className="py-2.5 pr-4 text-right text-foreground">{row.existingSFHomesSold.toLocaleString()}</td>
+                        <td className="py-2.5 pr-4 text-right">
+                          <span className={`font-medium ${row.yoyChange > 0 ? "text-green-600" : row.yoyChange < 0 ? "text-red-500" : "text-muted-foreground"}`}>
+                            {row.yoyChange > 0 ? "+" : ""}{row.yoyChange}%
+                          </span>
+                        </td>
+                        <td className="py-2.5 text-xs text-muted-foreground">{row.notes}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="CA Housing Legislation" subtitle={californiaLegislationSummary.headline} />
+              <div className="mt-4 space-y-2">
+                {californiaLegislationSummary.keyThemes.map((theme, i) => (
+                  <p key={i} className="flex items-start gap-2 text-sm text-foreground">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    {theme}
+                  </p>
+                ))}
+              </div>
+              <div className="mt-6 space-y-3">
+                {californiaHousingLegislation.map((bill) => (
+                  <CollapsibleSection key={bill.billNumber} title={`${bill.billNumber} — ${bill.title}`}>
+                    <p className="text-sm text-muted-foreground">{bill.summary}</p>
+                    <p className="text-xs text-primary mt-2 italic">{bill.realtorImpact}</p>
+                    <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
+                      <span className={`rounded-full px-2 py-0.5 ${bill.status === "signed" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300" : bill.status === "effective" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300" : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"}`}>
+                        {bill.status.replace(/-/g, " ")}
+                      </span>
+                      <span>Effective: {bill.effectiveDate}</span>
+                    </div>
+                  </CollapsibleSection>
+                ))}
+              </div>
+            </AnimatedSection>
+          </div>
+        )}
+
+        {/* ─── BAY AREA TAB ────────────────────────────────── */}
+        {activeTab === "bayarea" && (
           <div className="space-y-12">
             <AnimatedSection>
               <SectionHeader
@@ -249,13 +876,9 @@ export default function IntelligencePage() {
                       <tr key={city.city} className="border-b border-border/50 hover:bg-muted/30">
                         <td className="py-3 pr-4 font-medium text-foreground">{city.city}</td>
                         <td className="py-3 pr-4 text-muted-foreground">{city.county}</td>
-                        <td className="py-3 pr-4 text-right font-semibold text-foreground">
-                          {formatPrice(city.medianSalePrice)}
-                        </td>
+                        <td className="py-3 pr-4 text-right font-semibold text-foreground">{formatPrice(city.medianSalePrice)}</td>
                         <td className="py-3 pr-4 text-right">
-                          <span className={`inline-flex items-center gap-1 font-medium ${
-                            city.yoyPriceChange > 0 ? "text-green-600" : "text-red-500"
-                          }`}>
+                          <span className={`inline-flex items-center gap-1 font-medium ${city.yoyPriceChange > 0 ? "text-green-600" : "text-red-500"}`}>
                             {city.yoyPriceChange > 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
                             {city.yoyPriceChange > 0 ? "+" : ""}{city.yoyPriceChange}%
                           </span>
@@ -272,7 +895,6 @@ export default function IntelligencePage() {
               </p>
             </AnimatedSection>
 
-            {/* Interest Rates */}
             <AnimatedSection>
               <SectionHeader title="Mortgage Rates" subtitle="Current rates and 2026 outlook" />
               <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -298,7 +920,6 @@ export default function IntelligencePage() {
               </div>
             </AnimatedSection>
 
-            {/* Inventory */}
             <AnimatedSection>
               <SectionHeader title="Housing Inventory" subtitle="Supply levels across the Bay Area" />
               <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -306,9 +927,7 @@ export default function IntelligencePage() {
                   <div key={item.region} className="rounded-xl border border-border bg-card p-5">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-foreground">{item.region}</h3>
-                      <span className={`text-lg font-bold ${
-                        item.monthsOfSupply < 2 ? "text-red-500" : item.monthsOfSupply < 4 ? "text-amber-500" : "text-green-600"
-                      }`}>
+                      <span className={`text-lg font-bold ${item.monthsOfSupply < 2 ? "text-red-500" : item.monthsOfSupply < 4 ? "text-amber-500" : "text-green-600"}`}>
                         {item.monthsOfSupply} mo
                       </span>
                     </div>
@@ -323,14 +942,12 @@ export default function IntelligencePage() {
               </div>
             </AnimatedSection>
 
-            {/* Bay Area Trends */}
             <AnimatedSection>
               <SectionHeader title="Bay Area Trends" subtitle="Key themes shaping the market in 2026" />
               <div className="mt-6 grid gap-4 md:grid-cols-2">
                 <div className="rounded-xl border border-border bg-card p-5">
                   <h3 className="font-semibold text-foreground flex items-center gap-2">
-                    <Building2 className="h-4 w-4 text-primary" />
-                    Tech Layoff Impact
+                    <Building2 className="h-4 w-4 text-primary" /> Tech Layoff Impact
                   </h3>
                   <p className="text-sm text-muted-foreground mt-2">
                     {techLayoffImpact.totalJobsEliminated} jobs eliminated ({techLayoffImpact.period}). Housing cooling but not collapsing.
@@ -338,16 +955,14 @@ export default function IntelligencePage() {
                   <ul className="mt-3 space-y-1">
                     {techLayoffImpact.migrationTrends.slice(0, 3).map((point, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs text-foreground">
-                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                        {point}
+                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />{point}
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div className="rounded-xl border border-border bg-card p-5">
                   <h3 className="font-semibold text-foreground flex items-center gap-2">
-                    <Building2 className="h-4 w-4 text-primary" />
-                    ADU Boom
+                    <Building2 className="h-4 w-4 text-primary" /> ADU Boom
                   </h3>
                   <p className="text-sm text-muted-foreground mt-2">
                     {aduTrends.statePermits2023.toLocaleString()} CA permits in 2023. {aduTrends.growthFromBase}.
@@ -363,8 +978,7 @@ export default function IntelligencePage() {
                 </div>
                 <div className="rounded-xl border border-border bg-card p-5">
                   <h3 className="font-semibold text-foreground flex items-center gap-2">
-                    <Building2 className="h-4 w-4 text-primary" />
-                    Office-to-Residential Conversions
+                    <Building2 className="h-4 w-4 text-primary" /> Office-to-Residential Conversions
                   </h3>
                   <p className="text-sm text-muted-foreground mt-2">
                     SF office vacancy: {commercialToResidential.sfOfficeVacancyRate}. Major projects underway.
@@ -380,8 +994,7 @@ export default function IntelligencePage() {
                 </div>
                 <div className="rounded-xl border border-border bg-card p-5">
                   <h3 className="font-semibold text-foreground flex items-center gap-2">
-                    <Building2 className="h-4 w-4 text-primary" />
-                    Tariff Impact on Construction
+                    <Building2 className="h-4 w-4 text-primary" /> Tariff Impact on Construction
                   </h3>
                   <p className="text-sm text-muted-foreground mt-2">
                     Construction costs up {tariffImpact.constructionCostIncrease} from {tariffImpact.period}.
@@ -389,8 +1002,7 @@ export default function IntelligencePage() {
                   <ul className="mt-3 space-y-1">
                     {tariffImpact.effects.map((effect, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs text-foreground">
-                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                        {effect}
+                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />{effect}
                       </li>
                     ))}
                   </ul>
@@ -398,7 +1010,6 @@ export default function IntelligencePage() {
               </div>
             </AnimatedSection>
 
-            {/* Case Studies */}
             <AnimatedSection>
               <SectionHeader title="Notable Market Movements" subtitle="Case studies and standout transactions from the East Bay" />
               <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -417,7 +1028,143 @@ export default function IntelligencePage() {
           </div>
         )}
 
-        {/* ─── LEGISLATION TAB ───────────────────────────────── */}
+        {/* ─── INTEREST RATES TAB ──────────────────────────── */}
+        {activeTab === "rates" && (
+          <div className="space-y-12">
+            <AnimatedSection>
+              <SectionHeader title="Current Interest Rates" subtitle="Mortgage rates and Federal Reserve indicators" />
+              <div className="mt-6 grid gap-4 md:grid-cols-4">
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">30-Year Fixed</p>
+                  <p className="text-3xl font-bold text-foreground mt-2">{currentMortgageRates.thirtyYearFixed}%</p>
+                  <p className="text-xs text-muted-foreground mt-1">As of {currentMortgageRates.date}</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">15-Year Fixed</p>
+                  <p className="text-3xl font-bold text-foreground mt-2">{currentMortgageRates.fifteenYearFixed}%</p>
+                  <p className="text-xs text-muted-foreground mt-1">As of {currentMortgageRates.date}</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Fed Funds Rate</p>
+                  <p className="text-3xl font-bold text-foreground mt-2">{fedFundsRateSummary.currentRange}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{fedFundsRateSummary.totalBasisPointsCut} bps cut from peak</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">10-Year Treasury</p>
+                  <p className="text-3xl font-bold text-foreground mt-2">{tenYearTreasuryYield.yield}%</p>
+                  <p className="text-xs text-muted-foreground mt-1">Range: {tenYearTreasuryYield.recentRange.low}%-{tenYearTreasuryYield.recentRange.high}%</p>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="rounded-xl border border-border bg-card p-5">
+                <h3 className="font-semibold text-foreground mb-3">CME FedWatch — {cmeFedWatch.meetingDate}</h3>
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-foreground">{cmeFedWatch.holdProbability}%</p>
+                    <p className="text-xs text-muted-foreground">Hold</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-foreground">{cmeFedWatch.cutProbability25bp}%</p>
+                    <p className="text-xs text-muted-foreground">25bp Cut</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-foreground">{cmeFedWatch.cutProbability50bp}%</p>
+                    <p className="text-xs text-muted-foreground">50bp Cut</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-foreground">{cmeFedWatch.hikeProbability}%</p>
+                    <p className="text-xs text-muted-foreground">Hike</p>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">{cmeFedWatch.notes}</p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="FOMC 2026 Meeting Schedule" subtitle="Federal Reserve policy meeting dates and decisions" />
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Dates</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground">SEP</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Status</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Decision</th>
+                      <th className="pb-3 font-semibold text-foreground">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {fomcSchedule2026.map((mtg) => (
+                      <tr key={mtg.dates} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-3 pr-4 font-medium text-foreground">{mtg.dates}</td>
+                        <td className="py-3 pr-4 text-muted-foreground">{mtg.hasSEP ? "Yes" : "No"}</td>
+                        <td className="py-3 pr-4">
+                          <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${mtg.status === "completed" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300" : "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"}`}>
+                            {mtg.status}
+                          </span>
+                        </td>
+                        <td className="py-3 pr-4 text-sm text-foreground">{mtg.decision || "—"}</td>
+                        <td className="py-3 text-xs text-muted-foreground max-w-xs">{mtg.notes.slice(0, 80)}...</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Fed Funds Rate History" subtitle="The complete hiking and cutting cycle" />
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Date</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Target Range</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Action</th>
+                      <th className="pb-3 font-semibold text-foreground text-right">Change (bps)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {fedFundsRateHistory.map((entry) => (
+                      <tr key={entry.date} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-2.5 pr-4 font-medium text-foreground">{entry.date}</td>
+                        <td className="py-2.5 pr-4 text-foreground">{entry.targetRangeLower.toFixed(2)}%-{entry.targetRangeUpper.toFixed(2)}%</td>
+                        <td className="py-2.5 pr-4">
+                          <span className={`text-xs font-medium ${entry.action.includes("Hike") ? "text-red-500" : entry.action.includes("Cut") ? "text-green-600" : "text-muted-foreground"}`}>
+                            {entry.action}
+                          </span>
+                        </td>
+                        <td className="py-2.5 text-right">
+                          <span className={`font-medium ${entry.bpsChange > 0 ? "text-red-500" : entry.bpsChange < 0 ? "text-green-600" : "text-muted-foreground"}`}>
+                            {entry.bpsChange > 0 ? "+" : ""}{entry.bpsChange}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="rounded-xl border border-border bg-muted/30 p-5">
+                <h3 className="font-semibold text-foreground">2026 Rate Outlook</h3>
+                <p className="text-sm text-muted-foreground mt-2">{fedFundsRateSummary.forwardGuidance}</p>
+                <div className="mt-3 space-y-1">
+                  {tenYearTreasuryYield.keyDrivers.map((driver, i) => (
+                    <p key={i} className="flex items-start gap-2 text-xs text-foreground">
+                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{driver}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        )}
+
+        {/* ─── LEGISLATION TAB ─────────────────────────────── */}
         {activeTab === "legislation" && (
           <div className="space-y-8">
             <AnimatedSection>
@@ -425,14 +1172,10 @@ export default function IntelligencePage() {
                 title="California Legislation Tracker"
                 subtitle="Bills, laws, and regulations impacting Bay Area real estate in 2025-2026"
               />
-
-              {/* Category Filter */}
               <div className="mt-6 flex flex-wrap gap-2">
                 <button
                   onClick={() => setLegFilter("all")}
-                  className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                    legFilter === "all" ? "bg-primary text-white" : "bg-muted text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${legFilter === "all" ? "bg-primary text-white" : "bg-muted text-muted-foreground hover:text-foreground"}`}
                 >
                   All ({stateLegislation.length})
                 </button>
@@ -443,17 +1186,13 @@ export default function IntelligencePage() {
                     <button
                       key={key}
                       onClick={() => setLegFilter(key)}
-                      className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                        legFilter === key ? "bg-primary text-white" : "bg-muted text-muted-foreground hover:text-foreground"
-                      }`}
+                      className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${legFilter === key ? "bg-primary text-white" : "bg-muted text-muted-foreground hover:text-foreground"}`}
                     >
                       {label} ({count})
                     </button>
                   );
                 })}
               </div>
-
-              {/* Legislation Cards */}
               <div className="mt-6 space-y-3">
                 {filteredLegislation.map((bill) => (
                   <LegislationCard key={bill.id} bill={bill} />
@@ -461,7 +1200,6 @@ export default function IntelligencePage() {
               </div>
             </AnimatedSection>
 
-            {/* Local Ordinances */}
             <AnimatedSection>
               <SectionHeader title="Local Ordinances" subtitle="City-specific rules across the East Bay" />
               <div className="mt-6 space-y-3">
@@ -477,8 +1215,7 @@ export default function IntelligencePage() {
                     <ul className="mt-3 space-y-1">
                       {ord.keyDetails.map((d, i) => (
                         <li key={i} className="flex items-start gap-2 text-xs text-foreground">
-                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                          {d}
+                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />{d}
                         </li>
                       ))}
                     </ul>
@@ -488,7 +1225,6 @@ export default function IntelligencePage() {
               </div>
             </AnimatedSection>
 
-            {/* Pending */}
             <AnimatedSection>
               <SectionHeader title="Bills to Watch" subtitle="Pending legislation and two-year bills" />
               <div className="mt-6 space-y-3">
@@ -509,7 +1245,336 @@ export default function IntelligencePage() {
           </div>
         )}
 
-        {/* ─── AGENT ECONOMICS TAB ───────────────────────────── */}
+        {/* ─── PROPERTY TAXES TAB ──────────────────────────── */}
+        {activeTab === "taxes" && (
+          <div className="space-y-8">
+            <AnimatedSection>
+              <SectionHeader title="Property Tax Guide" subtitle="Comprehensive Bay Area property tax reference" />
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <CollapsibleSection title={`Proposition 13 — ${prop13Explainer.title}`} defaultOpen>
+                <p className="text-sm text-muted-foreground mb-4">{prop13Explainer.summary}</p>
+                <div className="space-y-3">
+                  {prop13Explainer.keyRules.map((rule, i) => (
+                    <div key={i} className="border-t border-border pt-3">
+                      <h4 className="text-sm font-semibold text-foreground">{rule.rule}</h4>
+                      <p className="text-xs text-muted-foreground mt-1">{rule.details}</p>
+                      {rule.example && <p className="text-xs text-primary mt-1 italic">{rule.example}</p>}
+                    </div>
+                  ))}
+                </div>
+              </CollapsibleSection>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="County Tax Rates" subtitle="Effective tax rates across Bay Area counties" />
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pr-4 font-semibold text-foreground">County</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">Base</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-right">Effective Range</th>
+                      <th className="pb-3 font-semibold text-foreground">Key Bonds</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {countyTaxRates.map((county) => (
+                      <tr key={county.county} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-3 pr-4 font-medium text-foreground">{county.county}</td>
+                        <td className="py-3 pr-4 text-right text-foreground">{county.baseRate}%</td>
+                        <td className="py-3 pr-4 text-right text-foreground">{county.typicalEffectiveRateLow}%-{county.typicalEffectiveRateHigh}%</td>
+                        <td className="py-3 text-xs text-muted-foreground max-w-xs">{county.voterApprovedBonds.slice(0, 80)}...</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <CollapsibleSection title="Mello-Roos / Community Facilities Districts">
+                <p className="text-sm text-muted-foreground mb-4">{melloRoosInfo.summary}</p>
+                <h4 className="text-sm font-semibold text-foreground mb-2">Common Bay Area CFDs</h4>
+                <div className="space-y-2">
+                  {melloRoosInfo.commonBayAreaCFDs.map((cfd, i) => (
+                    <div key={i} className="flex items-start justify-between gap-4 border-t border-border pt-2">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{cfd.area}</p>
+                        <p className="text-xs text-muted-foreground">{cfd.county} County — {cfd.notes.slice(0, 60)}...</p>
+                      </div>
+                      <span className="shrink-0 text-xs font-semibold text-primary">{cfd.typicalAnnualCharge}</span>
+                    </div>
+                  ))}
+                </div>
+              </CollapsibleSection>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <CollapsibleSection title="Supplemental Tax Bills">
+                <p className="text-sm text-muted-foreground mb-4">{supplementalTaxInfo.summary}</p>
+                <div className="rounded-lg border border-border bg-muted/30 p-4 mt-3">
+                  <h4 className="text-sm font-semibold text-foreground">Worked Example: {supplementalTaxInfo.calculationExample.scenario}</h4>
+                  <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
+                    <p className="text-muted-foreground">Purchase Price:</p>
+                    <p className="text-foreground font-medium">{formatPrice(supplementalTaxInfo.calculationExample.purchasePrice)}</p>
+                    <p className="text-muted-foreground">Previous Assessed Value:</p>
+                    <p className="text-foreground font-medium">{formatPrice(supplementalTaxInfo.calculationExample.previousAssessedValue)}</p>
+                    <p className="text-muted-foreground">Supplemental Assessment:</p>
+                    <p className="text-foreground font-medium">{formatPrice(supplementalTaxInfo.calculationExample.supplementalAssessment)}</p>
+                    <p className="text-muted-foreground">Pro-Rated Tax:</p>
+                    <p className="text-foreground font-bold text-primary">{formatPrice(supplementalTaxInfo.calculationExample.proRatedTax)}</p>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-3">{supplementalTaxInfo.calculationExample.explanation}</p>
+                </div>
+              </CollapsibleSection>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <CollapsibleSection title="Proposition 19 — Parent-Child Exclusion & Portability">
+                <p className="text-sm text-muted-foreground mb-3">{prop19Info.summary}</p>
+                <div className="border-t border-border pt-3">
+                  <h4 className="text-sm font-semibold text-foreground mb-2">Parent-Child Exclusion</h4>
+                  <p className="text-xs text-muted-foreground mb-2">{prop19Info.parentChildExclusion.description}</p>
+                  <p className="text-xs font-medium text-primary">Current exclusion amount: {formatPrice(prop19Info.parentChildExclusion.exclusionAmount)}</p>
+                </div>
+                <div className="border-t border-border pt-3 mt-3">
+                  <h4 className="text-sm font-semibold text-foreground mb-2">Senior Portability (55+)</h4>
+                  <p className="text-xs text-muted-foreground">{prop19Info.seniorPortability.description}</p>
+                  <ul className="mt-2 space-y-1">
+                    {prop19Info.seniorPortability.keyRules.slice(0, 4).map((rule, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-foreground">
+                        <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{rule}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </CollapsibleSection>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Tax Examples" subtitle="What Bay Area homeowners actually pay" />
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                {taxExamples.map((ex, i) => (
+                  <div key={i} className="rounded-xl border border-border bg-card p-5">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-sm font-semibold text-foreground">{ex.location}</h4>
+                      <span className="text-xs text-muted-foreground">{ex.county} Co.</span>
+                    </div>
+                    <p className="text-lg font-bold text-foreground">{formatPrice(ex.homeValue)} home</p>
+                    <div className="mt-3 grid grid-cols-2 gap-1 text-xs">
+                      <p className="text-muted-foreground">Base Tax (1%):</p>
+                      <p className="text-foreground text-right">{formatPrice(ex.baseTax)}</p>
+                      <p className="text-muted-foreground">Bonds/Assessments:</p>
+                      <p className="text-foreground text-right">{formatPrice(ex.estimatedBondsAssessments)}</p>
+                      <p className="text-muted-foreground">Mello-Roos:</p>
+                      <p className="text-foreground text-right">{formatPrice(ex.estimatedMelloRoos)}</p>
+                      <p className="text-muted-foreground font-semibold border-t border-border pt-1">Total Annual:</p>
+                      <p className="text-foreground font-bold text-right border-t border-border pt-1">{formatPrice(ex.estimatedTotalAnnual)}</p>
+                      <p className="text-muted-foreground">Monthly:</p>
+                      <p className="text-primary font-bold text-right">{formatPrice(ex.estimatedMonthly)}/mo</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Transfer Tax Rates" subtitle="City and county transfer taxes on property sales" />
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Jurisdiction</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Rate</th>
+                      <th className="pb-3 font-semibold text-foreground">Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transferTaxRates.map((tx) => (
+                      <tr key={tx.jurisdiction} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-3 pr-4 font-medium text-foreground">{tx.jurisdiction}</td>
+                        <td className="py-3 pr-4 text-xs text-foreground">{tx.rate}</td>
+                        <td className="py-3 text-xs text-muted-foreground max-w-sm">{tx.details.slice(0, 100)}...</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <div className="rounded-xl border border-border bg-muted/30 p-5">
+                <h3 className="font-semibold text-foreground">SALT Cap</h3>
+                <p className="text-sm text-muted-foreground mt-2">{saltCapInfo.description}</p>
+                <p className="text-xs text-muted-foreground mt-2 italic">{saltCapInfo.impact}</p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Property Tax Calendar" subtitle="Key dates for California property owners" />
+              <div className="mt-6 relative">
+                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border" />
+                <div className="space-y-4">
+                  {propertyTaxCalendarDates.map((item, i) => (
+                    <div key={i} className="relative flex gap-4 pl-12">
+                      <div className="absolute left-4 top-1.5 h-4 w-4 rounded-full border-2 border-primary bg-primary/20" />
+                      <div className="flex-1 rounded-xl border border-border bg-card p-3">
+                        <span className="text-xs font-bold text-primary">{item.date}</span>
+                        <p className="text-sm text-foreground mt-0.5">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        )}
+
+        {/* ─── RENT CONTROL TAB ────────────────────────────── */}
+        {activeTab === "rentcontrol" && (
+          <div className="space-y-8">
+            <AnimatedSection>
+              <SectionHeader title="Rent Control & Tenant Protection Guide" subtitle="California statewide and local rent control laws" />
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <CollapsibleSection title={ab1482Info.title} defaultOpen>
+                <p className="text-sm text-muted-foreground mb-3">{ab1482Info.summary}</p>
+                <div className="rounded-lg border border-border bg-primary/5 p-4 mb-3">
+                  <h4 className="text-sm font-semibold text-foreground">Rent Cap Formula</h4>
+                  <p className="text-lg font-bold text-primary mt-1">{ab1482Info.rentCapRules.formula}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Current allowable increase: <span className="font-bold text-foreground">{ab1482Info.rentCapRules.currentAllowableIncrease}%</span> ({ab1482Info.rentCapRules.cpiEffectivePeriod})</p>
+                </div>
+                <div className="space-y-1 mt-3">
+                  {ab1482Info.keyFacts.map((fact, i) => (
+                    <p key={i} className="flex items-start gap-2 text-xs text-foreground">
+                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{fact}
+                    </p>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">Sunset: {ab1482Info.sunsetDate}</p>
+              </CollapsibleSection>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Rent Control Quick Reference" subtitle="City-by-city comparison" />
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pr-4 font-semibold text-foreground">City</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Annual Cap</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground">Coverage</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-center">Just Cause</th>
+                      <th className="pb-3 pr-4 font-semibold text-foreground text-center">Banking</th>
+                      <th className="pb-3 font-semibold text-foreground">Key Takeaway</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rentControlSummaryTable.map((row) => (
+                      <tr key={row.city} className="border-b border-border/50 hover:bg-muted/30">
+                        <td className="py-2.5 pr-4 font-medium text-foreground">{row.city}</td>
+                        <td className="py-2.5 pr-4 text-foreground text-xs">{row.annualCap}</td>
+                        <td className="py-2.5 pr-4 text-xs text-muted-foreground">{row.coveredUnits}</td>
+                        <td className="py-2.5 pr-4 text-center">{row.justCauseRequired ? <CheckCircle2 className="h-4 w-4 text-green-600 mx-auto" /> : "—"}</td>
+                        <td className="py-2.5 pr-4 text-center">{row.bankingAllowed ? <CheckCircle2 className="h-4 w-4 text-green-600 mx-auto" /> : "—"}</td>
+                        <td className="py-2.5 text-xs text-muted-foreground max-w-xs">{row.realtorKeyTakeaway}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <CollapsibleSection title="Costa-Hawkins Rental Housing Act">
+                <p className="text-sm text-muted-foreground mb-3">{costaHawkinsInfo.summary}</p>
+                <div className="space-y-3">
+                  {costaHawkinsInfo.keyProvisions.map((prov, i) => (
+                    <div key={i} className="border-t border-border pt-3">
+                      <h4 className="text-sm font-semibold text-foreground">{prov.provision}</h4>
+                      <p className="text-xs text-muted-foreground mt-1">{prov.details}</p>
+                      <p className="text-xs text-primary mt-1 italic">{prov.practicalEffect}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 border-t border-border pt-3">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Repeal Attempts</h4>
+                  {costaHawkinsInfo.repealAttempts.map((attempt, i) => (
+                    <p key={i} className="text-xs text-foreground">
+                      {attempt.measure} ({attempt.year}): <span className="text-red-500">{attempt.result}</span> — {attempt.voteMargin}
+                    </p>
+                  ))}
+                </div>
+              </CollapsibleSection>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Key Tenant Rights" subtitle="What agents need to know about tenant protections" />
+              <div className="mt-6 space-y-3">
+                {keyTenantRights.map((right, i) => (
+                  <CollapsibleSection key={i} title={right.right}>
+                    <p className="text-sm text-muted-foreground mb-2">{right.description}</p>
+                    <ul className="space-y-1">
+                      {right.details.map((d, j) => (
+                        <li key={j} className="flex items-start gap-2 text-xs text-foreground">
+                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />{d}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-xs text-primary mt-2 italic">{right.realtorRelevance}</p>
+                  </CollapsibleSection>
+                ))}
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Recent & Upcoming Changes" subtitle="Legislative updates affecting rent control" />
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                {recentAndUpcomingChanges.map((change, i) => (
+                  <div key={i} className="rounded-xl border border-border bg-card p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                        change.status === "active" ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
+                        : change.status === "pending" ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
+                        : change.status === "proposed" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
+                        : change.status === "sunset_scheduled" ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
+                        : "bg-muted text-muted-foreground"
+                      }`}>
+                        {change.status.replace(/_/g, " ")}
+                      </span>
+                      <span className="text-xs text-muted-foreground">{change.effectiveDate}</span>
+                    </div>
+                    <h4 className="text-sm font-semibold text-foreground">{change.title}</h4>
+                    <p className="text-xs text-muted-foreground mt-1">{change.summary}</p>
+                    <p className="text-xs text-primary mt-2 italic">{change.impact.slice(0, 120)}...</p>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <SectionHeader title="Realtor Guidance" subtitle="Practical advice for agents working with rental properties" />
+              <div className="mt-6 space-y-3">
+                {realtorGuidance.map((section, i) => (
+                  <CollapsibleSection key={i} title={section.topic}>
+                    <ul className="space-y-1.5">
+                      {section.guidance.map((point, j) => (
+                        <li key={j} className="flex items-start gap-2 text-xs text-foreground">
+                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{point}
+                        </li>
+                      ))}
+                    </ul>
+                  </CollapsibleSection>
+                ))}
+              </div>
+            </AnimatedSection>
+          </div>
+        )}
+
+        {/* ─── AGENT ECONOMICS TAB ─────────────────────────── */}
         {activeTab === "economics" && (
           <div className="space-y-12">
             <AnimatedSection>
@@ -517,8 +1582,6 @@ export default function IntelligencePage() {
                 title="Realtor Economics"
                 subtitle="Commission trends, income data, and the post-NAR settlement landscape"
               />
-
-              {/* Commission Data */}
               <div className="mt-6 grid gap-4 md:grid-cols-3">
                 <div className="rounded-xl border border-border bg-card p-5 text-center">
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">CA Avg Total Commission</p>
@@ -535,8 +1598,6 @@ export default function IntelligencePage() {
                   <p className="text-xs text-muted-foreground mt-1">Up from post-settlement low of 2.36%</p>
                 </div>
               </div>
-
-              {/* Commission by Price */}
               <div className="mt-6 rounded-xl border border-border bg-card p-5">
                 <h3 className="font-semibold text-foreground mb-4">Buyer Agent Commission by Price Range</h3>
                 <div className="space-y-3">
@@ -557,7 +1618,6 @@ export default function IntelligencePage() {
               </div>
             </AnimatedSection>
 
-            {/* NAR Settlement Impact */}
             <AnimatedSection>
               <SectionHeader title="NAR Settlement Impact" subtitle="How the $418M settlement is reshaping the industry" />
               <div className="mt-6 space-y-4">
@@ -589,7 +1649,6 @@ export default function IntelligencePage() {
               </div>
             </AnimatedSection>
 
-            {/* Agent Income */}
             <AnimatedSection>
               <SectionHeader title="Agent Income Data" subtitle="California real estate agent earnings" />
               <div className="mt-6 overflow-x-auto">
@@ -605,9 +1664,7 @@ export default function IntelligencePage() {
                     {agentIncomeData.map((d) => (
                       <tr key={d.source} className="border-b border-border/50">
                         <td className="py-2.5 pr-4 font-medium text-foreground">{d.source}</td>
-                        <td className="py-2.5 pr-4 text-right font-semibold text-foreground">
-                          ${d.averageAnnualIncome.toLocaleString()}
-                        </td>
+                        <td className="py-2.5 pr-4 text-right font-semibold text-foreground">${d.averageAnnualIncome.toLocaleString()}</td>
                         <td className="py-2.5 text-xs text-muted-foreground">{d.notes}</td>
                       </tr>
                     ))}
@@ -633,9 +1690,9 @@ export default function IntelligencePage() {
           </div>
         )}
 
-        {/* ─── CERTIFICATIONS TAB ────────────────────────────── */}
-        {activeTab === "certifications" && (
-          <div className="space-y-8">
+        {/* ─── RESOURCES TAB ───────────────────────────────── */}
+        {activeTab === "resources" && (
+          <div className="space-y-12">
             <AnimatedSection>
               <SectionHeader
                 title="Professional Certifications"
@@ -652,12 +1709,7 @@ export default function IntelligencePage() {
                         </div>
                         <h3 className="text-sm font-semibold text-foreground">{cert.name}</h3>
                       </div>
-                      <a
-                        href={cert.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-muted-foreground hover:text-primary"
-                      >
+                      <a href={cert.website} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
                         <ExternalLink className="h-4 w-4" />
                       </a>
                     </div>
@@ -671,12 +1723,7 @@ export default function IntelligencePage() {
                 ))}
               </div>
             </AnimatedSection>
-          </div>
-        )}
 
-        {/* ─── INFLUENCERS TAB ───────────────────────────────── */}
-        {activeTab === "influencers" && (
-          <div className="space-y-8">
             <AnimatedSection>
               <SectionHeader
                 title="Industry Influencers"
@@ -687,7 +1734,7 @@ export default function IntelligencePage() {
                   <div key={inf.id} className="rounded-xl border border-border bg-card p-5">
                     <div className="flex items-start gap-3">
                       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary font-bold text-sm">
-                        {inf.name.split(" ").map(n => n[0]).join("")}
+                        {inf.name.split(" ").map((n) => n[0]).join("")}
                       </div>
                       <div className="flex-1">
                         <h3 className="text-sm font-semibold text-foreground">{inf.name}</h3>
@@ -703,19 +1750,12 @@ export default function IntelligencePage() {
                 ))}
               </div>
             </AnimatedSection>
-          </div>
-        )}
 
-        {/* ─── RESOURCES TAB ─────────────────────────────────── */}
-        {activeTab === "resources" && (
-          <div className="space-y-8">
             <AnimatedSection>
               <SectionHeader
-                title="Industry Resources & Bibliography"
-                subtitle="Publications, podcasts, tools, and organizations for real estate professionals"
+                title="Publications & Tools"
+                subtitle="Essential resources for real estate professionals"
               />
-
-              {/* Group by type */}
               {(["publication", "podcast", "newsletter", "tool", "organization", "education"] as const).map((type) => {
                 const items = industryResources.filter((r) => r.type === type);
                 if (items.length === 0) return null;
@@ -743,9 +1783,7 @@ export default function IntelligencePage() {
                           className="rounded-xl border border-border bg-card p-4 transition-all hover:shadow-md hover:border-primary/30 group"
                         >
                           <div className="flex items-start justify-between">
-                            <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
-                              {res.name}
-                            </h4>
+                            <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{res.name}</h4>
                             <ExternalLink className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" />
                           </div>
                           <p className="text-xs text-muted-foreground mt-1">{res.description}</p>
@@ -757,21 +1795,14 @@ export default function IntelligencePage() {
                 );
               })}
             </AnimatedSection>
-          </div>
-        )}
 
-        {/* ─── TIMELINE TAB ──────────────────────────────────── */}
-        {activeTab === "timeline" && (
-          <div className="space-y-8">
             <AnimatedSection>
               <SectionHeader
                 title="Key Dates Timeline"
                 subtitle="Important dates for Bay Area realtors to track"
               />
               <div className="mt-6 relative">
-                {/* Timeline line */}
                 <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border" />
-
                 <div className="space-y-6">
                   {keyDates.map((item, i) => {
                     const isPast = new Date(item.date) < new Date();
@@ -779,11 +1810,9 @@ export default function IntelligencePage() {
                     return (
                       <div key={i} className="relative flex gap-4 pl-12">
                         <div className={`absolute left-4 top-1 h-4 w-4 rounded-full border-2 ${
-                          isNow
-                            ? "border-primary bg-primary animate-pulse"
-                            : isPast
-                            ? "border-green-500 bg-green-500"
-                            : "border-muted-foreground bg-background"
+                          isNow ? "border-primary bg-primary animate-pulse"
+                          : isPast ? "border-green-500 bg-green-500"
+                          : "border-muted-foreground bg-background"
                         }`} />
                         <div className="flex-1 rounded-xl border border-border bg-card p-4">
                           <div className="flex items-center justify-between mb-1">
