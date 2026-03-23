@@ -37,6 +37,7 @@ export const navLinks = [
   { label: "Neighborhoods", href: "/neighborhoods" },
   { label: "Market Insights", href: "/market-insights" },
   { label: "Resources", href: "/resources" },
+  { label: "CRM Demo", href: "/crm-demo" },
   { label: "Contact", href: "/contact" },
 ] as const;
 

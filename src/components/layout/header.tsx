@@ -19,6 +19,7 @@ const navTranslationKeys: Record<string, string> = {
   "Market Insights": "nav.market_insights",
   Testimonials: "nav.testimonials",
   Resources: "nav.resources",
+  "CRM Demo": "nav.crm_demo",
   Contact: "nav.contact",
   Intelligence: "nav.intelligence",
   Partners: "nav.partners",
