@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Award,
   Heart,
@@ -62,6 +63,7 @@ export default function AboutPage() {
       <PageHero
         title="Meet Nasim"
         subtitle="East Bay local. Market strategist. Your biggest advocate."
+        backgroundImage="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=80"
       />
 
       {/* Stats */}
@@ -81,10 +83,32 @@ export default function AboutPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 md:grid-cols-2">
             <AnimatedSection animation="slide-left">
-              <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <div className="text-center text-primary/40">
-                  <Users className="mx-auto h-16 w-16 mb-3" />
-                  <p className="text-lg font-medium">Professional Headshot</p>
+              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80"
+                  alt="Bay Area home"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
+                {/* Floating glass stats card */}
+                <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/90 dark:bg-card/90 backdrop-blur-md p-4 shadow-lg">
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="text-center">
+                      <p className="text-xl font-bold text-primary font-display">100+</p>
+                      <p className="text-xs text-muted-foreground">Deals</p>
+                    </div>
+                    <div className="h-8 w-px bg-border" />
+                    <div className="text-center">
+                      <p className="text-xl font-bold text-primary font-display">20+</p>
+                      <p className="text-xs text-muted-foreground">Yrs in Bay</p>
+                    </div>
+                    <div className="h-8 w-px bg-border" />
+                    <div className="text-center">
+                      <p className="text-xl font-bold text-primary font-display">98%</p>
+                      <p className="text-xs text-muted-foreground">Satisfaction</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </AnimatedSection>
@@ -93,7 +117,7 @@ export default function AboutPage() {
               <p className="text-sm font-semibold uppercase tracking-wider text-accent">
                 My Story
               </p>
-              <h2 className="mt-2 text-3xl font-bold text-foreground md:text-4xl">
+              <h2 className="mt-2 text-3xl font-bold text-foreground font-display md:text-4xl">
                 Why I Love What I Do
               </h2>
               <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
@@ -130,7 +154,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+              <h2 className="text-3xl font-bold text-foreground font-display md:text-4xl">
                 What I Stand For
               </h2>
               <div className="mt-4 h-1 w-16 rounded-full bg-accent mx-auto" />

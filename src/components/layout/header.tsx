@@ -46,7 +46,7 @@ export const Header = () => {
             N
           </div>
           <div>
-            <div className="text-lg font-bold text-foreground leading-tight">
+            <div className="text-lg font-bold text-foreground leading-tight font-display">
               {siteConfig.name}
             </div>
             <div className="text-xs text-muted-foreground leading-tight">
@@ -64,8 +64,8 @@ export const Header = () => {
               className={cn(
                 "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 pathname === link.href
-                  ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "text-primary relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-0.5 after:w-4 after:rounded-full after:bg-primary"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
               {t(navTranslationKeys[link.label] ?? link.label)}
@@ -107,7 +107,7 @@ export const Header = () => {
 
           <a
             href={`tel:${siteConfig.agent.phone}`}
-            className="hidden items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-light transition-colors sm:flex"
+            className="btn-glow hidden items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-light transition-colors sm:flex"
           >
             <Phone className="h-4 w-4" />
             {siteConfig.agent.phone}

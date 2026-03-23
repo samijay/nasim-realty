@@ -3,17 +3,24 @@ import { cn } from "@/lib/utils";
 export const SectionHeader = ({
   title,
   subtitle,
+  kicker,
   centered = true,
   className,
 }: {
   title: string;
   subtitle?: string;
+  kicker?: string;
   centered?: boolean;
   className?: string;
 }) => {
   return (
-    <div className={cn(centered && "text-center", "mb-12", className)}>
-      <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+    <div className={cn(centered && "text-center", "mb-14", className)}>
+      {kicker && (
+        <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-3">
+          {kicker}
+        </p>
+      )}
+      <h2 className="text-3xl font-bold text-foreground font-display md:text-4xl lg:text-5xl">
         {title}
       </h2>
       {subtitle && (
@@ -23,10 +30,14 @@ export const SectionHeader = ({
       )}
       <div
         className={cn(
-          "mt-4 h-1 w-16 rounded-full bg-accent",
-          centered && "mx-auto"
+          "mt-5 flex items-center gap-2",
+          centered && "justify-center"
         )}
-      />
+      >
+        <div className="h-px w-8 bg-accent/40" />
+        <div className="h-1.5 w-1.5 rounded-full bg-accent" />
+        <div className="h-px w-8 bg-accent/40" />
+      </div>
     </div>
   );
 };

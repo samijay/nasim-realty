@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Bed,
   Bath,
@@ -11,9 +12,16 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/lib/utils";
+import { neighborhoods } from "@/lib/neighborhoods";
 import type { Property } from "@/types";
 
-export const PropertyCard = ({ property }: { property: Property }) => {
+export const PropertyCard = ({
+  property,
+  featured = false,
+}: {
+  property: Property;
+  featured?: boolean;
+}) => {
   const statusColors = {
     active: "bg-green-500",
     pending: "bg-amber-500",
@@ -26,30 +34,46 @@ export const PropertyCard = ({ property }: { property: Property }) => {
     sold: property.soldPrice ? `Sold ${formatPrice(property.soldPrice)}` : "Sold",
   };
 
-  const typeIcons: Record<string, string> = {
-    house: "House",
-    condo: "Condo",
-    townhouse: "Townhouse",
-    "multi-family": "Multi-Family",
-  };
+  const neighborhood = neighborhoods.find(
+    (n) => n.slug === property.neighborhoodSlug
+  );
 
   return (
-    <div className="group overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-      {/* Image placeholder */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-primary/20 to-primary/5">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-primary/40">
-            <Building2 className="mx-auto h-10 w-10 mb-1" />
-            <p className="text-xs font-medium">
-              {typeIcons[property.propertyType]} · {property.sqft.toLocaleString()} sqft
-            </p>
+    <div
+      className={cn(
+        "group overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg hover:-translate-y-1",
+        featured && "lg:col-span-2 lg:row-span-2"
+      )}
+    >
+      {/* Image */}
+      <div
+        className={cn(
+          "relative overflow-hidden",
+          featured ? "aspect-[16/10]" : "aspect-[4/3]"
+        )}
+      >
+        {neighborhood?.stockPhoto ? (
+          <Image
+            src={neighborhood.stockPhoto}
+            alt={property.address}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+            <div className="text-center text-primary/40">
+              <Building2 className="mx-auto h-10 w-10 mb-1" />
+              <p className="text-xs font-medium">
+                {property.sqft.toLocaleString()} sqft
+              </p>
+            </div>
           </div>
-        </div>
+        )}
         {/* Status badge */}
         <div className="absolute top-3 left-3">
           <span
             className={cn(
-              "rounded-full px-3 py-1 text-xs font-semibold text-white",
+              "rounded-full px-3 py-1 text-xs font-semibold text-white shadow-sm",
               statusColors[property.status]
             )}
           >
@@ -66,7 +90,7 @@ export const PropertyCard = ({ property }: { property: Property }) => {
           </div>
         )}
         {/* Price overlay */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-8">
           <div className="flex items-end justify-between">
             <p className="text-2xl font-bold text-white">
               {formatPrice(property.price)}

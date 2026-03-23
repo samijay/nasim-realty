@@ -43,6 +43,7 @@ export interface Neighborhood {
   culture: string[];
   transit: string[];
   heroColor: string;
+  stockPhoto?: string;
 }
 
 export interface NeighborhoodHighlight {

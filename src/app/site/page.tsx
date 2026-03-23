@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   TrendingUp,
@@ -9,6 +10,7 @@ import {
   BookOpen,
   Presentation,
   Sparkles,
+  ChevronDown,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { StatCounter } from "@/components/shared/stat-counter";
@@ -31,23 +33,29 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-light">
-        {/* Decorative blurs */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-20 -right-20 h-96 w-96 rounded-full bg-accent/20 blur-3xl" />
-          <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute top-1/2 left-1/3 h-48 w-48 rounded-full bg-accent/10 blur-2xl" />
-        </div>
+      {/* ═══════════ HERO — Full viewport with background image ═══════════ */}
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+        {/* Background image */}
+        <Image
+          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80"
+          alt="Beautiful East Bay home"
+          fill
+          priority
+          className="object-cover"
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/25" />
+        {/* Accent strip at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary" />
 
-        <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 md:py-32 lg:py-40 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-6xl px-4 py-32 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <p className="mb-4 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90 backdrop-blur-sm">
               East Bay&apos;s Trusted Real Estate Expert
             </p>
-            <h1 className="text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-bold leading-tight text-white font-display md:text-5xl lg:text-7xl">
               Your East Bay Home Story{" "}
-              <span className="text-accent">Starts Here</span>
+              <span className="text-gradient">Starts Here</span>
             </h1>
             <div className="mt-4 text-lg text-white/80 md:text-xl">
               <HeroRotatingText />
@@ -55,7 +63,7 @@ export default function HomePage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
               <Link
                 href="/listings"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-accent-dark"
+                className="btn-glow inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-accent-dark"
               >
                 Browse Listings
                 <ArrowRight className="h-5 w-5" />
@@ -77,47 +85,63 @@ export default function HomePage() {
             <NewsletterSignup variant="hero" />
           </div>
         </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+          <div className="flex flex-col items-center gap-2 text-white/40">
+            <span className="text-xs uppercase tracking-widest">Scroll</span>
+            <ChevronDown className="h-5 w-5 animate-bounce" />
+          </div>
+        </div>
       </section>
 
-      {/* ═══════════ STATS BAR ═══════════ */}
-      <section className="border-b border-border bg-card py-12">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      {/* ═══════════ STATS BAR — Gradient background ═══════════ */}
+      <section className="relative overflow-hidden bg-gradient-to-r from-primary-dark via-primary to-primary-light py-14">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute -top-10 right-0 h-48 w-48 rounded-full bg-accent blur-3xl" />
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             <StatCounter
               end={siteConfig.agent.homesSold}
               suffix="+"
-              label="Homes Sold"
+              label="Deals Advised"
+              className="text-white [&_span]:text-white/70"
             />
             <StatCounter
               end={siteConfig.agent.yearsExperience}
               label="Years Experience"
+              className="text-white [&_span]:text-white/70"
             />
             <StatCounter
               end={siteConfig.agent.avgDaysOnMarket}
               label="Avg Days on Market"
+              className="text-white [&_span]:text-white/70"
             />
             <StatCounter
               end={siteConfig.agent.clientSatisfaction}
               suffix="%"
               label="Client Satisfaction"
+              className="text-white [&_span]:text-white/70"
             />
           </div>
         </div>
       </section>
 
-      {/* ═══════════ FEATURED LISTINGS ═══════════ */}
+      {/* ═══════════ FEATURED LISTINGS — Asymmetric layout ═══════════ */}
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
+              kicker="Properties"
               title="Featured Listings"
               subtitle="Hand-picked properties in the East Bay's most desirable neighborhoods"
             />
           </AnimatedSection>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredListings.map((listing, i) => (
-              <AnimatedSection key={listing.id} delay={i * 150}>
-                <PropertyCard property={listing} />
+              <AnimatedSection key={listing.id} delay={i * 150} animation="scale">
+                <PropertyCard property={listing} featured={i === 0} />
               </AnimatedSection>
             ))}
           </div>
@@ -136,7 +160,7 @@ export default function HomePage() {
       {/* ═══════════ PITCH DECK ═══════════ */}
       <section className="bg-muted py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <AnimatedSection>
+          <AnimatedSection animation="blur">
             <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
               <div className="grid md:grid-cols-2">
                 {/* Left — preview mockup */}
@@ -150,7 +174,7 @@ export default function HomePage() {
                       <Sparkles className="h-3.5 w-3.5 text-accent" />
                       Exclusive Presentation
                     </div>
-                    <h3 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                    <h3 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight font-display">
                       Built for{" "}
                       <span className="text-accent">Nasim</span>
                     </h3>
@@ -172,7 +196,7 @@ export default function HomePage() {
                 {/* Right — CTA */}
                 <div className="p-8 sm:p-12 flex flex-col justify-center">
                   <Presentation className="h-10 w-10 text-primary mb-4" />
-                  <h3 className="text-2xl font-bold text-foreground">
+                  <h3 className="text-2xl font-bold text-foreground font-display">
                     Nasim&apos;s Pitch Deck
                   </h3>
                   <p className="mt-3 text-muted-foreground leading-relaxed">
@@ -181,7 +205,7 @@ export default function HomePage() {
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                     <Link
                       href="/pitch"
-                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-light transition-colors"
+                      className="btn-glow inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-light transition-colors"
                     >
                       View Pitch Deck
                       <ArrowRight className="h-4 w-4" />
@@ -201,18 +225,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════ NEIGHBORHOOD SPOTLIGHT ═══════════ */}
-      <section className="bg-muted py-20">
+      {/* ═══════════ NEIGHBORHOOD SPOTLIGHT — Image tiles ═══════════ */}
+      <section className="py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
-              title="Explore East Bay Neighborhoods"
+              kicker="Explore"
+              title="East Bay Neighborhoods"
               subtitle="Every neighborhood has a story. Let me help you find yours."
             />
           </AnimatedSection>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {spotlightNeighborhoods.map((neighborhood, i) => (
-              <AnimatedSection key={neighborhood.slug} delay={i * 100}>
+              <AnimatedSection key={neighborhood.slug} delay={i * 100} animation="scale">
                 <NeighborhoodCard neighborhood={neighborhood} compact />
               </AnimatedSection>
             ))}
@@ -230,10 +255,11 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ MARKET SNAPSHOT ═══════════ */}
-      <section className="py-20">
+      <section className="bg-muted py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
+              kicker="Market Data"
               title="East Bay Market Snapshot"
               subtitle="Real-time insights to help you make confident decisions"
             />
@@ -247,12 +273,12 @@ export default function HomePage() {
                 "trending-up": <TrendingUp className="h-6 w-6" />,
               };
               return (
-                <AnimatedSection key={stat.label} delay={i * 100}>
-                  <div className="rounded-xl border border-border bg-card p-6 text-center">
+                <AnimatedSection key={stat.label} delay={i * 100} animation="blur">
+                  <div className="rounded-xl border border-border bg-card p-6 text-center transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
                     <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                       {icons[stat.icon]}
                     </div>
-                    <p className="text-3xl font-bold text-foreground">
+                    <p className="text-3xl font-bold text-foreground font-display">
                       {stat.value}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -283,18 +309,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════ TESTIMONIAL HIGHLIGHT ═══════════ */}
-      <section className="bg-muted py-20">
+      {/* ═══════════ TESTIMONIAL — Full-width pull quote ═══════════ */}
+      <section className="py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
+              kicker="Client Stories"
               title="What Clients Say"
               subtitle="Real stories from real East Bay homeowners"
             />
           </AnimatedSection>
-          <AnimatedSection>
-            <TestimonialCard testimonial={featuredTestimonial} featured />
+
+          {/* Featured pull-quote style */}
+          <AnimatedSection animation="blur">
+            <div className="relative py-8 text-center max-w-3xl mx-auto">
+              <span className="absolute -top-4 left-0 text-[100px] leading-none text-accent/15 font-display select-none">
+                &ldquo;
+              </span>
+              <blockquote className="relative z-10 text-xl md:text-2xl lg:text-3xl font-display italic text-foreground leading-relaxed">
+                {featuredTestimonial.quote}
+              </blockquote>
+              <div className="mt-6 flex items-center justify-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white font-bold">
+                  {featuredTestimonial.initials}
+                </div>
+                <div className="text-left">
+                  <p className="font-semibold text-foreground">{featuredTestimonial.name}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {featuredTestimonial.type === "both" ? "Buyer & Seller" : featuredTestimonial.type} &middot; {featuredTestimonial.neighborhood}
+                  </p>
+                </div>
+              </div>
+            </div>
           </AnimatedSection>
+
           <AnimatedSection className="mt-8 text-center">
             <Link
               href="/testimonials"
@@ -307,23 +355,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════ ABOUT PREVIEW ═══════════ */}
-      <section className="py-20">
+      {/* ═══════════ ABOUT PREVIEW — With background image + floating card ═══════════ */}
+      <section className="bg-muted py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 md:grid-cols-2">
             <AnimatedSection animation="slide-left">
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <div className="text-center text-primary/40">
-                  <Users className="mx-auto h-16 w-16 mb-3" />
-                  <p className="text-lg font-medium">Nasim&apos;s Photo</p>
+              <div className="relative aspect-square rounded-2xl overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80"
+                  alt="Modern Bay Area home interior"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/50 to-transparent" />
+                {/* Floating glass stats card */}
+                <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/90 dark:bg-card/90 backdrop-blur-md p-4 shadow-lg">
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="text-center">
+                      <p className="text-xl font-bold text-primary font-display">100+</p>
+                      <p className="text-xs text-muted-foreground">Deals</p>
+                    </div>
+                    <div className="h-8 w-px bg-border" />
+                    <div className="text-center">
+                      <p className="text-xl font-bold text-primary font-display">20+</p>
+                      <p className="text-xs text-muted-foreground">Yrs in Bay</p>
+                    </div>
+                    <div className="h-8 w-px bg-border" />
+                    <div className="text-center">
+                      <p className="text-xl font-bold text-primary font-display">98%</p>
+                      <p className="text-xs text-muted-foreground">Satisfaction</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </AnimatedSection>
             <AnimatedSection animation="slide-right">
-              <p className="text-sm font-semibold uppercase tracking-wider text-accent">
+              <p className="text-sm font-semibold uppercase tracking-widest text-accent">
                 Meet Your Agent
               </p>
-              <h2 className="mt-2 text-3xl font-bold text-foreground md:text-4xl">
+              <h2 className="mt-2 text-3xl font-bold text-foreground font-display md:text-4xl">
                 Hi, I&apos;m Nasim
               </h2>
               <p className="mt-4 text-muted-foreground leading-relaxed">
@@ -341,7 +411,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="/about"
-                className="mt-6 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-light transition-colors"
+                className="btn-glow mt-6 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-light transition-colors"
               >
                 Learn more about Nasim
                 <ArrowRight className="h-4 w-4" />
@@ -352,11 +422,18 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ RESOURCE TEASER ═══════════ */}
-      <section className="bg-gradient-to-br from-primary-dark via-primary to-primary-light py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative overflow-hidden py-20">
+        <Image
+          src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1920&q=75"
+          alt="East Bay hills"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/90 via-primary/80 to-primary-light/70" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
           <AnimatedSection>
             <BookOpen className="mx-auto h-12 w-12 text-accent mb-4" />
-            <h2 className="text-3xl font-bold text-white md:text-4xl">
+            <h2 className="text-3xl font-bold text-white font-display md:text-4xl lg:text-5xl">
               Free East Bay Homebuyer&apos;s Guide
             </h2>
             <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto">
@@ -366,7 +443,7 @@ export default function HomePage() {
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/resources"
-                className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-semibold text-white hover:bg-accent-dark transition-colors"
+                className="btn-glow inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3.5 text-base font-semibold text-white hover:bg-accent-dark transition-colors"
               >
                 Get the Free Guide
                 <ArrowRight className="h-5 w-5" />
@@ -386,7 +463,7 @@ export default function HomePage() {
       <section className="py-20">
         <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
           <AnimatedSection>
-            <h2 className="text-3xl font-bold text-foreground md:text-4xl">
+            <h2 className="text-3xl font-bold text-foreground font-display md:text-4xl">
               Stay Ahead of the Market
             </h2>
             <p className="mt-4 text-muted-foreground">

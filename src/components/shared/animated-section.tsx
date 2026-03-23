@@ -3,13 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-type Animation = "fade-up" | "fade-in" | "slide-left" | "slide-right";
+type Animation = "fade-up" | "fade-in" | "slide-left" | "slide-right" | "scale" | "blur";
 
 const animationClasses: Record<Animation, string> = {
   "fade-up": "animate-fade-in-up",
   "fade-in": "animate-fade-in",
   "slide-left": "animate-slide-in-left",
   "slide-right": "animate-slide-in-right",
+  "scale": "animate-scale-in",
+  "blur": "animate-blur-in",
 };
 
 export const AnimatedSection = ({

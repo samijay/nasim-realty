@@ -23,6 +23,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Diesel Bookstore", "College Ave galleries", "Rockridge Library"],
     transit: ["Rockridge BART", "AC Transit 51A", "Easy I-24/580 access"],
     heroColor: "from-emerald-900/80 to-teal-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=75",
   },
   {
     slug: "temescal",
@@ -46,6 +47,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Temescal Alley", "Oaklandish", "Art galleries on Telegraph"],
     transit: ["MacArthur BART", "AC Transit 6/NL", "Bike-friendly streets"],
     heroColor: "from-orange-900/80 to-amber-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=75",
   },
   {
     slug: "montclair",
@@ -69,6 +71,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Montclair Village", "A Great Good Place for Books", "Montclair Art Gallery"],
     transit: ["AC Transit 33/NL", "Highway 13 access", "Park & Ride options"],
     heroColor: "from-green-900/80 to-emerald-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=75",
   },
   {
     slug: "lake-merritt",
@@ -92,6 +95,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Grand Lake Theatre", "Oakland Museum of CA", "Lake Merritt Farmers Market"],
     transit: ["Lake Merritt BART", "19th St BART", "AC Transit multiple lines"],
     heroColor: "from-blue-900/80 to-cyan-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75",
   },
   {
     slug: "jack-london-square",
@@ -115,6 +119,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Jack London's cabin", "USS Potomac", "Sunday Farmers Market"],
     transit: ["12th St BART nearby", "SF Ferry", "Amtrak station", "I-880 access"],
     heroColor: "from-slate-900/80 to-blue-900/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=75",
   },
   {
     slug: "piedmont-ave",
@@ -138,6 +143,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Piedmont Theatre", "Chapel of the Chimes", "Fentons Creamery"],
     transit: ["AC Transit 33/12", "Near MacArthur BART", "Highway 13 access"],
     heroColor: "from-stone-900/80 to-amber-900/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=75",
   },
   {
     slug: "fruitvale",
@@ -161,6 +167,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Fruitvale Village", "Día de los Muertos festival", "Unity Council"],
     transit: ["Fruitvale BART", "AC Transit multiple lines", "I-580 access"],
     heroColor: "from-red-900/80 to-orange-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=75",
   },
   {
     slug: "grand-lake",
@@ -184,6 +191,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Grand Lake Theatre", "Saturday Farmers Market", "Art Murmur"],
     transit: ["AC Transit NL/12", "Near Lake Merritt BART", "I-580 access"],
     heroColor: "from-violet-900/80 to-purple-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=75",
   },
   {
     slug: "claremont",
@@ -207,6 +215,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Claremont Hotel & Spa", "UC Berkeley campus", "Elmwood district"],
     transit: ["Ashby BART nearby", "AC Transit 49/65", "Highway 13/24 access"],
     heroColor: "from-indigo-900/80 to-blue-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=75",
   },
   {
     slug: "dimond",
@@ -230,6 +239,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Dimond Improvement Association", "Oaktoberfest", "Community garden"],
     transit: ["AC Transit 21/57", "Near Fruitvale BART", "I-580 access"],
     heroColor: "from-lime-900/80 to-green-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=75",
   },
   {
     slug: "glenview",
@@ -253,6 +263,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Park Boulevard corridor", "Glenview Elementary events"],
     transit: ["AC Transit 57", "Near Park Blvd", "I-580 access"],
     heroColor: "from-teal-900/80 to-cyan-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&q=75",
   },
   {
     slug: "adams-point",
@@ -276,6 +287,7 @@ export const neighborhoods: Neighborhood[] = [
     culture: ["Grand Avenue shopping", "Fox Theater nearby", "First Fridays"],
     transit: ["19th St BART", "AC Transit NL", "Walk to downtown"],
     heroColor: "from-sky-900/80 to-blue-800/60",
+    stockPhoto: "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=800&q=75",
   },
 ];
 

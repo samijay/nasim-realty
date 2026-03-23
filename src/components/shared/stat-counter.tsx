@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export const StatCounter = ({
   end,
@@ -8,12 +9,14 @@ export const StatCounter = ({
   prefix = "",
   label,
   duration = 2000,
+  className,
 }: {
   end: number;
   suffix?: string;
   prefix?: string;
   label: string;
   duration?: number;
+  className?: string;
 }) => {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -41,7 +44,6 @@ export const StatCounter = ({
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.floor(eased * end));
       if (progress < 1) {
@@ -53,15 +55,15 @@ export const StatCounter = ({
   }, [hasAnimated, end, duration]);
 
   return (
-    <div ref={ref} className="text-center">
-      <div className="text-4xl font-bold text-primary md:text-5xl">
+    <div ref={ref} className={cn("text-center", className)}>
+      <div className="text-4xl font-bold text-primary font-display md:text-5xl">
         {prefix}
         {count}
         {suffix}
       </div>
-      <div className="mt-2 text-sm font-medium text-muted-foreground uppercase tracking-wider">
+      <span className="mt-2 block text-sm font-medium text-muted-foreground uppercase tracking-wider">
         {label}
-      </div>
+      </span>
     </div>
   );
 };

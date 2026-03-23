@@ -25,7 +25,8 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="border-t border-border bg-card">
+    <footer className="bg-card">
+      <div className="h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand + Contact */}
@@ -34,7 +35,7 @@ export const Footer = () => {
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white font-bold text-lg">
                 N
               </div>
-              <div className="text-lg font-bold text-foreground">
+              <div className="text-lg font-bold text-foreground font-display">
                 {siteConfig.name}
               </div>
             </div>
@@ -130,7 +131,7 @@ export const Footer = () => {
               className="text-muted-foreground hover:text-primary transition-colors"
               aria-label="Instagram"
             >
-              <Instagram className="h-5 w-5" />
+              <Instagram className="h-6 w-6 transition-transform hover:scale-110" />
             </a>
             <a
               href={siteConfig.social.facebook}
@@ -139,7 +140,7 @@ export const Footer = () => {
               className="text-muted-foreground hover:text-primary transition-colors"
               aria-label="Facebook"
             >
-              <Facebook className="h-5 w-5" />
+              <Facebook className="h-6 w-6 transition-transform hover:scale-110" />
             </a>
             <a
               href={siteConfig.social.linkedin}
@@ -148,7 +149,7 @@ export const Footer = () => {
               className="text-muted-foreground hover:text-primary transition-colors"
               aria-label="LinkedIn"
             >
-              <Linkedin className="h-5 w-5" />
+              <Linkedin className="h-6 w-6 transition-transform hover:scale-110" />
             </a>
           </div>
         </div>
