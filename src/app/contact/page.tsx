@@ -202,7 +202,7 @@ function ContactFormSection() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-light transition-colors disabled:opacity-50"
+                    className="btn-press btn-glow inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-accent-dark transition-all disabled:opacity-50"
                   >
                     <Send className="h-4 w-4" />
                     {isSubmitting ? "Sending..." : "Send Message"}
@@ -214,7 +214,7 @@ function ContactFormSection() {
             {/* Contact Info Sidebar */}
             <AnimatedSection delay={200}>
               <div className="space-y-6">
-                <div className="rounded-xl border border-border bg-card p-6">
+                <div className="rounded-xl border border-border bg-card p-6 border-glow-hover">
                   <h3 className="text-lg font-bold text-foreground mb-4">
                     Get in Touch Directly
                   </h3>
@@ -260,9 +260,9 @@ function ContactFormSection() {
                   </div>
                 </div>
 
-                <div className="rounded-xl border border-border bg-card p-6">
+                <div className="rounded-xl border border-border bg-card p-6 border-glow-hover">
                   <div className="flex items-center gap-2 mb-3">
-                    <Clock className="h-5 w-5 text-primary" />
+                    <Clock className="h-5 w-5 text-accent" />
                     <h3 className="font-semibold text-foreground">
                       Response Time
                     </h3>

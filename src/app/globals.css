@@ -205,6 +205,46 @@ body {
   box-shadow: 0 0 24px -4px rgba(200, 165, 92, 0.2);
 }
 
+/* Slow-moving gradient background */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.bg-gradient-animated {
+  background-size: 200% 200%;
+  animation: gradient-shift 12s ease-in-out infinite;
+}
+
+/* Animated underline for links */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 1.5px;
+  background: var(--accent);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateX(-50%);
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Button press scale */
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Focus ring with gold accent */
+.focus-accent:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--accent);
+}
+
 /* Button glow effect */
 .btn-glow {
   position: relative;

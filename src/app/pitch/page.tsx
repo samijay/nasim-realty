@@ -421,7 +421,7 @@ export default function PitchPage() {
          ══════════════════════════════════════ */}
       <section
         id="hero"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-light"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-light bg-gradient-animated"
       >
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

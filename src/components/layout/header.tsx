@@ -69,8 +69,8 @@ export const Header = () => {
                   pathname === link.href
                     ? "text-primary relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-0.5 after:w-4 after:rounded-full after:bg-primary"
                     : isCrmDemo
-                      ? "text-accent font-semibold hover:text-accent-dark"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "text-accent font-semibold hover:text-accent-dark link-underline"
+                      : "text-muted-foreground hover:text-foreground link-underline"
                 )}
               >
                 {t(navTranslationKeys[link.label] ?? link.label)}
