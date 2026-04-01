@@ -132,19 +132,22 @@ export const Header = () => {
 
       {/* Mobile Nav */}
       {mobileOpen && (
-        <div className="border-t border-border bg-background px-4 py-4 lg:hidden">
+        <div className="border-t border-border bg-background px-4 py-4 lg:hidden animate-fade-in" style={{ animationDuration: "200ms" }}>
           <nav className="flex flex-col gap-1">
-            {navLinks.map((link) => (
+            {navLinks.map((link, i) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
                 className={cn(
-                  "rounded-lg px-4 py-3 text-sm font-medium transition-colors",
+                  "rounded-lg px-4 py-3 text-sm font-medium transition-colors animate-fade-in-up",
                   pathname === link.href
                     ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    : link.label === "Live CRM Demo"
+                      ? "text-accent font-semibold"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
+                style={{ animationDelay: `${i * 50}ms`, animationFillMode: "forwards", opacity: 0 }}
               >
                 {t(navTranslationKeys[link.label] ?? link.label)}
               </Link>

@@ -70,7 +70,7 @@ export const PropertyCard = ({
           </div>
         )}
         {/* Status badge */}
-        <div className="absolute top-3 left-3">
+        <div className="absolute top-3 left-3 flex items-center gap-1.5">
           <span
             className={cn(
               "rounded-full px-3 py-1 text-xs font-semibold text-white shadow-sm",
@@ -79,6 +79,11 @@ export const PropertyCard = ({
           >
             {statusLabels[property.status]}
           </span>
+          {property.daysOnMarket !== undefined && property.daysOnMarket <= 7 && property.status === "active" && (
+            <span className="rounded-full bg-accent px-2.5 py-1 text-xs font-bold text-white shadow-sm animate-pulse">
+              NEW
+            </span>
+          )}
         </div>
         {/* Days on market badge */}
         {property.daysOnMarket !== undefined && property.status !== "sold" && (

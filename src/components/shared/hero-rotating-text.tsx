@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const phrases = [
   "Helping families find their dream home in the East Bay",
@@ -11,28 +11,51 @@ const phrases = [
 ];
 
 export const HeroRotatingText = () => {
-  const [index, setIndex] = useState(0);
-  const [fade, setFade] = useState(true);
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setFade(false);
-      setTimeout(() => {
-        setIndex((prev) => (prev + 1) % phrases.length);
-        setFade(true);
-      }, 300);
-    }, 3500);
-
-    return () => clearInterval(interval);
+  const typePhrase = useCallback((phrase: string, onComplete: () => void) => {
+    let i = 0;
+    setIsTyping(true);
+    const typeInterval = setInterval(() => {
+      setDisplayText(phrase.slice(0, i + 1));
+      i++;
+      if (i >= phrase.length) {
+        clearInterval(typeInterval);
+        setIsTyping(false);
+        onComplete();
+      }
+    }, 35);
+    return typeInterval;
   }, []);
 
+  useEffect(() => {
+    const phrase = phrases[phraseIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    const intervalId = typePhrase(phrase, () => {
+      // Hold the completed text for 2 seconds, then fade out and move to next
+      timeout = setTimeout(() => {
+        setDisplayText("");
+        setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      }, 2500);
+    });
+
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timeout);
+    };
+  }, [phraseIndex, typePhrase]);
+
   return (
-    <span
-      className={`inline-block transition-opacity duration-300 ${
-        fade ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      {phrases[index]}
+    <span className="inline-block min-h-[1.5em]">
+      {displayText}
+      <span
+        className={`inline-block w-[2px] h-[1em] bg-accent ml-0.5 align-middle ${
+          isTyping ? "animate-pulse" : "opacity-0"
+        }`}
+      />
     </span>
   );
 };
