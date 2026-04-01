@@ -92,7 +92,7 @@ export default function AboutPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
                 {/* Floating glass stats card */}
-                <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/90 dark:bg-card/90 backdrop-blur-md p-4 shadow-lg">
+                <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/90 dark:bg-card/90 backdrop-blur-md p-4 shadow-lg border-glow-hover transition-all duration-500 hover:-translate-y-1">
                   <div className="flex items-center justify-between text-sm">
                     <div className="text-center">
                       <p className="text-xl font-bold text-primary font-display">100+</p>

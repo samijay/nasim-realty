@@ -440,45 +440,45 @@ export default function PitchPage() {
         </div>
 
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center py-20">
-          <AnimatedSection animation="fade-in">
+          <div className="animate-fade-in" style={{ animationDelay: "0ms", animationFillMode: "forwards" }}>
             <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-white/90 backdrop-blur-sm mb-8">
               <Crown className="h-4 w-4 text-accent" />
               Exclusive Presentation
             </div>
-          </AnimatedSection>
+          </div>
 
-          <AnimatedSection delay={200}>
-            <h1 className="text-5xl font-extrabold text-white sm:text-6xl md:text-7xl lg:text-8xl tracking-tight">
+          <div className="animate-fade-in-up" style={{ animationDelay: "200ms", animationFillMode: "forwards", opacity: 0 }}>
+            <h1 className="text-5xl font-normal tracking-wide uppercase text-white font-display sm:text-6xl md:text-7xl lg:text-8xl">
               Built for{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 text-accent">Nasim</span>
+                <span className="relative z-10 text-gradient">Nasim</span>
                 <span className="absolute -bottom-2 left-0 right-0 h-3 bg-accent/20 rounded-full blur-sm" />
               </span>
             </h1>
-          </AnimatedSection>
+          </div>
 
-          <AnimatedSection delay={500}>
+          <div className="animate-fade-in-up" style={{ animationDelay: "500ms", animationFillMode: "forwards", opacity: 0 }}>
             <p className="mt-6 text-xl text-white/70 sm:text-2xl md:text-3xl font-light max-w-3xl mx-auto">
               Your East Bay real estate empire starts here.
             </p>
-          </AnimatedSection>
+          </div>
 
-          <AnimatedSection delay={800}>
+          <div className="animate-fade-in" style={{ animationDelay: "800ms", animationFillMode: "forwards", opacity: 0 }}>
             <div className="mt-10 flex items-center justify-center gap-4">
               <div className="h-px w-12 bg-accent/40" />
-              <span className="text-accent font-semibold tracking-widest text-sm uppercase">
+              <span className="text-accent font-semibold tracking-[0.2em] text-sm uppercase">
                 {siteConfig.name}
               </span>
               <div className="h-px w-12 bg-accent/40" />
             </div>
-          </AnimatedSection>
+          </div>
 
-          <AnimatedSection delay={1100}>
+          <div className="animate-fade-in" style={{ animationDelay: "1100ms", animationFillMode: "forwards", opacity: 0 }}>
             <p className="mt-12 text-white/50 text-sm">
               Scroll to explore the strategy
             </p>
             <ChevronDown className="mx-auto mt-2 h-6 w-6 text-white/30 animate-bounce" />
-          </AnimatedSection>
+          </div>
         </div>
       </section>
 

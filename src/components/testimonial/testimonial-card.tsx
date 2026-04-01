@@ -12,7 +12,7 @@ export const TestimonialCard = ({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg",
+        "relative overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-accent/30",
         "border-l-4 border-l-accent",
         featured && "md:col-span-2 md:flex md:gap-8 md:p-8"
       )}

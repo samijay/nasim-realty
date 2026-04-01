@@ -14,7 +14,7 @@ export const NeighborhoodCard = ({
   return (
     <Link
       href={`/neighborhoods/${neighborhood.slug}`}
-      className="group relative block overflow-hidden rounded-xl aspect-[3/4] sm:aspect-[4/5]"
+      className="group relative block overflow-hidden rounded-xl aspect-[3/4] sm:aspect-[4/5] ring-1 ring-transparent hover:ring-accent/40 transition-all duration-500 hover:shadow-xl hover:shadow-accent/10"
     >
       {neighborhood.stockPhoto ? (
         <Image
@@ -27,8 +27,8 @@ export const NeighborhoodCard = ({
         <div className={`absolute inset-0 bg-gradient-to-br ${neighborhood.heroColor}`} />
       )}
 
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+      {/* Dark gradient overlay — lightens on hover */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-opacity duration-500 group-hover:opacity-80" />
 
       {/* Content pinned to bottom */}
       <div className="absolute inset-x-0 bottom-0 p-5">
