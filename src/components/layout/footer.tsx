@@ -31,7 +31,7 @@ export const Footer = () => {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand + Contact */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white font-bold text-lg">
                 N
               </div>
@@ -39,6 +39,9 @@ export const Footer = () => {
                 {siteConfig.name}
               </div>
             </div>
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-accent mb-4">
+              East Bay Real Estate
+            </p>
             <p className="text-sm text-muted-foreground mb-6">
               {t("footer.tagline")}
             </p>
@@ -69,7 +72,7 @@ export const Footer = () => {
 
           {/* Explore */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-accent">
               {t("footer.explore")}
             </h3>
             <ul className="space-y-3">
@@ -88,7 +91,7 @@ export const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-accent">
               {t("footer.resources")}
             </h3>
             <ul className="space-y-3">
@@ -107,7 +110,7 @@ export const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground">
+            <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.15em] text-accent">
               {t("footer.stay_in_loop")}
             </h3>
             <p className="text-sm text-muted-foreground mb-4">

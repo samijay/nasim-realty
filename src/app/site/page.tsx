@@ -11,6 +11,7 @@ import {
   Presentation,
   Sparkles,
   ChevronDown,
+  DollarSign,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { StatCounter } from "@/components/shared/stat-counter";
@@ -46,6 +47,12 @@ export default function HomePage() {
         />
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/25" />
+        {/* Floating gold decorative circles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-[15%] right-[10%] h-64 w-64 rounded-full bg-accent/8 blur-[80px]" />
+          <div className="absolute bottom-[20%] left-[5%] h-48 w-48 rounded-full bg-accent/6 blur-[60px]" />
+          <div className="absolute top-[60%] right-[30%] h-32 w-32 rounded-full bg-primary-light/10 blur-[50px]" />
+        </div>
         {/* Accent strip at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary" />
 
@@ -482,8 +489,64 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════ NEWSLETTER CTA ═══════════ */}
+      {/* ═══════════ WHAT'S MY HOME WORTH? — Lead capture ═══════════ */}
       <section className="py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-dark via-primary to-primary-light p-8 sm:p-12 lg:p-16">
+              {/* Decorative elements */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-accent/10 blur-[60px]" />
+                <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-white/5 blur-[50px]" />
+              </div>
+              <div className="relative z-10 grid items-center gap-8 md:grid-cols-2">
+                <div>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/20 text-accent mb-6">
+                    <DollarSign className="h-7 w-7" />
+                  </div>
+                  <h2 className="text-3xl font-normal tracking-wide uppercase text-white font-display md:text-4xl lg:text-5xl">
+                    What&apos;s My Home Worth?
+                  </h2>
+                  <p className="mt-4 text-lg text-white/70 leading-relaxed">
+                    Get a complimentary market analysis from Nasim. Data-driven
+                    insights, local expertise, and a realistic price range —
+                    no obligation.
+                  </p>
+                  <div className="mt-3 flex items-center gap-3 text-sm text-white/50">
+                    <span className="flex items-center gap-1.5">
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                      Free analysis
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                      24hr turnaround
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                      No obligation
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center md:items-end gap-4">
+                  <Link
+                    href="/contact"
+                    className="btn-glow inline-flex items-center gap-2 rounded-lg bg-accent px-8 py-4 text-lg font-semibold text-white hover:bg-accent-dark transition-colors"
+                  >
+                    Get Your Free Valuation
+                    <ArrowRight className="h-5 w-5" />
+                  </Link>
+                  <p className="text-xs text-white/40">
+                    Response within 24 hours
+                  </p>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ═══════════ NEWSLETTER CTA ═══════════ */}
+      <section className="bg-muted py-24">
         <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
           <AnimatedSection>
             <h2 className="text-3xl font-bold text-foreground font-display md:text-4xl">

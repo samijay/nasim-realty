@@ -41,7 +41,7 @@ export const PropertyCard = ({
   return (
     <div
       className={cn(
-        "group overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg hover:-translate-y-1",
+        "group overflow-hidden rounded-xl border border-border bg-card card-hover",
         featured && "lg:col-span-2 lg:row-span-2"
       )}
     >
