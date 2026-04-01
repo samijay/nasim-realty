@@ -562,8 +562,8 @@ export default function CrmDemoPage() {
       {/* Header */}
       <div className="border-b border-border bg-card">
         <div className="mx-auto max-w-4xl px-4 py-8 text-center sm:px-6">
-          <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-2">Live Demo</p>
-          <h1 className="text-3xl font-bold text-foreground font-display md:text-4xl lg:text-5xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-2">Live Demo</p>
+          <h1 className="text-3xl font-normal tracking-wide uppercase text-foreground font-display md:text-4xl lg:text-5xl">
             Nasim&apos;s Morning with Her CRM
           </h1>
           <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
@@ -585,6 +585,18 @@ export default function CrmDemoPage() {
             <h2 className="text-xl font-bold text-foreground font-display">{scene.title}</h2>
             <p className="text-sm text-muted-foreground">{scene.subtitle}</p>
           </div>
+        </div>
+
+        {/* Progress bar */}
+        <div className="h-0.5 bg-muted rounded-full overflow-hidden mb-6">
+          <div
+            className="h-full bg-accent rounded-full"
+            style={{
+              width: playing && !fading ? "100%" : "0%",
+              transition: playing && !fading ? "width 6s linear" : "none",
+            }}
+            key={`progress-${current}-${playing}`}
+          />
         </div>
 
         {/* Scene content */}

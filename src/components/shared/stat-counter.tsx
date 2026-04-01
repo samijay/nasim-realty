@@ -56,12 +56,15 @@ export const StatCounter = ({
 
   return (
     <div ref={ref} className={cn("text-center", className)}>
-      <div className="text-4xl font-bold text-primary font-display md:text-5xl">
+      <div className={cn(
+        "text-5xl font-normal text-primary font-display md:text-6xl",
+        hasAnimated && "animate-counter-reveal"
+      )}>
         {prefix}
         {count}
         {suffix}
       </div>
-      <span className="mt-2 block text-sm font-medium text-muted-foreground uppercase tracking-wider">
+      <span className="mt-2 block text-xs font-medium text-muted-foreground uppercase tracking-[0.15em]">
         {label}
       </span>
     </div>

@@ -19,7 +19,7 @@ const navTranslationKeys: Record<string, string> = {
   "Market Insights": "nav.market_insights",
   Testimonials: "nav.testimonials",
   Resources: "nav.resources",
-  "CRM Demo": "nav.crm_demo",
+  "Live CRM Demo": "nav.crm_demo",
   Contact: "nav.contact",
   Intelligence: "nav.intelligence",
   Partners: "nav.partners",
@@ -58,20 +58,25 @@ export const Header = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-1 lg:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                pathname === link.href
-                  ? "text-primary relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-0.5 after:w-4 after:rounded-full after:bg-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {t(navTranslationKeys[link.label] ?? link.label)}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isCrmDemo = link.label === "Live CRM Demo";
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  pathname === link.href
+                    ? "text-primary relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:h-0.5 after:w-4 after:rounded-full after:bg-primary"
+                    : isCrmDemo
+                      ? "text-accent font-semibold hover:text-accent-dark"
+                      : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {t(navTranslationKeys[link.label] ?? link.label)}
+              </Link>
+            );
+          })}
           {onInternalPage && (
             <>
               <div className="mx-1 h-5 w-px bg-border" />

@@ -21,20 +21,21 @@ import { NeighborhoodCard } from "@/components/neighborhood/neighborhood-card";
 import { TestimonialCard } from "@/components/testimonial/testimonial-card";
 import { HeroRotatingText } from "@/components/shared/hero-rotating-text";
 import { siteConfig } from "@/lib/site-config";
-import { getFeaturedListings } from "@/lib/listings";
+import { getFeaturedListings, getSoldListings } from "@/lib/listings";
 import { neighborhoods } from "@/lib/neighborhoods";
 import { getFeaturedTestimonial } from "@/lib/testimonials";
 import { marketOverview } from "@/lib/market-data";
 
 export default function HomePage() {
   const featuredListings = getFeaturedListings();
+  const soldListings = getSoldListings();
   const spotlightNeighborhoods = neighborhoods.slice(0, 6);
   const featuredTestimonial = getFeaturedTestimonial();
 
   return (
     <>
       {/* ═══════════ HERO — Full viewport with background image ═══════════ */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background image */}
         <Image
           src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80"
@@ -50,10 +51,10 @@ export default function HomePage() {
 
         <div className="relative z-10 mx-auto max-w-6xl px-4 py-32 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <p className="mb-4 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90 backdrop-blur-sm">
+            <p className="mb-4 inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-medium text-white/90 backdrop-blur-sm">
               East Bay&apos;s Trusted Real Estate Expert
             </p>
-            <h1 className="text-4xl font-bold leading-tight text-white font-display md:text-5xl lg:text-7xl">
+            <h1 className="text-4xl font-normal tracking-wide leading-tight text-white font-display md:text-5xl lg:text-7xl">
               Your East Bay Home Story{" "}
               <span className="text-gradient">Starts Here</span>
             </h1>
@@ -77,13 +78,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Hero newsletter */}
-          <div className="mt-12 max-w-md">
-            <p className="mb-2 text-sm font-medium text-white/70">
-              Get weekly East Bay market updates
-            </p>
-            <NewsletterSignup variant="hero" />
-          </div>
         </div>
 
         {/* Scroll indicator */}
@@ -96,7 +90,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ STATS BAR — Gradient background ═══════════ */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-primary-dark via-primary to-primary-light py-14">
+      <section className="relative overflow-hidden bg-gradient-to-r from-primary-dark via-primary to-primary-light py-16 border-t-2 border-accent">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute -top-10 right-0 h-48 w-48 rounded-full bg-accent blur-3xl" />
         </div>
@@ -129,7 +123,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ FEATURED LISTINGS — Asymmetric layout ═══════════ */}
-      <section className="py-20">
+      <section className="py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
@@ -157,11 +151,40 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══════════ RECENTLY SOLD — Track record ═══════════ */}
+      <section className="bg-muted py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <SectionHeader
+              kicker="Track Record"
+              title="Recently Sold"
+              subtitle="A selection of homes Nasim has recently helped clients buy and sell"
+            />
+          </AnimatedSection>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {soldListings.slice(0, 4).map((listing, i) => (
+              <AnimatedSection key={listing.id} delay={i * 100} animation="scale">
+                <PropertyCard property={listing} />
+              </AnimatedSection>
+            ))}
+          </div>
+          <AnimatedSection className="mt-8 text-center">
+            <Link
+              href="/listings"
+              className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
+            >
+              View full portfolio
+              <ChevronRight className="h-5 w-5" />
+            </Link>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* ═══════════ PITCH DECK ═══════════ */}
-      <section className="bg-muted py-20">
+      <section className="py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection animation="blur">
-            <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-card card-hover">
               <div className="grid md:grid-cols-2">
                 {/* Left — preview mockup */}
                 <div className="relative bg-gradient-to-br from-primary-dark via-primary to-primary-light p-8 sm:p-12 flex flex-col justify-center min-h-[280px]">
@@ -226,7 +249,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ NEIGHBORHOOD SPOTLIGHT — Image tiles ═══════════ */}
-      <section className="py-20">
+      <section className="py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
@@ -255,7 +278,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ MARKET SNAPSHOT ═══════════ */}
-      <section className="bg-muted py-20">
+      <section className="bg-muted py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
@@ -274,7 +297,7 @@ export default function HomePage() {
               };
               return (
                 <AnimatedSection key={stat.label} delay={i * 100} animation="blur">
-                  <div className="rounded-xl border border-border bg-card p-6 text-center transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
+                  <div className="rounded-xl border border-border bg-card p-6 text-center card-hover">
                     <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                       {icons[stat.icon]}
                     </div>
@@ -310,7 +333,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ TESTIMONIAL — Full-width pull quote ═══════════ */}
-      <section className="py-20">
+      <section className="py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionHeader
@@ -356,7 +379,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ ABOUT PREVIEW — With background image + floating card ═══════════ */}
-      <section className="bg-muted py-20">
+      <section className="bg-muted py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 md:grid-cols-2">
             <AnimatedSection animation="slide-left">
@@ -422,7 +445,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ RESOURCE TEASER ═══════════ */}
-      <section className="relative overflow-hidden py-20">
+      <section className="relative overflow-hidden py-24">
         <Image
           src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1920&q=75"
           alt="East Bay hills"
@@ -460,7 +483,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ NEWSLETTER CTA ═══════════ */}
-      <section className="py-20">
+      <section className="py-24">
         <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
           <AnimatedSection>
             <h2 className="text-3xl font-bold text-foreground font-display md:text-4xl">

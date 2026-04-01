@@ -45,7 +45,7 @@ export const PageHero = ({
       )}
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-white font-display md:text-5xl lg:text-6xl">
+        <h1 className="text-4xl font-normal tracking-wide uppercase text-white font-display md:text-5xl lg:text-6xl">
           {title}
         </h1>
         {subtitle && (

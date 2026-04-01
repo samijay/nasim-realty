@@ -16,11 +16,11 @@ export const SectionHeader = ({
   return (
     <div className={cn(centered && "text-center", "mb-14", className)}>
       {kicker && (
-        <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-4">
           {kicker}
         </p>
       )}
-      <h2 className="text-3xl font-bold text-foreground font-display md:text-4xl lg:text-5xl">
+      <h2 className="text-3xl font-normal tracking-wide uppercase text-foreground font-display md:text-4xl lg:text-5xl">
         {title}
       </h2>
       {subtitle && (
@@ -30,13 +30,11 @@ export const SectionHeader = ({
       )}
       <div
         className={cn(
-          "mt-5 flex items-center gap-2",
+          "mt-5 flex items-center",
           centered && "justify-center"
         )}
       >
-        <div className="h-px w-8 bg-accent/40" />
-        <div className="h-1.5 w-1.5 rounded-full bg-accent" />
-        <div className="h-px w-8 bg-accent/40" />
+        <div className="h-px w-16 bg-accent" />
       </div>
     </div>
   );

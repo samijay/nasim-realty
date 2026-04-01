@@ -13,6 +13,7 @@ export const es: Record<string, string> = {
   "nav.partners": "Socios",
   "nav.dashboard": "Panel",
   "nav.crm": "CRM",
+  "nav.crm_demo": "Demo CRM en Vivo",
   "nav.toggle_theme": "Cambiar tema",
   "nav.toggle_menu": "Abrir menú",
   "nav.call": "Llamar",
