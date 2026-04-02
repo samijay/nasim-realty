@@ -18,7 +18,7 @@ export const siteConfig = {
   social: {
     instagram: "https://instagram.com/nasimrealty",
     facebook: "https://facebook.com/nasimrealty",
-    linkedin: "https://linkedin.com/in/nasimrealty",
+    linkedin: "https://linkedin.com/in/nasim-pasallar-55a0b623",
     zillow: "https://zillow.com/profile/nasimrealty",
   },
   office: {

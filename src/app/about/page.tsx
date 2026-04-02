@@ -117,7 +117,7 @@ export default function AboutPage() {
               <p className="text-sm font-semibold uppercase tracking-wider text-accent">
                 My Story
               </p>
-              <h2 className="mt-2 text-3xl font-bold text-foreground font-display md:text-4xl">
+              <h2 className="mt-2 text-3xl font-normal tracking-wide uppercase text-foreground font-display md:text-4xl">
                 Why I Love What I Do
               </h2>
               <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
@@ -154,7 +154,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground font-display md:text-4xl">
+              <h2 className="text-3xl font-normal tracking-wide uppercase text-foreground font-display md:text-4xl">
                 What I Stand For
               </h2>
               <div className="mt-4 h-1 w-16 rounded-full bg-accent mx-auto" />

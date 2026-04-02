@@ -39,9 +39,10 @@ export const PropertyCard = ({
   );
 
   return (
-    <div
+    <Link
+      href={`/neighborhoods/${property.neighborhoodSlug}`}
       className={cn(
-        "group overflow-hidden rounded-xl border border-border bg-card card-hover",
+        "group block overflow-hidden rounded-xl border border-border bg-card card-hover",
         featured && "lg:col-span-2 lg:row-span-2"
       )}
     >
@@ -114,13 +115,10 @@ export const PropertyCard = ({
         <p className="font-semibold text-foreground text-lg leading-tight">
           {property.address}
         </p>
-        <Link
-          href={`/neighborhoods/${property.neighborhoodSlug}`}
-          className="mt-1 flex items-center gap-1 text-sm text-primary hover:underline"
-        >
+        <span className="mt-1 flex items-center gap-1 text-sm text-primary">
           <MapPin className="h-3 w-3" />
           {property.neighborhood}, {property.city}
-        </Link>
+        </span>
 
         <div className="mt-3 flex items-center gap-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1">
@@ -179,6 +177,6 @@ export const PropertyCard = ({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

@@ -263,11 +263,11 @@ export default function HomePage() {
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                     <Link
-                      href="/pitch"
+                      href="/pitch#cta"
                       className="inline-flex items-center justify-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground hover:bg-muted transition-colors"
                     >
                       <Presentation className="h-4 w-4" />
-                      Download PDF
+                      Full Presentation
                     </Link>
                   </div>
                 </div>
