@@ -271,7 +271,7 @@ const features = [
     title: "Vendor/Partner Marketplace",
     description:
       "A curated directory of trusted vendors and partners. Generates referral revenue and strengthens your network.",
-    color: "from-purple-500/20 to-pink-500/20",
+    color: "from-primary/15 to-accent/15",
     link: "/vendors",
   },
   {
@@ -279,7 +279,7 @@ const features = [
     title: "Newsletter Lead Capture",
     description:
       "6 strategic touchpoints throughout the site. Turns browsers into subscribers, subscribers into clients.",
-    color: "from-rose-500/20 to-red-500/20",
+    color: "from-accent/15 to-accent-dark/15",
     link: "/site",
   },
   {

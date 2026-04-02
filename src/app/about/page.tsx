@@ -38,7 +38,7 @@ const values = [
     icon: MapPin,
     title: "Local Expertise",
     description:
-      "East Bay born and raised. I know every block, every trend, every opportunity.",
+      "20+ years calling the East Bay home. I know every block, every trend, every opportunity.",
   },
   {
     icon: Users,
@@ -52,7 +52,7 @@ const credentials = [
   "Licensed California Real Estate Agent",
   "Certified Negotiation Expert (CNE)",
   "Oakland Association of Realtors member",
-  "Bay Area Real Estate Top Producer 2023-2025",
+  "Golden Gate Sotheby's International Realty",
   "Specializing in first-time buyers and luxury homes",
   "Fluent in English, Farsi, and Spanish",
 ];
@@ -70,7 +70,7 @@ export default function AboutPage() {
       <section className="border-b border-border bg-card py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            <StatCounter end={siteConfig.agent.homesSold} suffix="+" label="Homes Sold" />
+            <StatCounter end={siteConfig.agent.homesSold} suffix="+" label="Deals Advised" />
             <StatCounter end={siteConfig.agent.yearsExperience} label="Years Experience" />
             <StatCounter end={siteConfig.agent.clientSatisfaction} suffix="%" label="Client Satisfaction" />
             <StatCounter end={72} suffix="%" label="Referral Rate" />

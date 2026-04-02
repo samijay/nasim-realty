@@ -88,7 +88,7 @@ export const en: Record<string, string> = {
   "about.data_driven": "Data-Driven",
   "about.data_driven_desc": "Market insights and analytics power every recommendation I make.",
   "about.local_expertise": "Local Expertise",
-  "about.local_expertise_desc": "East Bay born and raised. I know every block, every trend, every opportunity.",
+  "about.local_expertise_desc": "20+ years calling the East Bay home. I know every block, every trend, every opportunity.",
   "about.community_first": "Community First",
   "about.community_first_desc": "Actively involved in East Bay community organizations and neighborhood advocacy.",
   "about.credentials": "Credentials",

@@ -66,8 +66,12 @@ function ContactFormSection() {
   const inquiryType = watch("inquiryType");
 
   const onSubmit = async (data: ContactForm) => {
-    console.log("Contact form submitted:", data);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Send form data via mailto link as a fallback
+    const subject = encodeURIComponent(`Website Inquiry: ${data.inquiryType} — ${data.name}`);
+    const body = encodeURIComponent(
+      `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || "Not provided"}\nType: ${data.inquiryType}\nNeighborhood: ${data.neighborhood || "N/A"}\n\nMessage:\n${data.message}`
+    );
+    window.open(`mailto:n.pasallar@ggsir.com?subject=${subject}&body=${body}`, "_blank");
     setSubmittedData(data);
     setSubmitted(true);
   };
@@ -161,7 +165,7 @@ function ContactFormSection() {
                         {...register("phone")}
                         type="tel"
                         className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                        placeholder="(510) 555-0000"
+                        placeholder="Your phone number"
                       />
                     </div>
                     <div>
