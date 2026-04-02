@@ -34,7 +34,7 @@ export const SectionHeader = ({
           centered && "justify-center"
         )}
       >
-        <div className="h-px w-16 bg-accent" />
+        <div className="h-px w-16 accent-shimmer" />
       </div>
     </div>
   );

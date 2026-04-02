@@ -7,9 +7,9 @@ export const siteConfig = {
   agent: {
     name: "Nasim",
     title: "Licensed Realtor | East Bay Specialist",
-    email: "nasim@nasimrealty.com",
-    phone: "(510) 555-0123",
-    license: "DRE# 0XXXXXXX",
+    email: "n.pasallar@ggsir.com",
+    phone: "(310) 339-6221",
+    license: "DRE# 02178942",
     yearsExperience: 5,
     homesSold: 100,
     avgDaysOnMarket: 18,

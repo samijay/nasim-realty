@@ -407,6 +407,72 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══════════ WHY NASIM — Competitive Differentiators ═══════════ */}
+      <section className="relative overflow-hidden py-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/50 to-background pointer-events-none" />
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <SectionHeader
+              kicker="The Difference"
+              title="Why Work with Nasim"
+              subtitle="What sets Nasim apart from every other agent in the East Bay"
+            />
+          </AnimatedSection>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                icon: <Sparkles className="h-6 w-6" />,
+                title: "Design Eye",
+                description:
+                  "Nasim doesn\u2019t just sell homes \u2014 she stages, styles, and presents them with a keen design sensibility that gets top dollar.",
+              },
+              {
+                icon: <Users className="h-6 w-6" />,
+                title: "20+ Years in the Bay",
+                description:
+                  "An LA native who\u2019s called the Bay Area home for over two decades. She knows every block, every school, every vibe.",
+              },
+              {
+                icon: <TrendingUp className="h-6 w-6" />,
+                title: "100+ Deals Advised",
+                description:
+                  "Dozens of closed transactions on both buy and sell sides. Experience across every price range and property type.",
+              },
+              {
+                icon: <Home className="h-6 w-6" />,
+                title: "Sotheby\u2019s Network",
+                description:
+                  "Backed by Golden Gate Sotheby\u2019s International Realty \u2014 a global luxury brand with 25+ offices across the Bay Area.",
+              },
+              {
+                icon: <Clock className="h-6 w-6" />,
+                title: "18 Days Average",
+                description:
+                  "Nasim\u2019s listings sell 14% faster than the East Bay average, powered by strategic pricing and marketing.",
+              },
+              {
+                icon: <DollarSign className="h-6 w-6" />,
+                title: "Above Asking",
+                description:
+                  "Her sellers consistently receive above asking price \u2014 driven by competitive bidding strategies and targeted exposure.",
+              },
+            ].map((item, i) => (
+              <AnimatedSection key={item.title} delay={i * 100} animation="scale">
+                <div className="group rounded-xl border border-border bg-card p-6 card-hover h-full">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-white">
+                    {item.icon}
+                  </div>
+                  <h3 className="text-lg font-bold text-foreground">{item.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════ ABOUT PREVIEW — With background image + floating card ═══════════ */}
       <section className="bg-muted py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

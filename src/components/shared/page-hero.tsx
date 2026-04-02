@@ -20,7 +20,7 @@ export const PageHero = ({
     <section
       className={cn(
         "relative overflow-hidden",
-        !backgroundImage && `bg-gradient-to-br ${gradient}`,
+        !backgroundImage && `bg-gradient-to-br ${gradient} bg-gradient-animated`,
         compact ? "py-16 md:py-20" : "py-24 md:py-32"
       )}
     >

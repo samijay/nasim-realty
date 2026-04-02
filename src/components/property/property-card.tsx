@@ -48,7 +48,7 @@ export const PropertyCard = ({
       {/* Image */}
       <div
         className={cn(
-          "relative overflow-hidden",
+          "relative overflow-hidden img-zoom",
           featured ? "aspect-[16/10]" : "aspect-[4/3]"
         )}
       >

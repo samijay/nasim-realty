@@ -14,7 +14,7 @@ export const NeighborhoodCard = ({
   return (
     <Link
       href={`/neighborhoods/${neighborhood.slug}`}
-      className="group relative block overflow-hidden rounded-xl aspect-[3/4] sm:aspect-[4/5] ring-1 ring-transparent hover:ring-accent/40 transition-all duration-500 hover:shadow-xl hover:shadow-accent/10"
+      className="group relative block overflow-hidden rounded-xl aspect-[3/4] sm:aspect-[4/5] ring-1 ring-transparent hover:ring-accent/40 transition-all duration-500 hover:shadow-xl hover:shadow-accent/10 card-hover img-zoom"
     >
       {neighborhood.stockPhoto ? (
         <Image

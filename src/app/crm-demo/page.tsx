@@ -1,21 +1,25 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import Link from "next/link";
 import {
   Play,
   Pause,
   ChevronLeft,
   ChevronRight,
   Sun,
+  CloudSun,
   Bell,
   Users,
   Mail,
   Star,
   Home,
   TrendingUp,
+  TrendingDown,
   Calendar,
   Clock,
   CheckCircle,
+  CheckCircle2,
   AlertCircle,
   Zap,
   BarChart3,
@@ -24,329 +28,172 @@ import {
   MessageSquare,
   Sparkles,
   ArrowRight,
+  ArrowUpRight,
   Eye,
   MapPin,
   Target,
+  Route,
+  Trophy,
+  Send,
+  Edit3,
+  Timer,
+  CircleDot,
+  Flame,
+  ThermometerSun,
+  Snowflake,
+  FileText,
+  Activity,
+  PieChart,
+  Gift,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/* ═══════════════════════════════════════════
+/* ============================================================
+   CONSTANTS
+   ============================================================ */
+
+const SCENE_DURATION = 6000;
+const GOLD = "#C8A55C";
+
+/* ============================================================
    SCENE DATA
-   ═══════════════════════════════════════════ */
+   ============================================================ */
 
 const scenes = [
   {
     time: "6:45 AM",
-    title: "Morning Brief",
-    subtitle: "Nasim opens her CRM to a personalized dashboard",
+    title: "Morning Dashboard",
+    subtitle: "Nasim opens her CRM to a personalized command center",
   },
   {
     time: "7:00 AM",
-    title: "Lead Triage",
-    subtitle: "New leads auto-categorized and scored overnight",
+    title: "Lead Pipeline",
+    subtitle: "New leads auto-scored and organized into a visual pipeline",
   },
   {
-    time: "7:30 AM",
-    title: "Smart Follow-ups",
-    subtitle: "AI drafts personalized messages for each client",
+    time: "7:15 AM",
+    title: "AI Follow-ups",
+    subtitle: "AI drafted personalized follow-ups overnight while Nasim slept",
   },
   {
-    time: "8:15 AM",
+    time: "8:00 AM",
     title: "Showing Prep",
-    subtitle: "Everything she needs for today's showings, in one view",
+    subtitle: "Everything she needs for today's showings, route-optimized",
   },
   {
     time: "9:00 AM",
-    title: "Pipeline at a Glance",
-    subtitle: "Every deal tracked from first contact to closing",
+    title: "Deal Tracker",
+    subtitle: "Every active deal tracked from first contact to closing day",
   },
   {
     time: "12:00 PM",
-    title: "Midday Check-in",
-    subtitle: "Performance snapshot and weekly goal tracker",
+    title: "Market Pulse",
+    subtitle: "Real-time market intelligence matched to her buyer profiles",
+  },
+  {
+    time: "5:00 PM",
+    title: "Daily Wrap",
+    subtitle: "Today's wins, weekly progress, and tomorrow's auto-generated plan",
   },
 ];
 
-/* ═══════════════════════════════════════════
-   SCENE COMPONENTS
-   ═══════════════════════════════════════════ */
+/* ============================================================
+   SCENE 1 — MORNING DASHBOARD
+   ============================================================ */
 
-const MorningBrief = () => (
-  <div className="space-y-4">
-    {/* Greeting */}
+const MorningDashboard = () => (
+  <div className="space-y-5">
+    {/* Greeting row */}
     <div className="flex items-center justify-between">
-      <div>
-        <h3 className="text-lg font-bold text-foreground">Good morning, Nasim</h3>
-        <p className="text-sm text-muted-foreground">Saturday, March 22 &middot; Oakland, CA</p>
+      <div className="flex items-center gap-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#C8A55C] to-[#A68A3E]">
+          <span className="text-lg font-bold text-white">N</span>
+        </div>
+        <div>
+          <h3 className="text-xl font-bold text-white">Good morning, Nasim</h3>
+          <div className="flex items-center gap-2 text-sm text-white/50">
+            <CloudSun className="h-4 w-4 text-amber-400" />
+            <span>68 F &middot; Oakland, CA &middot; Tuesday, April 1</span>
+          </div>
+        </div>
       </div>
       <div className="flex items-center gap-2">
-        <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-accent/20 text-accent">
+        <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/60 hover:bg-white/15 transition-colors cursor-pointer">
           <Bell className="h-4 w-4" />
-          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">3</span>
+          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">5</span>
         </span>
       </div>
     </div>
 
     {/* Stats row */}
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
       {[
-        { label: "New Leads", value: "4", icon: Users, color: "text-blue-500 bg-blue-500/10" },
-        { label: "Showings Today", value: "3", icon: Calendar, color: "text-green-500 bg-green-500/10" },
-        { label: "Market Alerts", value: "7", icon: TrendingUp, color: "text-amber-500 bg-amber-500/10" },
+        { label: "New Leads", value: "4", icon: Users, accent: "text-blue-400 bg-blue-400/10", change: "+2 from yesterday" },
+        { label: "Showings Today", value: "3", icon: Calendar, accent: "text-emerald-400 bg-emerald-400/10", change: "Next at 9:00 AM" },
+        { label: "Offers Pending", value: "2", icon: FileText, accent: "text-amber-400 bg-amber-400/10", change: "1 response expected" },
+        { label: "Pipeline Value", value: "$4.2M", icon: DollarSign, accent: "text-[#C8A55C] bg-[#C8A55C]/10", change: "+$380K this week" },
       ].map((stat) => (
-        <div key={stat.label} className="rounded-lg border border-border bg-card p-3 text-center">
-          <div className={cn("mx-auto mb-2 flex h-8 w-8 items-center justify-center rounded-full", stat.color)}>
-            <stat.icon className="h-4 w-4" />
+        <div key={stat.label} className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className={cn("flex h-8 w-8 items-center justify-center rounded-lg", stat.accent)}>
+              <stat.icon className="h-4 w-4" />
+            </div>
           </div>
-          <p className="text-2xl font-bold text-foreground font-display">{stat.value}</p>
-          <p className="text-xs text-muted-foreground">{stat.label}</p>
+          <p className="text-2xl font-bold text-white">{stat.value}</p>
+          <p className="text-xs text-white/40 mt-0.5">{stat.label}</p>
+          <p className="text-[10px] text-emerald-400/80 mt-1">{stat.change}</p>
         </div>
       ))}
     </div>
 
-    {/* Today's schedule */}
-    <div className="rounded-lg border border-border bg-card p-4">
-      <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-        <Clock className="h-4 w-4 text-primary" /> Today&apos;s Schedule
+    {/* Priority tasks */}
+    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+      <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <Target className="h-4 w-4 text-[#C8A55C]" /> Priority Tasks
       </h4>
       <div className="space-y-2">
         {[
-          { time: "9:00 AM", event: "Showing — 5432 College Ave, Rockridge", type: "showing" },
-          { time: "10:30 AM", event: "Showing — 311 Oak St #405, Jack London", type: "showing" },
-          { time: "1:00 PM", event: "Listing presentation — Chen family", type: "meeting" },
-          { time: "3:00 PM", event: "Open house prep — 1789 Skyline Blvd", type: "prep" },
-        ].map((item) => (
-          <div key={item.time} className="flex items-center gap-3 text-sm">
-            <span className="w-16 text-xs font-medium text-muted-foreground">{item.time}</span>
-            <span className={cn(
-              "h-2 w-2 rounded-full",
-              item.type === "showing" ? "bg-blue-500" : item.type === "meeting" ? "bg-green-500" : "bg-amber-500"
-            )} />
-            <span className="text-foreground">{item.event}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* Notifications */}
-    <div className="rounded-lg border border-border bg-card p-4">
-      <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-        <Bell className="h-4 w-4 text-accent" /> Overnight Activity
-      </h4>
-      <div className="space-y-2">
-        {[
-          { text: "New lead from Zillow — Sarah K. interested in Rockridge", icon: Zap, ago: "2h ago" },
-          { text: "Offer accepted! Patel family — 842 Alcatraz Ave", icon: CheckCircle, ago: "5h ago" },
-          { text: "Mortgage rates dropped to 6.41% — 3 clients may benefit", icon: TrendingUp, ago: "6h ago" },
-        ].map((note) => (
-          <div key={note.text} className="flex items-start gap-2 text-sm">
-            <note.icon className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-            <span className="text-foreground flex-1">{note.text}</span>
-            <span className="text-xs text-muted-foreground whitespace-nowrap">{note.ago}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
-
-const LeadTriage = () => (
-  <div className="space-y-4">
-    <div className="flex items-center justify-between">
-      <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-        <Target className="h-5 w-5 text-primary" /> Lead Inbox
-      </h3>
-      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">4 new overnight</span>
-    </div>
-
-    {[
-      { name: "Sarah K.", source: "Zillow", score: 92, budget: "$1.2M", area: "Rockridge", priority: "hot", type: "Buyer", timeAgo: "2h ago" },
-      { name: "Marcus & Tina J.", source: "Referral", score: 88, budget: "$850K", area: "Temescal", priority: "hot", type: "Buyer", timeAgo: "4h ago" },
-      { name: "David Chen", source: "Website", score: 74, budget: "$1.8M listing", area: "Montclair", priority: "warm", type: "Seller", timeAgo: "6h ago" },
-      { name: "Priya N.", source: "Instagram", score: 61, budget: "$650K", area: "Adams Point", priority: "new", type: "Buyer", timeAgo: "8h ago" },
-    ].map((lead) => (
-      <div key={lead.name} className="rounded-lg border border-border bg-card p-4">
-        <div className="flex items-start justify-between mb-2">
-          <div>
-            <div className="flex items-center gap-2">
-              <p className="font-semibold text-foreground">{lead.name}</p>
-              <span className={cn(
-                "rounded-full px-2 py-0.5 text-[10px] font-semibold text-white",
-                lead.type === "Buyer" ? "bg-blue-500" : "bg-green-500"
-              )}>{lead.type}</span>
+          { task: "Review & send AI-drafted follow-up to Sarah K. (Rockridge buyer)", done: false, urgent: true },
+          { task: "Prep CMA for David Chen listing presentation (Montclair)", done: false, urgent: true },
+          { task: "Confirm inspection time with Patterson family (842 Alcatraz)", done: true, urgent: false },
+        ].map((item, i) => (
+          <div key={i} className="flex items-center gap-3 text-sm">
+            <div className={cn(
+              "flex h-5 w-5 items-center justify-center rounded border transition-colors cursor-pointer",
+              item.done
+                ? "border-emerald-500 bg-emerald-500/20"
+                : "border-white/20 hover:border-white/40"
+            )}>
+              {item.done && <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />}
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">{lead.area} &middot; {lead.budget} &middot; via {lead.source}</p>
-          </div>
-          <span className="text-xs text-muted-foreground">{lead.timeAgo}</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="flex-1">
-            <div className="flex items-center justify-between text-xs mb-1">
-              <span className="text-muted-foreground">AI Score</span>
-              <span className="font-semibold text-foreground">{lead.score}/100</span>
-            </div>
-            <div className="h-2 rounded-full bg-muted overflow-hidden">
-              <div
-                className={cn(
-                  "h-full rounded-full transition-all",
-                  lead.score >= 85 ? "bg-green-500" : lead.score >= 70 ? "bg-amber-500" : "bg-blue-400"
-                )}
-                style={{ width: `${lead.score}%` }}
-              />
-            </div>
-          </div>
-          <span className={cn(
-            "rounded-full px-2 py-0.5 text-[10px] font-bold uppercase",
-            lead.priority === "hot" ? "bg-red-500/10 text-red-500" : lead.priority === "warm" ? "bg-amber-500/10 text-amber-500" : "bg-blue-500/10 text-blue-500"
-          )}>{lead.priority}</span>
-        </div>
-      </div>
-    ))}
-  </div>
-);
-
-const SmartFollowups = () => (
-  <div className="space-y-4">
-    <div className="flex items-center justify-between">
-      <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-        <Sparkles className="h-5 w-5 text-accent" /> AI-Suggested Follow-ups
-      </h3>
-      <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">3 drafts ready</span>
-    </div>
-
-    {[
-      {
-        client: "The Rivera Family",
-        context: "Toured 2 homes in Rockridge last weekend. Loved the Craftsman on College Ave.",
-        subject: "Re: Your Rockridge home search",
-        draft: "Hi Maria & Carlos — I just heard back from the listing agent on 5432 College Ave. Great news: they're reviewing offers next Tuesday. Based on your feedback about the natural light and yard space, I think this one checks every box. Want to put together a competitive offer this weekend?",
-        action: "Send offer strategy",
-        channel: "email",
-      },
-      {
-        client: "James & Nicole Patterson",
-        context: "Under contract at 842 Alcatraz Ave. Inspection is Thursday.",
-        subject: "Inspection prep & next steps",
-        draft: "Hey James & Nicole! Quick update — your inspection at 842 Alcatraz is confirmed for Thursday at 10am. I've already flagged a few areas for the inspector to look closely at based on the disclosure. I'll be there the whole time. After that, we'll review findings together and decide on any repair requests.",
-        action: "Confirm appointment",
-        channel: "text",
-      },
-      {
-        client: "David Chen",
-        context: "New seller lead. Interested in listing Montclair home. No meeting set yet.",
-        subject: "Complimentary home valuation",
-        draft: "Hi David — thank you for reaching out about your Montclair home! I'd love to put together a complimentary market analysis. Montclair properties are seeing strong demand right now, with median prices around $1.65M. When would be a good time this week for a quick walkthrough?",
-        action: "Schedule meeting",
-        channel: "email",
-      },
-    ].map((item) => (
-      <div key={item.client} className="rounded-lg border border-border bg-card p-4">
-        <div className="flex items-start justify-between mb-2">
-          <div>
-            <p className="font-semibold text-foreground">{item.client}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">{item.context}</p>
-          </div>
-          <span className="flex items-center gap-1 rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-semibold text-accent">
-            <Sparkles className="h-3 w-3" /> AI Draft
-          </span>
-        </div>
-        <div className="mt-3 rounded-lg bg-muted/50 p-3">
-          <p className="text-xs font-semibold text-foreground mb-1">
-            {item.channel === "email" ? "✉️" : "💬"} {item.subject}
-          </p>
-          <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">{item.draft}</p>
-        </div>
-        <div className="mt-3 flex items-center justify-between">
-          <div className="flex gap-2">
-            <button className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white">{item.action}</button>
-            <button className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-foreground">Edit draft</button>
-          </div>
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            {item.channel === "email" ? <Mail className="h-3 w-3" /> : <MessageSquare className="h-3 w-3" />}
-            {item.channel}
-          </div>
-        </div>
-      </div>
-    ))}
-  </div>
-);
-
-const ShowingPrep = () => (
-  <div className="space-y-4">
-    <div className="flex items-center justify-between">
-      <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-        <Home className="h-5 w-5 text-primary" /> Showing Prep — 9:00 AM
-      </h3>
-      <span className="text-xs text-muted-foreground">For: Rivera Family</span>
-    </div>
-
-    {/* Property card */}
-    <div className="rounded-lg border border-border bg-card overflow-hidden">
-      <div className="bg-gradient-to-r from-primary/20 to-primary/5 p-4 flex items-center gap-4">
-        <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10 text-primary">
-          <Home className="h-8 w-8" />
-        </div>
-        <div>
-          <p className="font-bold text-foreground text-lg">5432 College Ave</p>
-          <p className="text-sm text-muted-foreground flex items-center gap-1">
-            <MapPin className="h-3 w-3" /> Rockridge, Oakland
-          </p>
-          <p className="text-xl font-bold text-primary font-display mt-1">$1,495,000</p>
-        </div>
-      </div>
-      <div className="p-4 grid grid-cols-4 gap-3 text-center text-sm border-t border-border">
-        <div><p className="font-bold text-foreground">3</p><p className="text-xs text-muted-foreground">Beds</p></div>
-        <div><p className="font-bold text-foreground">2</p><p className="text-xs text-muted-foreground">Baths</p></div>
-        <div><p className="font-bold text-foreground">1,850</p><p className="text-xs text-muted-foreground">Sqft</p></div>
-        <div><p className="font-bold text-foreground">1922</p><p className="text-xs text-muted-foreground">Built</p></div>
-      </div>
-    </div>
-
-    {/* Comps table */}
-    <div className="rounded-lg border border-border bg-card p-4">
-      <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-        <BarChart3 className="h-4 w-4 text-primary" /> Recent Comps
-      </h4>
-      <div className="space-y-2 text-sm">
-        {[
-          { addr: "5510 College Ave", price: "$1,520,000", sqft: "1,920", ratio: "103%", days: "8" },
-          { addr: "5388 Boyd Ave", price: "$1,410,000", sqft: "1,780", ratio: "106%", days: "5" },
-          { addr: "5601 Lawton Ave", price: "$1,475,000", sqft: "1,850", ratio: "101%", days: "12" },
-        ].map((comp) => (
-          <div key={comp.addr} className="flex items-center justify-between py-1 border-b border-border last:border-0">
-            <span className="text-foreground">{comp.addr}</span>
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">{comp.price}</span>
-              <span>{comp.sqft} sqft</span>
-              <span className="text-green-500 font-semibold">{comp.ratio}</span>
-              <span>{comp.days}d</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* Client preferences */}
-    <div className="rounded-lg border border-border bg-card p-4">
-      <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-        <CheckCircle className="h-4 w-4 text-green-500" /> Client Preferences Match
-      </h4>
-      <div className="grid grid-cols-2 gap-2 text-sm">
-        {[
-          { pref: "3+ bedrooms", match: true },
-          { pref: "Walkable to BART", match: true },
-          { pref: "Under $1.5M", match: true },
-          { pref: "Yard/garden space", match: true },
-          { pref: "Updated kitchen", match: true },
-          { pref: "Garage parking", match: false },
-        ].map((p) => (
-          <div key={p.pref} className="flex items-center gap-2">
-            {p.match ? (
-              <CheckCircle className="h-3.5 w-3.5 text-green-500" />
-            ) : (
-              <AlertCircle className="h-3.5 w-3.5 text-amber-500" />
+            <span className={cn("flex-1", item.done ? "text-white/30 line-through" : "text-white/80")}>
+              {item.task}
+            </span>
+            {item.urgent && !item.done && (
+              <span className="rounded-full bg-red-500/15 px-2 py-0.5 text-[10px] font-semibold text-red-400">Urgent</span>
             )}
-            <span className={cn("text-sm", p.match ? "text-foreground" : "text-muted-foreground")}>{p.pref}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Recent activity */}
+    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+      <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <Activity className="h-4 w-4 text-blue-400" /> Recent Activity
+      </h4>
+      <div className="space-y-2.5">
+        {[
+          { text: "New Zillow lead — Sarah K. interested in Rockridge 3BR homes", icon: Zap, time: "2h ago", color: "text-blue-400" },
+          { text: "Offer accepted! Patel family at 842 Alcatraz Ave ($1.33M)", icon: Trophy, time: "5h ago", color: "text-emerald-400" },
+          { text: "Mortgage rates dropped to 6.41% — 3 clients may benefit", icon: TrendingDown, time: "6h ago", color: "text-amber-400" },
+        ].map((note, i) => (
+          <div key={i} className="flex items-start gap-3 text-sm">
+            <div className={cn("mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-white/5", note.color)}>
+              <note.icon className="h-3.5 w-3.5" />
+            </div>
+            <span className="text-white/70 flex-1">{note.text}</span>
+            <span className="text-xs text-white/30 whitespace-nowrap">{note.time}</span>
           </div>
         ))}
       </div>
@@ -354,78 +201,116 @@ const ShowingPrep = () => (
   </div>
 );
 
-const PipelineView = () => {
+/* ============================================================
+   SCENE 2 — LEAD PIPELINE (KANBAN)
+   ============================================================ */
+
+const LeadPipeline = () => {
   const columns = [
     {
-      title: "New Leads",
-      color: "bg-blue-500",
-      count: 4,
-      cards: [
-        { name: "Sarah K.", detail: "$1.2M · Rockridge", days: "2d" },
-        { name: "Priya N.", detail: "$650K · Adams Point", days: "8d" },
-      ],
-    },
-    {
-      title: "Showings",
-      color: "bg-purple-500",
+      title: "New",
       count: 3,
+      color: "bg-blue-500",
       cards: [
-        { name: "Rivera Family", detail: "$1.5M · Rockridge", days: "12d" },
-        { name: "Marcus & Tina", detail: "$850K · Temescal", days: "5d" },
+        { name: "Sarah K.", interest: "3BR Craftsman, Rockridge", score: "hot", source: "Zillow", budget: "$1.2M" },
+        { name: "Priya Nair", interest: "1BR condo, Adams Point", score: "warm", source: "Instagram", budget: "$650K" },
+        { name: "Tom & Lisa W.", interest: "4BR family home, Montclair", score: "warm", source: "Website", budget: "$1.6M" },
       ],
     },
     {
-      title: "Offers",
+      title: "Contacted",
+      count: 5,
+      color: "bg-purple-500",
+      cards: [
+        { name: "Marcus & Tina J.", interest: "2BR+ near BART, Temescal", score: "hot", source: "Referral", budget: "$850K" },
+        { name: "David Chen", interest: "Listing — Montclair home", score: "hot", source: "Website", budget: "$1.8M" },
+        { name: "Jennifer Liu", interest: "Investment duplex, Grand Lake", score: "warm", source: "Open House", budget: "$1.1M" },
+      ],
+    },
+    {
+      title: "Showing",
+      count: 4,
       color: "bg-amber-500",
-      count: 2,
       cards: [
-        { name: "Kim Family", detail: "$1.1M · Grand Lake", days: "18d" },
+        { name: "Rivera Family", interest: "3BR Craftsman, Rockridge", score: "hot", source: "Referral", budget: "$1.5M" },
+        { name: "Kim Family", interest: "Townhome, Grand Lake", score: "warm", source: "Zillow", budget: "$975K" },
       ],
     },
     {
-      title: "Under Contract",
+      title: "Offer",
+      count: 2,
       color: "bg-orange-500",
-      count: 2,
       cards: [
-        { name: "Pattersons", detail: "$975K · Temescal", days: "24d" },
-        { name: "Patel Family", detail: "$1.3M · Montclair", days: "30d" },
+        { name: "Pattersons", interest: "842 Alcatraz Ave, Temescal", score: "hot", source: "Referral", budget: "$975K" },
+        { name: "Okonkwo Family", interest: "1221 Park Blvd, Piedmont", score: "hot", source: "Sphere", budget: "$2.1M" },
       ],
     },
     {
-      title: "Closed",
-      color: "bg-green-500",
-      count: 8,
+      title: "Closing",
+      count: 1,
+      color: "bg-emerald-500",
       cards: [
-        { name: "Garcia Family", detail: "$1.1M · Rockridge", days: "Closed 3/15" },
+        { name: "Patel Family", interest: "3417 Piedmont Ave", score: "hot", source: "Referral", budget: "$1.33M" },
       ],
     },
   ];
 
+  const scoreConfig: Record<string, { bg: string; text: string; icon: typeof Flame }> = {
+    hot: { bg: "bg-red-500/15", text: "text-red-400", icon: Flame },
+    warm: { bg: "bg-amber-500/15", text: "text-amber-400", icon: ThermometerSun },
+    cold: { bg: "bg-blue-400/15", text: "text-blue-300", icon: Snowflake },
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-          <Eye className="h-5 w-5 text-primary" /> Deal Pipeline
+        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+          <Eye className="h-5 w-5 text-[#C8A55C]" /> Lead Pipeline
         </h3>
-        <span className="text-xs text-muted-foreground">19 active deals</span>
+        <span className="text-xs text-white/40">15 active leads &middot; $12.8M total interest</span>
       </div>
 
-      <div className="flex gap-3 overflow-x-auto pb-2">
+      {/* Column headers summary */}
+      <div className="flex gap-2 overflow-x-auto pb-1">
         {columns.map((col) => (
-          <div key={col.title} className="min-w-[180px] flex-1">
-            <div className="flex items-center gap-2 mb-3">
+          <div key={col.title} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1">
+            <div className={cn("h-2 w-2 rounded-full", col.color)} />
+            <span className="text-xs font-medium text-white/70">{col.title}</span>
+            <span className="text-xs font-bold text-white">{col.count}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Kanban board */}
+      <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
+        {columns.map((col) => (
+          <div key={col.title} className="min-w-[200px] flex-1">
+            <div className="flex items-center gap-2 mb-2 px-1">
               <div className={cn("h-2 w-2 rounded-full", col.color)} />
-              <span className="text-xs font-semibold text-foreground">{col.title}</span>
-              <span className="text-xs text-muted-foreground">({col.count})</span>
+              <span className="text-xs font-semibold text-white/80">{col.title}</span>
+              <span className="ml-auto text-[10px] text-white/30">{col.count}</span>
             </div>
             <div className="space-y-2">
-              {col.cards.map((card) => (
-                <div key={card.name} className="rounded-lg border border-border bg-card p-3">
-                  <p className="text-sm font-semibold text-foreground">{card.name}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{card.detail}</p>
-                  <p className="text-[10px] text-muted-foreground mt-1">{card.days}</p>
-                </div>
-              ))}
+              {col.cards.map((card) => {
+                const sc = scoreConfig[card.score];
+                const ScoreIcon = sc.icon;
+                return (
+                  <div key={card.name} className="rounded-xl border border-white/10 bg-white/[0.04] p-3 hover:bg-white/[0.07] transition-colors cursor-pointer group">
+                    <div className="flex items-start justify-between mb-1.5">
+                      <p className="text-sm font-semibold text-white group-hover:text-[#C8A55C] transition-colors">{card.name}</p>
+                      <span className={cn("flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase", sc.bg, sc.text)}>
+                        <ScoreIcon className="h-2.5 w-2.5" />
+                        {card.score}
+                      </span>
+                    </div>
+                    <p className="text-xs text-white/50 mb-1.5">{card.interest}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-white/70">{card.budget}</span>
+                      <span className="text-[10px] text-white/30">via {card.source}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
@@ -434,54 +319,496 @@ const PipelineView = () => {
   );
 };
 
-const MiddayCheckin = () => (
+/* ============================================================
+   SCENE 3 — AI FOLLOW-UPS
+   ============================================================ */
+
+const AIFollowups = () => (
   <div className="space-y-4">
     <div className="flex items-center justify-between">
-      <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-        <Sun className="h-5 w-5 text-accent" /> Midday Performance
+      <h3 className="text-lg font-bold text-white flex items-center gap-2">
+        <Sparkles className="h-5 w-5 text-[#C8A55C]" /> AI Follow-ups
       </h3>
-      <span className="text-xs text-muted-foreground">Week of March 22</span>
+      <span className="flex items-center gap-1.5 rounded-full bg-[#C8A55C]/10 px-3 py-1 text-xs font-semibold text-[#C8A55C]">
+        <Sparkles className="h-3 w-3" /> 3 drafts ready
+      </span>
     </div>
 
-    {/* Key metrics */}
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div className="rounded-xl border border-[#C8A55C]/20 bg-[#C8A55C]/5 p-3">
+      <p className="text-xs text-[#C8A55C]/80 flex items-center gap-2">
+        <Sparkles className="h-3.5 w-3.5" />
+        Based on Sarah&apos;s search history, I&apos;ve drafted a message about the new Rockridge listing that matches her criteria.
+      </p>
+    </div>
+
+    {[
+      {
+        client: "Sarah K.",
+        context: "New lead from Zillow, interested in 3BR Craftsman homes in Rockridge. Budget $1.2M.",
+        subject: "A Rockridge home I think you'll love",
+        draft: "Hi Sarah! I noticed you've been looking at Craftsman-style homes in Rockridge. I wanted to share a listing that just came on the market at 5432 College Ave — it's a beautifully restored 1922 Craftsman with 3 beds, 2 baths, and a sun-drenched backyard. It's listed at $1,495,000 but given current comps, there may be room to negotiate. Would you like to schedule a private showing this week?",
+        channel: "email",
+        priority: "High — hot lead, respond within 2 hours",
+      },
+      {
+        client: "Rivera Family",
+        context: "Toured 2 homes in Rockridge last weekend. Loved 5432 College Ave Craftsman.",
+        subject: "Re: Your Rockridge home search — offer strategy",
+        draft: "Hi Maria & Carlos — I just heard back from the listing agent on 5432 College Ave. Great news: they're reviewing offers next Tuesday. Based on your feedback about the natural light and yard space, I think this one checks every box. I've prepared a comp analysis showing recent sales in the $1.4-1.5M range. Want to meet Saturday to put together a competitive offer?",
+        channel: "email",
+        priority: "High — offer deadline approaching",
+      },
+      {
+        client: "David Chen",
+        context: "New seller lead interested in listing his Montclair home. No meeting set yet.",
+        subject: "Complimentary home valuation — Montclair",
+        draft: "Hi David, thank you for reaching out about your Montclair home! Montclair is one of the strongest micro-markets in Oakland right now — median sale price has climbed to $1.65M with homes selling in under 14 days. I'd love to do a complimentary walkthrough and prepare a detailed market analysis. Are you available this Thursday or Friday afternoon?",
+        channel: "email",
+        priority: "Medium — nurture new seller lead",
+      },
+    ].map((item) => (
+      <div key={item.client} className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden">
+        <div className="p-4">
+          <div className="flex items-start justify-between mb-1">
+            <div>
+              <div className="flex items-center gap-2">
+                <p className="font-semibold text-white">{item.client}</p>
+                <span className="rounded-full bg-[#C8A55C]/10 px-2 py-0.5 text-[10px] font-semibold text-[#C8A55C] flex items-center gap-1">
+                  <Sparkles className="h-2.5 w-2.5" /> AI Draft
+                </span>
+              </div>
+              <p className="text-xs text-white/40 mt-0.5">{item.context}</p>
+            </div>
+          </div>
+
+          {/* Email preview */}
+          <div className="mt-3 rounded-lg bg-white/[0.06] border border-white/5 p-3">
+            <div className="flex items-center gap-2 text-xs text-white/50 mb-2 pb-2 border-b border-white/5">
+              <Mail className="h-3 w-3" />
+              <span className="font-medium text-white/70">{item.subject}</span>
+            </div>
+            <p className="text-xs text-white/50 leading-relaxed">{item.draft}</p>
+          </div>
+
+          <p className="text-[10px] text-amber-400/70 mt-2 flex items-center gap-1">
+            <AlertCircle className="h-3 w-3" /> {item.priority}
+          </p>
+        </div>
+
+        {/* Action buttons */}
+        <div className="flex items-center border-t border-white/5 divide-x divide-white/5">
+          <button className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-emerald-400 hover:bg-emerald-400/5 transition-colors">
+            <Send className="h-3.5 w-3.5" /> Send
+          </button>
+          <button className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-white/50 hover:bg-white/5 transition-colors">
+            <Edit3 className="h-3.5 w-3.5" /> Edit
+          </button>
+          <button className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold text-white/50 hover:bg-white/5 transition-colors">
+            <Timer className="h-3.5 w-3.5" /> Schedule
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+/* ============================================================
+   SCENE 4 — SHOWING PREP
+   ============================================================ */
+
+const ShowingPrep = () => (
+  <div className="space-y-4">
+    <div className="flex items-center justify-between">
+      <h3 className="text-lg font-bold text-white flex items-center gap-2">
+        <Home className="h-5 w-5 text-[#C8A55C]" /> Today&apos;s Showings
+      </h3>
+      <span className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
+        <Route className="h-3 w-3" /> Route optimized — 12 min between stops
+      </span>
+    </div>
+
+    {/* Timeline */}
+    <div className="relative space-y-4 pl-8">
+      {/* Vertical timeline line */}
+      <div className="absolute left-[13px] top-2 bottom-2 w-px bg-gradient-to-b from-blue-500 via-purple-500 to-emerald-500" />
+
       {[
-        { label: "Deals Closing", value: "3", sub: "this month", icon: CheckCircle, color: "text-green-500" },
-        { label: "Commission", value: "$47.2K", sub: "projected", icon: DollarSign, color: "text-primary" },
-        { label: "Avg Response", value: "12min", sub: "today", icon: Clock, color: "text-blue-500" },
-        { label: "Showings Done", value: "2/3", sub: "today", icon: Home, color: "text-amber-500" },
-      ].map((m) => (
-        <div key={m.label} className="rounded-lg border border-border bg-card p-3 text-center">
-          <m.icon className={cn("mx-auto h-5 w-5 mb-1", m.color)} />
-          <p className="text-xl font-bold text-foreground font-display">{m.value}</p>
-          <p className="text-[10px] text-muted-foreground">{m.label}</p>
-          <p className="text-[10px] text-muted-foreground">{m.sub}</p>
+        {
+          time: "9:00 AM",
+          address: "5432 College Ave",
+          neighborhood: "Rockridge",
+          client: "Rivera Family",
+          price: "$1,495,000",
+          beds: 3, baths: 2, sqft: "1,850",
+          prepNotes: "Clients love natural light — highlight the south-facing sunroom. Bring comp sheet from Boyd Ave.",
+          clientPrefs: "Walkable to BART, 3+ beds, yard, under $1.5M",
+          color: "bg-blue-500",
+          dotColor: "border-blue-500",
+        },
+        {
+          time: "10:30 AM",
+          address: "311 41st St #12",
+          neighborhood: "Temescal",
+          client: "Marcus & Tina J.",
+          price: "$875,000",
+          beds: 2, baths: 2, sqft: "1,150",
+          prepNotes: "First-time buyers, emphasize HOA includes earthquake insurance. Close to Temescal Alley dining.",
+          clientPrefs: "Near BART, 2BR+, modern kitchen, under $900K",
+          color: "bg-purple-500",
+          dotColor: "border-purple-500",
+        },
+        {
+          time: "12:00 PM",
+          address: "4501 Park Blvd",
+          neighborhood: "Grand Lake",
+          client: "Kim Family",
+          price: "$1,150,000",
+          beds: 3, baths: 2, sqft: "1,620",
+          prepNotes: "Near Grand Lake Farmer's Market. Updated kitchen 2023. Good schools (Crocker Highlands).",
+          clientPrefs: "Good schools, 3BR, walkable neighborhood, garage",
+          color: "bg-emerald-500",
+          dotColor: "border-emerald-500",
+        },
+      ].map((showing) => (
+        <div key={showing.time} className="relative">
+          {/* Timeline dot */}
+          <div className={cn("absolute -left-8 top-3 h-[10px] w-[10px] rounded-full border-2", showing.dotColor, "bg-[#0A0F1A]")} />
+
+          <div className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden hover:bg-white/[0.06] transition-colors">
+            <div className="p-4">
+              <div className="flex items-start justify-between mb-2">
+                <div>
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-bold text-white", showing.color)}>{showing.time}</span>
+                    <span className="text-xs text-white/40">{showing.client}</span>
+                  </div>
+                  <p className="text-base font-bold text-white flex items-center gap-1.5">
+                    <MapPin className="h-3.5 w-3.5 text-white/30" />
+                    {showing.address}
+                  </p>
+                  <p className="text-xs text-white/40">{showing.neighborhood}, Oakland</p>
+                </div>
+                <p className="text-lg font-bold text-[#C8A55C]">{showing.price}</p>
+              </div>
+
+              {/* Property specs */}
+              <div className="flex gap-4 text-xs text-white/50 mb-3 mt-2">
+                <span>{showing.beds} beds</span>
+                <span>{showing.baths} baths</span>
+                <span>{showing.sqft} sqft</span>
+              </div>
+
+              {/* Prep notes */}
+              <div className="rounded-lg bg-white/[0.04] border border-white/5 p-2.5 text-xs">
+                <p className="text-white/30 uppercase tracking-wider text-[10px] font-semibold mb-1">Prep Notes</p>
+                <p className="text-white/60 leading-relaxed">{showing.prepNotes}</p>
+              </div>
+
+              {/* Client prefs */}
+              <div className="mt-2 flex items-center gap-2 text-[10px] text-white/30">
+                <Users className="h-3 w-3" />
+                <span>Client wants: {showing.clientPrefs}</span>
+              </div>
+            </div>
+
+            {/* Quick actions */}
+            <div className="flex border-t border-white/5 divide-x divide-white/5">
+              <button className="flex-1 flex items-center justify-center gap-1 py-2 text-[11px] text-white/40 hover:text-white/70 hover:bg-white/5 transition-colors">
+                <Home className="h-3 w-3" /> Details
+              </button>
+              <button className="flex-1 flex items-center justify-center gap-1 py-2 text-[11px] text-white/40 hover:text-white/70 hover:bg-white/5 transition-colors">
+                <BarChart3 className="h-3 w-3" /> Comps
+              </button>
+              <button className="flex-1 flex items-center justify-center gap-1 py-2 text-[11px] text-white/40 hover:text-white/70 hover:bg-white/5 transition-colors">
+                <Users className="h-3 w-3" /> Client
+              </button>
+            </div>
+          </div>
         </div>
       ))}
     </div>
+  </div>
+);
 
-    {/* Weekly goals */}
-    <div className="rounded-lg border border-border bg-card p-4">
-      <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-        <Target className="h-4 w-4 text-primary" /> Weekly Goals
+/* ============================================================
+   SCENE 5 — DEAL TRACKER
+   ============================================================ */
+
+const DealTracker = () => {
+  const deals = [
+    { property: "5432 College Ave", client: "Rivera Family", stage: "Showing", price: "$1,495,000", commission: "$22,425", days: 12, pct: 25, neighborhood: "Rockridge" },
+    { property: "842 Alcatraz Ave", client: "Patterson Family", stage: "Under Contract", price: "$975,000", commission: "$14,625", days: 24, pct: 75, neighborhood: "Temescal" },
+    { property: "3417 Piedmont Ave", client: "Patel Family", stage: "Closing", price: "$1,330,000", commission: "$19,950", days: 38, pct: 95, neighborhood: "Piedmont" },
+    { property: "1221 Park Blvd", client: "Okonkwo Family", stage: "Offer", price: "$2,100,000", commission: "$31,500", days: 18, pct: 50, neighborhood: "Piedmont" },
+    { property: "4501 Park Blvd", client: "Kim Family", stage: "Showing", price: "$1,150,000", commission: "$17,250", days: 8, pct: 20, neighborhood: "Grand Lake" },
+  ];
+
+  const stageColors: Record<string, string> = {
+    Showing: "bg-amber-500/15 text-amber-400",
+    Offer: "bg-orange-500/15 text-orange-400",
+    "Under Contract": "bg-blue-500/15 text-blue-400",
+    Closing: "bg-emerald-500/15 text-emerald-400",
+  };
+
+  const barColors: Record<string, string> = {
+    Showing: "bg-amber-500",
+    Offer: "bg-orange-500",
+    "Under Contract": "bg-blue-500",
+    Closing: "bg-emerald-500",
+  };
+
+  const totalPipeline = "$7.05M";
+  const totalCommission = "$105,750";
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+          <DollarSign className="h-5 w-5 text-[#C8A55C]" /> Deal Tracker
+        </h3>
+        <div className="text-right">
+          <p className="text-xs text-white/40">Pipeline Value</p>
+          <p className="text-lg font-bold text-[#C8A55C]">{totalPipeline}</p>
+        </div>
+      </div>
+
+      {/* Summary bar */}
+      <div className="flex gap-3 text-center">
+        {[
+          { label: "Active Deals", value: "5", color: "text-white" },
+          { label: "Projected Commission", value: totalCommission, color: "text-emerald-400" },
+          { label: "Avg. Days Active", value: "20", color: "text-blue-400" },
+        ].map((s) => (
+          <div key={s.label} className="flex-1 rounded-xl border border-white/10 bg-white/5 p-3">
+            <p className={cn("text-xl font-bold", s.color)}>{s.value}</p>
+            <p className="text-[10px] text-white/40">{s.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Deals table */}
+      <div className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden">
+        {/* Table header */}
+        <div className="grid grid-cols-12 gap-2 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-wider text-white/30 border-b border-white/5">
+          <div className="col-span-3">Property</div>
+          <div className="col-span-2">Client</div>
+          <div className="col-span-2">Stage</div>
+          <div className="col-span-2 text-right">Price</div>
+          <div className="col-span-1 text-right">Days</div>
+          <div className="col-span-2">Progress</div>
+        </div>
+
+        {/* Table rows */}
+        {deals.map((deal) => (
+          <div key={deal.property} className="grid grid-cols-12 gap-2 items-center px-4 py-3 border-b border-white/5 last:border-0 hover:bg-white/[0.03] transition-colors cursor-pointer">
+            <div className="col-span-3">
+              <p className="text-sm font-medium text-white">{deal.property}</p>
+              <p className="text-[10px] text-white/30">{deal.neighborhood}</p>
+            </div>
+            <div className="col-span-2 text-xs text-white/60">{deal.client}</div>
+            <div className="col-span-2">
+              <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-semibold", stageColors[deal.stage])}>
+                {deal.stage}
+              </span>
+            </div>
+            <div className="col-span-2 text-right">
+              <p className="text-sm font-semibold text-white">{deal.price}</p>
+              <p className="text-[10px] text-emerald-400/70">{deal.commission}</p>
+            </div>
+            <div className="col-span-1 text-right text-xs text-white/40">{deal.days}d</div>
+            <div className="col-span-2">
+              <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div className={cn("h-full rounded-full transition-all", barColors[deal.stage])} style={{ width: `${deal.pct}%` }} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ============================================================
+   SCENE 6 — MARKET PULSE
+   ============================================================ */
+
+const MarketPulse = () => (
+  <div className="space-y-4">
+    <div className="flex items-center justify-between">
+      <h3 className="text-lg font-bold text-white flex items-center gap-2">
+        <TrendingUp className="h-5 w-5 text-[#C8A55C]" /> Market Pulse
+      </h3>
+      <span className="text-xs text-white/40">Oakland &middot; Live</span>
+    </div>
+
+    {/* Hot alert */}
+    <div className="rounded-xl border border-[#C8A55C]/30 bg-gradient-to-r from-[#C8A55C]/10 to-transparent p-4">
+      <div className="flex items-start gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#C8A55C]/20">
+          <Zap className="h-5 w-5 text-[#C8A55C]" />
+        </div>
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-white">New listing in Rockridge matches 3 buyer profiles</p>
+          <p className="text-xs text-white/50 mt-1">5891 Claremont Ave — 3BR/2BA, 1,920 sqft, listed at $1,375,000. Matches criteria for Sarah K., Rivera Family, and Tom & Lisa W.</p>
+          <div className="mt-2 flex gap-2">
+            <button className="rounded-lg bg-[#C8A55C] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#B8953C] transition-colors">Notify Clients</button>
+            <button className="rounded-lg border border-white/10 px-3 py-1.5 text-xs font-semibold text-white/60 hover:bg-white/5 transition-colors">View Listing</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Price change alerts */}
+    <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+      <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <Bell className="h-4 w-4 text-amber-400" /> Price Changes Today
+      </h4>
+      <div className="space-y-2.5">
+        {[
+          { address: "2218 Encinal Ave, Alameda", change: "-$25,000", from: "$1,100,000", to: "$1,075,000", direction: "down", days: "21 DOM" },
+          { address: "688 Haddon Rd, Piedmont", change: "-$50,000", from: "$2,450,000", to: "$2,400,000", direction: "down", days: "34 DOM" },
+        ].map((alert) => (
+          <div key={alert.address} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
+            <div>
+              <p className="text-sm text-white/80">{alert.address}</p>
+              <p className="text-[10px] text-white/30">{alert.days} &middot; {alert.from} &rarr; {alert.to}</p>
+            </div>
+            <span className="flex items-center gap-1 text-sm font-bold text-red-400">
+              <TrendingDown className="h-3.5 w-3.5" />
+              {alert.change}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Neighborhood stats */}
+    <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+      <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <BarChart3 className="h-4 w-4 text-blue-400" /> Oakland Neighborhood Snapshot
       </h4>
       <div className="space-y-3">
         {[
-          { goal: "New leads contacted", current: 8, target: 10, pct: 80 },
-          { goal: "Showings completed", current: 6, target: 8, pct: 75 },
+          { name: "Rockridge", median: "$1.52M", dom: "11", newThisWeek: 4, trend: "+3.2%" },
+          { name: "Temescal", median: "$985K", dom: "14", newThisWeek: 6, trend: "+1.8%" },
+          { name: "Montclair", median: "$1.65M", dom: "9", newThisWeek: 3, trend: "+4.1%" },
+          { name: "Grand Lake", median: "$1.12M", dom: "16", newThisWeek: 5, trend: "+2.4%" },
+          { name: "Piedmont", median: "$2.35M", dom: "18", newThisWeek: 2, trend: "-0.5%" },
+        ].map((n) => (
+          <div key={n.name} className="grid grid-cols-5 gap-2 items-center text-sm py-1.5 border-b border-white/5 last:border-0">
+            <span className="font-medium text-white">{n.name}</span>
+            <span className="text-white/60 text-center">{n.median}</span>
+            <span className="text-white/40 text-center">{n.dom} days</span>
+            <span className="text-white/40 text-center">{n.newThisWeek} new</span>
+            <span className={cn(
+              "text-right font-semibold text-xs",
+              n.trend.startsWith("+") ? "text-emerald-400" : "text-red-400"
+            )}>{n.trend}</span>
+          </div>
+        ))}
+        {/* Column headers */}
+        <div className="grid grid-cols-5 gap-2 text-[10px] uppercase tracking-wider text-white/20 pt-1">
+          <span>Area</span>
+          <span className="text-center">Median</span>
+          <span className="text-center">Avg DOM</span>
+          <span className="text-center">New/Wk</span>
+          <span className="text-right">YoY</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Mini trend chart (ASCII representation) */}
+    <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+      <h4 className="text-sm font-semibold text-white mb-3">Oakland Median Price — 6 Month Trend</h4>
+      <div className="flex items-end gap-1 h-20">
+        {[62, 64, 63, 67, 70, 72, 71, 74, 76, 78, 80, 82].map((val, i) => (
+          <div
+            key={i}
+            className={cn(
+              "flex-1 rounded-t transition-all",
+              i === 11 ? "bg-[#C8A55C]" : "bg-white/10"
+            )}
+            style={{ height: `${val}%` }}
+          />
+        ))}
+      </div>
+      <div className="flex justify-between text-[10px] text-white/20 mt-2">
+        <span>Oct</span>
+        <span>Nov</span>
+        <span>Dec</span>
+        <span>Jan</span>
+        <span>Feb</span>
+        <span>Mar</span>
+      </div>
+    </div>
+  </div>
+);
+
+/* ============================================================
+   SCENE 7 — DAILY WRAP
+   ============================================================ */
+
+const DailyWrap = () => (
+  <div className="space-y-4">
+    <div className="flex items-center justify-between">
+      <h3 className="text-lg font-bold text-white flex items-center gap-2">
+        <Sun className="h-5 w-5 text-[#C8A55C]" /> Daily Wrap-up
+      </h3>
+      <span className="text-xs text-white/40">Tuesday, April 1</span>
+    </div>
+
+    {/* Today's accomplishments */}
+    <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+      <h4 className="text-sm font-semibold text-emerald-400 mb-3 flex items-center gap-2">
+        <Trophy className="h-4 w-4" /> Today&apos;s Wins
+      </h4>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {[
+          { label: "Showings", value: "3", sub: "completed" },
+          { label: "Follow-ups", value: "5", sub: "sent" },
+          { label: "Offers", value: "1", sub: "submitted" },
+          { label: "New Leads", value: "2", sub: "contacted" },
+        ].map((w) => (
+          <div key={w.label} className="text-center">
+            <p className="text-2xl font-bold text-white">{w.value}</p>
+            <p className="text-xs text-white/40">{w.label} {w.sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Weekly goal progress */}
+    <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+      <div className="flex items-center justify-between mb-3">
+        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
+          <Target className="h-4 w-4 text-blue-400" /> Weekly Goal Progress
+        </h4>
+        <span className="text-lg font-bold text-[#C8A55C]">68%</span>
+      </div>
+
+      {/* Main progress bar */}
+      <div className="h-3 rounded-full bg-white/10 overflow-hidden mb-4">
+        <div className="h-full rounded-full bg-gradient-to-r from-[#C8A55C] to-amber-400 transition-all" style={{ width: "68%" }} />
+      </div>
+
+      <div className="space-y-2.5">
+        {[
+          { goal: "Leads contacted", current: 8, target: 12, pct: 67 },
+          { goal: "Showings completed", current: 7, target: 10, pct: 70 },
           { goal: "Offers submitted", current: 2, target: 3, pct: 67 },
-          { goal: "Follow-ups sent", current: 14, target: 15, pct: 93 },
+          { goal: "Listings acquired", current: 1, target: 2, pct: 50 },
+          { goal: "Follow-ups sent", current: 18, target: 20, pct: 90 },
         ].map((g) => (
           <div key={g.goal}>
             <div className="flex items-center justify-between text-xs mb-1">
-              <span className="text-foreground">{g.goal}</span>
-              <span className="text-muted-foreground">{g.current}/{g.target}</span>
+              <span className="text-white/60">{g.goal}</span>
+              <span className="text-white/40">{g.current}/{g.target}</span>
             </div>
-            <div className="h-2 rounded-full bg-muted overflow-hidden">
+            <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
               <div
                 className={cn(
                   "h-full rounded-full",
-                  g.pct >= 90 ? "bg-green-500" : g.pct >= 70 ? "bg-primary" : "bg-amber-500"
+                  g.pct >= 80 ? "bg-emerald-500" : g.pct >= 60 ? "bg-[#C8A55C]" : "bg-amber-500"
                 )}
                 style={{ width: `${g.pct}%` }}
               />
@@ -491,25 +818,46 @@ const MiddayCheckin = () => (
       </div>
     </div>
 
-    {/* Closing this week */}
-    <div className="rounded-lg border border-border bg-card p-4">
-      <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-        <DollarSign className="h-4 w-4 text-green-500" /> Closing This Week
+    {/* Revenue tracker */}
+    <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+      <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <DollarSign className="h-4 w-4 text-emerald-400" /> Revenue Tracker
+      </h4>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="rounded-lg bg-white/[0.04] border border-white/5 p-3 text-center">
+          <p className="text-xs text-white/40 mb-1">This Month</p>
+          <p className="text-2xl font-bold text-white">$42K</p>
+          <p className="text-[10px] text-emerald-400">+$19.9K from Patel closing</p>
+        </div>
+        <div className="rounded-lg bg-white/[0.04] border border-white/5 p-3 text-center">
+          <p className="text-xs text-white/40 mb-1">Quarterly Target</p>
+          <p className="text-2xl font-bold text-white">$120K</p>
+          <div className="h-1.5 rounded-full bg-white/10 overflow-hidden mt-2">
+            <div className="h-full rounded-full bg-[#C8A55C]" style={{ width: "35%" }} />
+          </div>
+          <p className="text-[10px] text-white/40 mt-1">35% ($42K / $120K)</p>
+        </div>
+      </div>
+    </div>
+
+    {/* Tomorrow's priorities */}
+    <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4">
+      <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+        <Sparkles className="h-4 w-4 text-[#C8A55C]" /> Tomorrow&apos;s Top Priorities
+        <span className="text-[10px] text-[#C8A55C]/60 font-normal">(AI-generated)</span>
       </h4>
       <div className="space-y-2">
         {[
-          { client: "Patel Family", property: "842 Alcatraz Ave", price: "$1,325,000", date: "Mar 24", commission: "$19,875" },
-          { client: "Garcia Family", property: "217 Grand Ave #8", price: "$725,000", date: "Mar 26", commission: "$10,875" },
-        ].map((deal) => (
-          <div key={deal.client} className="flex items-center justify-between py-2 border-b border-border last:border-0">
-            <div>
-              <p className="text-sm font-semibold text-foreground">{deal.client}</p>
-              <p className="text-xs text-muted-foreground">{deal.property} &middot; {deal.date}</p>
-            </div>
-            <div className="text-right">
-              <p className="text-sm font-bold text-foreground">{deal.price}</p>
-              <p className="text-xs text-green-500 font-semibold">{deal.commission}</p>
-            </div>
+          "Submit offer for Rivera Family on 5432 College Ave (deadline Tuesday)",
+          "Schedule listing presentation with David Chen (Montclair seller lead)",
+          "Send inspection report summary to Patterson family",
+          "Follow up with 3 new Rockridge listing matches",
+        ].map((task, i) => (
+          <div key={i} className="flex items-start gap-2.5 text-sm">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-white/50 mt-0.5">
+              {i + 1}
+            </span>
+            <span className="text-white/60">{task}</span>
           </div>
         ))}
       </div>
@@ -517,28 +865,43 @@ const MiddayCheckin = () => (
   </div>
 );
 
-/* ═══════════════════════════════════════════
-   SCENE RENDERER
-   ═══════════════════════════════════════════ */
+/* ============================================================
+   SCENE COMPONENTS ARRAY
+   ============================================================ */
 
-const sceneComponents = [MorningBrief, LeadTriage, SmartFollowups, ShowingPrep, PipelineView, MiddayCheckin];
+const sceneComponents = [
+  MorningDashboard,
+  LeadPipeline,
+  AIFollowups,
+  ShowingPrep,
+  DealTracker,
+  MarketPulse,
+  DailyWrap,
+];
 
-/* ═══════════════════════════════════════════
+/* ============================================================
    MAIN PAGE
-   ═══════════════════════════════════════════ */
+   ============================================================ */
 
 export default function CrmDemoPage() {
   const [current, setCurrent] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const [fading, setFading] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
+  const [progressKey, setProgressKey] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const goTo = useCallback((index: number) => {
-    setFading(true);
-    setTimeout(() => {
-      setCurrent(index);
-      setFading(false);
-    }, 300);
-  }, []);
+  const goTo = useCallback(
+    (index: number) => {
+      if (transitioning) return;
+      setTransitioning(true);
+      setTimeout(() => {
+        setCurrent(index);
+        setTransitioning(false);
+        setProgressKey((k) => k + 1);
+      }, 400);
+    },
+    [transitioning]
+  );
 
   const next = useCallback(() => {
     goTo((current + 1) % scenes.length);
@@ -548,129 +911,175 @@ export default function CrmDemoPage() {
     goTo((current - 1 + scenes.length) % scenes.length);
   }, [current, goTo]);
 
+  // Auto-advance
   useEffect(() => {
-    if (!playing) return;
-    const timer = setInterval(next, 6000);
-    return () => clearInterval(timer);
+    if (!playing) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      return;
+    }
+    intervalRef.current = setInterval(() => {
+      next();
+    }, SCENE_DURATION);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [playing, next]);
+
+  // Reset progress bar when scene changes
+  useEffect(() => {
+    setProgressKey((k) => k + 1);
+  }, [current]);
 
   const scene = scenes[current];
   const SceneComponent = sceneComponents[current];
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b border-border bg-card">
-        <div className="mx-auto max-w-4xl px-4 py-8 text-center sm:px-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-2">Live Demo</p>
-          <h1 className="text-3xl font-normal tracking-wide uppercase text-foreground font-display md:text-4xl lg:text-5xl">
-            Nasim&apos;s Morning with Her CRM
+      {/* ====== Hero Banner ====== */}
+      <section className="bg-gradient-to-r from-primary-dark via-primary to-primary-dark py-16 text-center">
+        <div className="mx-auto max-w-3xl px-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/60 mb-3">Interactive Demo</p>
+          <h1 className="text-3xl font-normal tracking-wide uppercase text-white font-display md:text-4xl lg:text-5xl">
+            See Your CRM in Action
           </h1>
-          <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-            Watch how Nasim uses her custom CRM to manage leads, prep for showings,
-            and close deals — all before lunch.
+          <p className="mt-4 text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
+            Watch how Nasim&apos;s morning transforms with a custom-built CRM —
+            from lead triage to deal tracking, all before lunch.
           </p>
         </div>
-      </div>
+      </section>
 
-      {/* Scene viewer */}
-      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
-        {/* Time + title bar */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-white">
-            <Clock className="h-4 w-4" />
-            <span className="text-sm font-bold font-display">{scene.time}</span>
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-foreground font-display">{scene.title}</h2>
-            <p className="text-sm text-muted-foreground">{scene.subtitle}</p>
-          </div>
-        </div>
-
-        {/* Progress bar */}
-        <div className="h-0.5 bg-muted rounded-full overflow-hidden mb-6">
+      {/* ====== Demo Area ====== */}
+      <div className="bg-[#0A0F1A] min-h-screen">
+        {/* Top progress bar */}
+        <div className="h-1 bg-white/5">
           <div
-            className="h-full bg-accent rounded-full"
+            key={`progress-${progressKey}-${playing}`}
+            className="h-full bg-[#C8A55C] rounded-r-full"
             style={{
-              width: playing && !fading ? "100%" : "0%",
-              transition: playing && !fading ? "width 6s linear" : "none",
+              width: playing && !transitioning ? "100%" : "0%",
+              transition: playing && !transitioning ? `width ${SCENE_DURATION}ms linear` : "none",
             }}
-            key={`progress-${current}-${playing}`}
           />
         </div>
 
-        {/* Scene content */}
-        <div
-          className={cn(
-            "rounded-2xl border border-border bg-card p-6 shadow-sm transition-opacity duration-300 min-h-[500px]",
-            fading ? "opacity-0" : "opacity-100"
-          )}
-        >
-          <SceneComponent />
-        </div>
-
-        {/* Controls */}
-        <div className="mt-6 flex items-center justify-between">
-          {/* Prev/Next */}
-          <button
-            onClick={prev}
-            className="rounded-lg border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-
-          {/* Dots + play/pause */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setPlaying(!playing)}
-              className="rounded-lg border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-            >
-              {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-            </button>
-            <div className="flex items-center gap-1.5">
-              {scenes.map((s, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  className={cn(
-                    "transition-all duration-300 rounded-full",
-                    i === current
-                      ? "h-2.5 w-8 bg-primary"
-                      : "h-2.5 w-2.5 bg-border hover:bg-muted-foreground"
-                  )}
-                  title={`${s.time} — ${s.title}`}
-                />
-              ))}
+        <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+          {/* Time + title bar */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-2 rounded-full bg-[#C8A55C] px-4 py-2 text-white shadow-lg shadow-[#C8A55C]/20">
+              <Clock className="h-4 w-4" />
+              <span className="text-sm font-bold">{scene.time}</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">{scene.title}</h2>
+              <p className="text-sm text-white/40">{scene.subtitle}</p>
+            </div>
+            <div className="ml-auto flex items-center gap-1 text-xs text-white/20">
+              <span>{current + 1}</span>
+              <span>/</span>
+              <span>{scenes.length}</span>
             </div>
           </div>
 
-          {/* Next */}
-          <button
-            onClick={next}
-            className="rounded-lg border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          {/* Scene content with crossfade */}
+          <div
+            className={cn(
+              "rounded-2xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 min-h-[560px] transition-all duration-400",
+              transitioning
+                ? "opacity-0 translate-y-2"
+                : "opacity-100 translate-y-0"
+            )}
           >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-        </div>
+            <SceneComponent />
+          </div>
 
-        {/* Scene labels */}
-        <div className="mt-4 flex justify-center gap-1 overflow-x-auto pb-2">
-          {scenes.map((s, i) => (
+          {/* Controls */}
+          <div className="mt-6 flex items-center justify-between">
+            {/* Prev */}
             <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={cn(
-                "rounded-lg px-3 py-1.5 text-xs font-medium transition-colors whitespace-nowrap",
-                i === current
-                  ? "bg-primary text-white"
-                  : "text-muted-foreground hover:bg-muted"
-              )}
+              onClick={prev}
+              className="rounded-full border border-white/10 p-2.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label="Previous scene"
             >
-              {s.time} {s.title}
+              <ChevronLeft className="h-5 w-5" />
             </button>
-          ))}
+
+            {/* Center: Play/pause + dots */}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setPlaying(!playing)}
+                className="rounded-full border border-white/10 p-2.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors"
+                aria-label={playing ? "Pause" : "Play"}
+              >
+                {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+              </button>
+
+              <div className="flex items-center gap-2">
+                {scenes.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => goTo(i)}
+                    className={cn(
+                      "transition-all duration-300 rounded-full",
+                      i === current
+                        ? "h-2.5 w-8 bg-[#C8A55C]"
+                        : "h-2.5 w-2.5 bg-white/15 hover:bg-white/30"
+                    )}
+                    aria-label={`Go to scene ${i + 1}: ${scenes[i].title}`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Next */}
+            <button
+              onClick={next}
+              className="rounded-full border border-white/10 p-2.5 text-white/40 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label="Next scene"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* Scene quick-nav labels */}
+          <div className="mt-4 flex justify-center gap-1 overflow-x-auto pb-2 scrollbar-hide">
+            {scenes.map((s, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className={cn(
+                  "rounded-full px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap",
+                  i === current
+                    ? "bg-[#C8A55C] text-white"
+                    : "text-white/30 hover:text-white/60 hover:bg-white/5"
+                )}
+              >
+                {s.time}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* ====== CTA Section ====== */}
+      <section className="bg-gradient-to-r from-primary-dark via-primary to-primary-dark py-20 text-center">
+        <div className="mx-auto max-w-2xl px-4">
+          <h2 className="text-3xl font-normal tracking-wide uppercase text-white font-display md:text-4xl">
+            Ready to Transform Your Workflow?
+          </h2>
+          <p className="mt-4 text-lg text-white/60 leading-relaxed">
+            This is just a glimpse of what a custom CRM can do. Every feature is tailored
+            to the way you actually work — no bloat, no learning curve.
+          </p>
+          <Link
+            href="/contact"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#C8A55C] px-8 py-4 text-sm font-semibold uppercase tracking-wider text-white hover:bg-[#B8953C] transition-colors shadow-lg shadow-[#C8A55C]/20"
+          >
+            Let&apos;s Build Yours
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

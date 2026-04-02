@@ -25,7 +25,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-card">
+    <footer className="bg-card border-t-2 border-accent">
       <div className="h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
@@ -121,7 +121,8 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
+        <div className="mt-12 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+        <div className="mt-0 flex flex-col items-center justify-between gap-4 pt-8 md:flex-row">
           <p className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} {siteConfig.name}. {t("footer.all_rights")}{" "}
             {siteConfig.agent.license}
